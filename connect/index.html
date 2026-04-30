@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect — Mordraga</title>
+  <meta name="description" content="Find Mordraga on Twitch, Twitter, Discord, YouTube, and Fansly. The Crypt is always open.">
+  <meta property="og:title" content="Mordraga — Connect">
+  <meta property="og:description" content="The Crypt is always open. Come hang.">
+  <meta property="og:url" content="https://mordraga.me/connect/">
+  <meta name="theme-color" content="#8b1a1a">
+  <link rel="stylesheet" href="../crypt.css">
+  <style>
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 8rem 1.5rem 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(139,26,26,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero-sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.6em;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-hero h1 {
+      margin-bottom: 0.75rem;
+    }
+
+    .page-hero .subtitle {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── PLATFORM CARDS ── */
+    .platforms-section {
+      padding: 4rem 0;
+    }
+
+    .platform-card {
+      background: var(--deep);
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+    }
+
+    .platform-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-2px);
+      color: inherit;
+    }
+
+    .platform-card.twitch-card   { border-top: 2px solid #9146ff44; }
+    .platform-card.twitter-card  { border-top: 2px solid #1d9bf044; }
+    .platform-card.discord-card  { border-top: 2px solid #5865f244; }
+    .platform-card.youtube-card  { border-top: 2px solid #ff000044; }
+    .platform-card.fansly-card   { border-top: 2px solid var(--accent); }
+
+    .platform-card:hover.twitch-card  { border-color: #9146ff88; }
+    .platform-card:hover.twitter-card { border-color: #1d9bf088; }
+    .platform-card:hover.discord-card { border-color: #5865f288; }
+    .platform-card:hover.youtube-card { border-color: #ff000088; }
+    .platform-card:hover.fansly-card  { border-color: var(--accent); }
+
+    .platform-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    .platform-handle {
+      font-size: 0.8rem;
+      color: var(--text-mute);
+      font-style: italic;
+      letter-spacing: 0.05em;
+    }
+
+    .platform-desc {
+      font-size: 0.88rem;
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .platform-cta {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── DISCORD FEATURE ── */
+    .discord-section {
+      padding: 5rem 0;
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .discord-section h2 {
+      margin-bottom: 0.75rem;
+    }
+
+    .discord-section p {
+      max-width: 500px;
+      margin: 0 auto 2rem;
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .discord-perks {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    /* ── CONTACT SECTION ── */
+    .contact-section {
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .contact-section h2 {
+      margin-bottom: 0.75rem;
+    }
+
+    .contact-section > .container > p {
+      max-width: 500px;
+      margin: 0 auto 2.5rem;
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    .contact-methods {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .contact-method {
+      padding: 1.25rem 1rem;
+      border: 1px solid var(--border);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .contact-method-label {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .contact-method-for {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 680px) {
+      .contact-methods { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Mordraga</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/connect/" class="active">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="bar" style="position:absolute;top:0;left:0;right:0;"></div>
+    <div class="page-hero-sigil fade-up-1">⸸ ✦ ⸸</div>
+    <h1 class="fade-up-2">Connect</h1>
+    <p class="subtitle fade-up-3">The Crypt is always open. Come find me wherever you lurk.</p>
+  </section>
+
+  <!-- PLATFORM CARDS -->
+  <section class="platforms-section">
+    <div class="container">
+
+      <div class="grid-3" style="margin-bottom:1.5rem;">
+
+        <a href="https://twitch.tv/mordraga0" class="platform-card twitch-card fade-up-1" target="_blank">
+          <div class="platform-name">Twitch</div>
+          <div class="platform-handle">mordraga0</div>
+          <p class="platform-desc">Streams from The Crypt. Coding, games, chaos, and the occasional ritual. Lurking always welcome.</p>
+          <div class="platform-cta">Watch Live →</div>
+        </a>
+
+        <a href="https://twitter.com/mordraga0" class="platform-card twitter-card fade-up-2" target="_blank">
+          <div class="platform-name">Twitter</div>
+          <div class="platform-handle">@mordraga0</div>
+          <p class="platform-desc">Chaos posting, stream announcements, dev takes, and whatever is haunting my brain at 2am.</p>
+          <div class="platform-cta">Follow →</div>
+        </a>
+
+        <a href="https://youtube.com/@mordraga0" class="platform-card youtube-card fade-up-3" target="_blank">
+          <div class="platform-name">YouTube</div>
+          <div class="platform-handle">@mordraga0</div>
+          <p class="platform-desc">Stream VODs, highlight clips, and the occasional video essay when the mood strikes.</p>
+          <div class="platform-cta">Subscribe →</div>
+        </a>
+
+      </div>
+
+      <div class="grid-2" style="max-width:640px;margin:0 auto;">
+
+        <a href="https://fansly.com/Mordraga0" class="platform-card fansly-card fade-up-4" target="_blank">
+          <div class="platform-name">Fansly</div>
+          <div class="platform-handle">Mordraga0</div>
+          <p class="platform-desc">Exclusive content, tiers, and the spicy stuff. 18+ only. You know what you're here for.</p>
+          <div class="platform-cta">Visit →</div>
+        </a>
+
+        <a href="#discord" class="platform-card discord-card fade-up-5">
+          <div class="platform-name">Discord</div>
+          <div class="platform-handle">The Crypt Server</div>
+          <p class="platform-desc">Community hub, stream notifications, dev chat, and general gremlin behavior. The home base.</p>
+          <div class="platform-cta">Join Below ↓</div>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DISCORD FEATURE -->
+  <section class="discord-section" id="discord">
+    <div class="container">
+      <div class="sigil" style="margin-bottom:1.5rem;">✦</div>
+      <h2>The Crypt Server</h2>
+      <p>
+        Community Discord for stream viewers, dev collaborators, and fellow gremlins.
+        A place to be weird, talk craft, and watch me debug things live.
+      </p>
+
+      <div class="discord-perks">
+        <span class="badge">Stream Pings</span>
+        <span class="badge">Dev Chat</span>
+        <span class="badge">Witch Corner</span>
+        <span class="badge">Fan Art</span>
+        <span class="badge badge-accent">18+ Channels</span>
+        <span class="badge">Memes &amp; Chaos</span>
+      </div>
+      <a href="discord.gg/HCCFcYRJjY" class="btn btn-ghost">✦ Join The Crypt</a>
+    </div>
+  </section>
+
+  <!-- HOW TO REACH ME -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="bar-thin" style="margin-bottom:2.5rem;"></div>
+      <div class="sigil" style="margin-bottom:1.5rem;">⸸</div>
+      <h2>Reaching Out</h2>
+      <p>
+        For commissions and dev work, Twitter DMs or Discord are fastest.
+        For Fansly content requests, message me there directly.
+      </p>
+
+      <div class="contact-methods">
+        <div class="contact-method fade-up-1">
+          <div class="contact-method-label">Dev &amp; Commissions</div>
+          <div class="contact-method-for">Twitter DM or Discord</div>
+        </div>
+        <div class="contact-method fade-up-2">
+          <div class="contact-method-label">Content Requests</div>
+          <div class="contact-method-for">Fansly DM (subscribers)</div>
+        </div>
+        <div class="contact-method fade-up-3">
+          <div class="contact-method-label">General / Collabs</div>
+          <div class="contact-method-for">Twitter or Discord</div>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem;">
+        <a href="https://twitter.com/mordraga0" class="btn btn-gold" target="_blank">✦ Twitter DM</a>
+      </div>
+
+      <div class="bar-thin" style="margin-top:2.5rem;"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="bar" style="margin-bottom:1.5rem;"></div>
+    <div class="footer-sigil">⸸ ✦ ⸸</div>
+    <div class="footer-name">Mordraga</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/services/">Services</a>
+      <a href="/tools/">Tools</a>
+      <a href="/connect/">Connect</a>
+      <a href="https://twitch.tv/mordraga0" target="_blank">Twitch</a>
+      <a href="https://twitter.com/mordraga0" target="_blank">Twitter</a>
+    </div>
+    <div class="footer-copy">The Crypt · @Mordraga0 · she/they · ©2026</div>
+  </footer>
+
+</body>
+</html>

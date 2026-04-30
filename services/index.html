@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services — Mordraga</title>
+  <meta name="description" content="Web dev, custom tools, and the spicy stuff. Built for creators, priced for humans.">
+  <meta property="og:title" content="Mordraga — Services">
+  <meta property="og:description" content="Web dev, custom tools, and the spicy stuff. Built for creators, priced for humans.">
+  <meta property="og:url" content="https://mordraga.me/services/">
+  <meta name="theme-color" content="#8b1a1a">
+  <link rel="stylesheet" href="../crypt.css">
+  <style>
+    /* ── PAGE HERO ── */
+    .page-hero {
+      padding: 8rem 1.5rem 4rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(139,26,26,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .page-hero-sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.6em;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-hero h1 {
+      margin-bottom: 0.75rem;
+    }
+
+    .page-hero .subtitle {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .section-header p {
+      font-style: italic;
+      color: var(--text-dim);
+      max-width: 500px;
+      margin: 0.75rem auto 0;
+      font-size: 0.95rem;
+    }
+
+    /* ── SERVICE CARDS ── */
+    .service-card {
+      background: var(--deep);
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .service-card.gold-service { border-top: 2px solid var(--gold-dim); }
+    .service-card.accent-service { border-top: 2px solid var(--accent); }
+
+    .service-card h3 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+    }
+
+    .gold-service h3 { color: var(--gold); }
+    .accent-service h3 { color: var(--no-text); }
+
+    .service-card p {
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .service-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .service-list li {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      padding-left: 1.2rem;
+      position: relative;
+    }
+
+    .service-list li::before {
+      content: '⸸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.65rem;
+    }
+
+    .gold-service .service-list li::before { content: '✦'; color: var(--gold-dim); }
+
+    .service-price {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.15em;
+      color: var(--text-mute);
+      text-transform: uppercase;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── TECH SECTION ── */
+    .tech-section {
+      padding: 4rem 0;
+    }
+
+    /* ── SPICY SECTION ── */
+    .spicy-section {
+      padding: 5rem 0;
+      background: var(--deep);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .spicy-warning {
+      text-align: center;
+      padding: 1rem 1.5rem;
+      border: 1px solid var(--accent2);
+      background: rgba(139,26,26,0.05);
+      margin-bottom: 2.5rem;
+    }
+
+    .spicy-warning p {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* ── TIER CARDS ── */
+    .tier-card {
+      background: var(--black);
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .tier-card.tier-base { border-top: 2px solid var(--border2); }
+    .tier-card.tier-mid  { border-top: 2px solid var(--accent2); }
+    .tier-card.tier-top  { border-top: 2px solid var(--accent); }
+
+    .tier-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+    }
+
+    .tier-mid .tier-name { color: var(--no-text); }
+    .tier-top .tier-name { color: #e09f9f; }
+
+    .tier-price {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.55rem;
+      color: var(--text-mute);
+      letter-spacing: 0.1em;
+    }
+
+    .tier-perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      text-align: left;
+    }
+
+    .tier-perks li {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .tier-perks li::before {
+      content: '⸸';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.6rem;
+    }
+
+    /* ── PROCESS ── */
+    .process-section {
+      padding: 4rem 0;
+      text-align: center;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .process-step {
+      padding: 1.25rem 1rem;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .step-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.45rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+    }
+
+    .step-label {
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 680px) {
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Mordraga</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/services/" class="active">Services</a></li>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/connect/">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="bar" style="position:absolute;top:0;left:0;right:0;"></div>
+    <div class="page-hero-sigil fade-up-1">⸸ ✦ ⸸</div>
+    <h1 class="fade-up-2">Services</h1>
+    <p class="subtitle fade-up-3">Built for creators. Priced for humans. Sometimes cursed.</p>
+  </section>
+
+  <!-- TECH SERVICES -->
+  <section class="tech-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="sigil" style="margin-bottom:1rem;">✦</div>
+        <h2>The Dev Work</h2>
+        <p>Websites, bots, tools, and storefronts. If you create, I can probably build something that helps.</p>
+      </div>
+
+      <div class="grid-3" style="margin-bottom:1.5rem;">
+
+        <div class="service-card gold-service fade-up-1">
+          <h3>Static Site</h3>
+          <p>Portfolio, link hub, landing page. Custom design, mobile responsive, no templates.</p>
+          <ul class="service-list">
+            <li>Custom design</li>
+            <li>Mobile responsive</li>
+            <li>Social &amp; Fansly integration</li>
+          </ul>
+          <div class="path-tags">
+            <span class="badge badge-gold">HTML/CSS</span>
+            <span class="badge badge-gold">JS</span>
+          </div>
+          <div class="service-price">$150 – $200</div>
+        </div>
+
+        <div class="service-card gold-service fade-up-2">
+          <h3>Full Stack</h3>
+          <p>Full application with backend, auth, database — bots, dashboards, APIs, whatever you need to survive.</p>
+          <ul class="service-list">
+            <li>Frontend + backend</li>
+            <li>Auth &amp; database</li>
+            <li>Twitch / Discord integrations</li>
+          </ul>
+          <div class="path-tags">
+            <span class="badge badge-gold">React</span>
+            <span class="badge badge-gold">FastAPI</span>
+            <span class="badge badge-gold">Python</span>
+          </div>
+          <div class="service-price">$350 – $500</div>
+        </div>
+
+        <div class="service-card gold-service fade-up-3">
+          <h3>Commission Shop</h3>
+          <p>Full storefront for artists, writers, and VTubers. Order forms, queue boards, payment integration guidance.</p>
+          <ul class="service-list">
+            <li>Order forms &amp; queue display</li>
+            <li>Ko-fi / Stripe guidance</li>
+            <li>Status boards</li>
+          </ul>
+          <div class="path-tags">
+            <span class="badge badge-gold">React</span>
+            <span class="badge badge-gold">Next.js</span>
+          </div>
+          <div class="service-price">$600 – $900</div>
+        </div>
+
+      </div>
+
+      <div class="grid-2" style="max-width:640px;margin:0 auto 1.5rem;">
+
+        <div class="service-card gold-service fade-up-4">
+          <h3>Custom Rust / Python</h3>
+          <p>Bots, automation, CLI tools, scrapers, performance utilities. Negotiated based on scope.</p>
+          <ul class="service-list">
+            <li>Twitch / Discord bots</li>
+            <li>Automation &amp; scheduled tasks</li>
+            <li>CLI tools &amp; utilities</li>
+          </ul>
+          <div class="path-tags">
+            <span class="badge badge-gold">Rust</span>
+            <span class="badge badge-gold">Python</span>
+          </div>
+          <div class="service-price">From $100 · negotiated</div>
+        </div>
+
+        <div class="service-card gold-service fade-up-5" style="display:flex;flex-direction:column;gap:0.75rem;">
+          <h3>Hourly Services</h3>
+          <p>Targeted work billed by the hour. Good for audits, reviews, or one-off fixes.</p>
+          <div style="display:flex;flex-direction:column;gap:0.5rem;flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding-bottom:0.4rem;">
+              <span style="font-size:0.85rem;font-style:italic;color:var(--text-dim);">Security review</span>
+              <span style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;color:var(--gold);">$50/hr</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:0.85rem;font-style:italic;color:var(--text-dim);">UX testing</span>
+              <span style="font-family:'Cinzel Decorative',serif;font-size:0.6rem;color:var(--gold);">$25/hr</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="process-section" style="padding-top:3rem;padding-bottom:0;">
+        <h3>How it works</h3>
+        <div class="process-steps">
+          <div class="process-step fade-up-1">
+            <div class="step-num">01</div>
+            <div class="step-label">DM me on Twitter or Discord with your idea</div>
+          </div>
+          <div class="process-step fade-up-2">
+            <div class="step-num">02</div>
+            <div class="step-label">We scope it out, agree on price &amp; timeline</div>
+          </div>
+          <div class="process-step fade-up-3">
+            <div class="step-num">03</div>
+            <div class="step-label">$50 deposit holds your slot, work begins</div>
+          </div>
+          <div class="process-step fade-up-4">
+            <div class="step-num">04</div>
+            <div class="step-label">Review, revisions, final payment, delivery</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:2.5rem;">
+        <a href="/connect/" class="btn btn-gold">✦ Reach Out</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPICY SECTION -->
+  <section class="spicy-section" id="spicy">
+    <div class="container">
+      <div class="section-header">
+        <div class="sigil" style="margin-bottom:1rem;">⸸</div>
+        <h2>The Spicy Stuff</h2>
+        <p>You know why you're here. Adults only. No minors, no exceptions.</p>
+      </div>
+
+      <div class="spicy-warning">
+        <p>18+ only. All content is legal. Consent is non-negotiable. I reserve the right to refuse any request.</p>
+      </div>
+
+      <!-- FANSLY TIERS -->
+      <div class="bar-thin" style="margin-bottom:2rem;"></div>
+      <h3 style="text-align:center;margin-bottom:1.5rem;">Fansly Tiers</h3>
+
+      <div class="grid-2" style="margin-bottom:2.5rem;max-width:640px;margin-left:auto;margin-right:auto;">
+
+        <div class="tier-card tier-mid fade-up-1">
+          <div class="tier-name">Devoted</div>
+          <div class="tier-price">$5 / month · Fansly</div>
+          <p style="font-size:0.8rem;font-style:italic;color:var(--text-mute);text-align:center;">Welcome to the spicy part of the crypt — Astarte is pleased to see you.</p>
+          <ul class="tier-perks">
+            <li>Full explicit photo &amp; video feed</li>
+            <li>PPV access unlocked</li>
+            <li>Priority DM response</li>
+          </ul>
+          <a href="https://fansly.com/Mordraga0" class="btn btn-accent" target="_blank" style="margin-top:0.5rem;font-size:0.5rem;">Subscribe — $10/mo</a>
+        </div>
+
+        <div class="tier-card tier-top fade-up-2">
+          <div class="tier-name">Vessel</div>
+          <div class="tier-price">$10 / month · Fansly</div>
+          <p style="font-size:0.8rem;font-style:italic;color:var(--text-mute);text-align:center;">Closest proximity. The altar knows your name.</p>
+          <ul class="tier-perks">
+            <li>Everything in Devoted</li>
+            <li>Custom content requests open</li>
+            <li>DMs open — I decide the vibe</li>
+            <li>Monthly personalized content</li>
+          </ul>
+          <a href="https://fansly.com/Mordraga0" class="btn btn-accent" target="_blank" style="margin-top:0.5rem;font-size:0.5rem;">Subscribe — $25/mo</a>
+        </div>
+
+      </div>
+
+      <!-- PAY PER VIEW -->
+      <div class="bar-thin" style="margin-bottom:2rem;"></div>
+      <h3 style="text-align:center;margin-bottom:1.5rem;">✦ Pay Per View</h3>
+
+      <div class="grid-2" style="max-width:640px;margin:0 auto 2.5rem;">
+
+        <div class="service-card accent-service fade-up-1" style="flex-direction:row;align-items:center;justify-content:space-between;gap:1rem;">
+          <div>
+            <h3 style="font-size:0.6rem;letter-spacing:0.15em;">Short Clip</h3>
+            <p style="font-size:0.75rem;color:var(--text-mute);font-style:italic;margin-top:0.25rem;">1–3 min</p>
+          </div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.85rem;color:var(--no-text);white-space:nowrap;">$5–15</div>
+        </div>
+
+        <div class="service-card accent-service fade-up-2" style="flex-direction:row;align-items:center;justify-content:space-between;gap:1rem;">
+          <div>
+            <h3 style="font-size:0.6rem;letter-spacing:0.15em;">Medium Clip</h3>
+            <p style="font-size:0.75rem;color:var(--text-mute);font-style:italic;margin-top:0.25rem;">5–10 min</p>
+          </div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.85rem;color:var(--no-text);white-space:nowrap;">$15–25</div>
+        </div>
+
+        <div class="service-card accent-service fade-up-3" style="flex-direction:row;align-items:center;justify-content:space-between;gap:1rem;">
+          <div>
+            <h3 style="font-size:0.6rem;letter-spacing:0.15em;">Photo Set</h3>
+            <p style="font-size:0.75rem;color:var(--text-mute);font-style:italic;margin-top:0.25rem;">per set</p>
+          </div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.85rem;color:var(--no-text);white-space:nowrap;">$10–20</div>
+        </div>
+
+        <div class="service-card accent-service fade-up-4" style="flex-direction:row;align-items:center;justify-content:space-between;gap:1rem;">
+          <div>
+            <h3 style="font-size:0.6rem;letter-spacing:0.15em;">Custom</h3>
+            <p style="font-size:0.75rem;color:var(--text-mute);font-style:italic;margin-top:0.25rem;">negotiated</p>
+          </div>
+          <div style="font-family:'Cinzel Decorative',serif;font-size:0.85rem;color:var(--no-text);white-space:nowrap;">$30+</div>
+        </div>
+
+      </div>
+
+      <!-- DM POLICY -->
+      <div class="bar-thin" style="margin-bottom:1.5rem;"></div>
+      <div style="text-align:center;max-width:560px;margin:0 auto 2.5rem;">
+        <h3 style="margin-bottom:0.75rem;">⸸ DM Policy</h3>
+        <p style="font-style:italic;color:var(--text-dim);font-size:0.9rem;line-height:1.7;">Saryn decides the vibe. Don't push it.</p>
+      </div>
+
+      <div style="text-align:center;margin-top:1rem;">
+        <a href="https://fansly.com/Mordraga0" class="btn btn-accent" target="_blank">⸸ Go to Fansly</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOM SERVICES -->
+  <section class="section" style="padding:5rem 0;">
+    <div class="container" style="max-width:680px;text-align:center;">
+      <div class="sigil" style="margin-bottom:1.5rem;">🖤</div>
+      <h2 style="margin-bottom:1.5rem;">Dom Services</h2>
+      <div class="bar-thin" style="margin-bottom:2rem;"></div>
+      <blockquote style="font-size:1rem;font-style:italic;color:var(--text-dim);line-height:1.9;text-align:left;border-left:2px solid var(--border2);padding-left:1.5rem;margin-bottom:2rem;">
+        I'm naturally flirty and a switch, so if I end up dominant in your dynamic, it happened for a reason. My style reads the room. Soft when you need held, rough when you need broken. I'm a rigger by nature, control through rope, through presence, through knowing exactly what I'm doing and why.
+      </blockquote>
+      <p style="font-style:italic;color:var(--text-dim);line-height:1.8;margin-bottom:2rem;">
+        I don't charge for this. If it meant something, my Ko-fi is there. If you want to talk, my DMs are open. We talk first. Always.
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <!-- Replace # with your actual Ko-fi URL -->
+        <a href="#" class="btn btn-ghost" target="_blank">Ko-fi →</a>
+        <a href="https://twitter.com/mordraga0" class="btn btn-ghost" target="_blank">DM on Twitter</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="bar" style="margin-bottom:1.5rem;"></div>
+    <div class="footer-sigil">⸸ ✦ ⸸</div>
+    <div class="footer-name">Mordraga</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/services/">Services</a>
+      <a href="/tools/">Tools</a>
+      <a href="/connect/">Connect</a>
+      <a href="https://twitch.tv/mordraga0" target="_blank">Twitch</a>
+      <a href="https://twitter.com/mordraga0" target="_blank">Twitter</a>
+    </div>
+    <div class="footer-copy">The Crypt · @Mordraga0 · she/they · ©2026</div>
+  </footer>
+
+</body>
+</html>
