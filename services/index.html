@@ -479,6 +479,20 @@
 
       </div>
 
+      <!-- BOUNDARIES CARD -->
+      <div class="bar-thin" style="margin-bottom:2rem;"></div>
+      <h3 style="text-align:center;margin-bottom:1.5rem;">⸸ Boundaries &amp; Consent Card</h3>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;margin-bottom:2.5rem;">
+        <iframe
+          id="boundaries-frame"
+          src="../cards/boundaries.html"
+          scrolling="no"
+          style="width:400px;height:500px;border:none;pointer-events:none;display:block;"
+          title="Mordraga Boundaries &amp; Consent Card"
+        ></iframe>
+        <button id="download-card-btn" class="btn btn-accent" style="font-size:0.5rem;">⬇ Save as PNG</button>
+      </div>
+
       <!-- DM POLICY -->
       <div class="bar-thin" style="margin-bottom:1.5rem;"></div>
       <div style="text-align:center;max-width:560px;margin:0 auto 2.5rem;">
@@ -527,5 +541,25 @@
     <div class="footer-copy">The Crypt · @Mordraga0 · she/they · ©2026</div>
   </footer>
 
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    (function () {
+      var frame = document.getElementById('boundaries-frame');
+      frame.addEventListener('load', function () {
+        var card = frame.contentDocument.querySelector('.card');
+        if (card) frame.style.height = (card.scrollHeight + 16) + 'px';
+      });
+      document.getElementById('download-card-btn').addEventListener('click', function () {
+        var card = frame.contentDocument.querySelector('.card');
+        if (!card) return;
+        html2canvas(card, { scale: 2, useCORS: true }).then(function (canvas) {
+          var a = document.createElement('a');
+          a.download = 'mordraga-boundaries.png';
+          a.href = canvas.toDataURL('image/png');
+          a.click();
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
