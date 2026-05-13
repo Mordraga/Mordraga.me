@@ -259,6 +259,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-start;
   gap: 2rem;
   margin-bottom: 1.5rem;
 }
@@ -267,7 +268,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
+  padding: 1.5rem;
+  max-height: 220px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: max-height 0.45s ease, border-color 0.2s ease;
+}
+
+.reference-card-slot::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: linear-gradient(to bottom, transparent, var(--deep));
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.reference-card-slot:hover::after,
+.reference-card-slot.expanded::after {
+  opacity: 0;
 }
 
 .reference-card-label {

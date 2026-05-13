@@ -381,6 +381,41 @@
         });
       });
     })();
+
+    document.querySelectorAll('.reference-card-slot').forEach(function (card) {
+      var fullHeight = 0;
+
+      function measure() {
+        card.style.transition = 'none';
+        card.style.maxHeight = 'none';
+        fullHeight = card.scrollHeight;
+        card.style.maxHeight = '';
+        card.offsetHeight; // force reflow before re-enabling transition
+        card.style.transition = '';
+      }
+
+      var iframe = card.querySelector('iframe');
+      if (iframe) {
+        iframe.addEventListener('load', function () {
+          setTimeout(measure, 0); // let autoSize run first
+        });
+      }
+
+      function expand() { if (fullHeight) card.style.maxHeight = fullHeight + 'px'; }
+      function collapse() { card.style.maxHeight = ''; }
+
+      card.addEventListener('mouseenter', expand);
+      card.addEventListener('mouseleave', function () {
+        if (!card.classList.contains('expanded')) collapse();
+      });
+
+      card.addEventListener('click', function (e) {
+        if (!e.target.closest('.btn')) {
+          card.classList.toggle('expanded');
+          card.classList.contains('expanded') ? expand() : collapse();
+        }
+      });
+    });
   </script>
 </body>
 </html>
