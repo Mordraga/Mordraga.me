@@ -1,0 +1,370 @@
+/* ── PAGE HERO (override max-width) ── */
+.page-hero .subtitle { max-width: 520px; }
+
+/* ── SECTION HEADER ── */
+.section-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.section-header h2   { margin-bottom: 0.5rem; }
+.section-header .sigil { margin-bottom: 1rem; }
+
+.section-header p {
+  font-style: italic;
+  color: var(--text-dim);
+  max-width: 500px;
+  margin: 0.75rem auto 0;
+  font-size: 0.95rem;
+}
+
+/* ── SERVICE CARDS ── */
+.service-card {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.service-card.gold-service   { border-top: 2px solid var(--gold-dim); }
+.service-card.accent-service { border-top: 2px solid var(--accent); }
+
+.service-card h3 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
+
+.gold-service h3   { color: var(--gold); }
+.accent-service h3 { color: var(--no-text); }
+
+.service-card p {
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--text-dim);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.service-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.service-list li {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.service-list li::before {
+  content: '⸸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.65rem;
+}
+
+.gold-service .service-list li::before { content: '✦'; color: var(--gold-dim); }
+
+.service-price {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+/* ── TECH SECTION ── */
+.tech-section { padding: 4rem 0; }
+.tech-section .grid-3 { margin-bottom: 1.5rem; }
+
+.tech-hourly-grid { max-width: 640px; margin: 0 auto 1.5rem; }
+
+.hourly-card { gap: 0.75rem; }
+
+.hourly-rates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.rate-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rate-row--divided {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+}
+
+.rate-label { font-size: 0.85rem; font-style: italic; color: var(--text-dim); }
+
+.rate-price {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.6rem;
+  color: var(--gold);
+}
+
+.tech-section .process-section { padding-top: 3rem; padding-bottom: 0; }
+.section-cta { text-align: center; margin-top: 2.5rem; }
+
+/* ── SPICY SECTION ── */
+.spicy-section {
+  padding: 5rem 0;
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.spicy-warning {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--accent2);
+  background: rgba(139,26,26,0.05);
+  margin-bottom: 2.5rem;
+}
+
+.spicy-warning p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.spicy-section .bar-thin { margin-bottom: 2rem; }
+.spicy-section .dm-divider { margin-bottom: 1.5rem; }
+
+.spicy-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* ── TIER CARDS ── */
+.tier-grid { max-width: 640px; margin: 0 auto 2.5rem; }
+
+.tier-card {
+  background: var(--black);
+  border: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.tier-card.tier-base { border-top: 2px solid var(--border2); }
+.tier-card.tier-mid  { border-top: 2px solid var(--accent2); }
+.tier-card.tier-top  { border-top: 2px solid var(--accent); }
+
+.tier-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: var(--text-dim);
+}
+
+.tier-mid .tier-name { color: var(--no-text); }
+.tier-top .tier-name { color: #e09f9f; }
+
+.tier-price {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.55rem;
+  color: var(--text-mute);
+  letter-spacing: 0.1em;
+}
+
+.tier-perks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  text-align: left;
+}
+
+.tier-perks li {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  padding-left: 1.1rem;
+  position: relative;
+}
+
+.tier-perks li::before {
+  content: '⸸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.6rem;
+}
+
+.tier-card .btn { margin-top: 0.5rem; font-size: 0.5rem; }
+
+/* ── PPV GRID ── */
+.ppv-grid {
+  max-width: min(640px, 95vw);
+  margin: 0 auto 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  align-items: start;
+}
+
+.ppv-category {
+  grid-column: 1 / -1;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.5rem;
+  color: var(--text-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding-top: 0.5rem;
+}
+
+.ppv-grid > .ppv-category:first-child { padding-top: 0; }
+
+.ppv-item { text-align: center; }
+.ppv-item h3 { font-size: 0.6rem; letter-spacing: 0.15em; }
+.ppv-item p  { font-size: 0.75rem; color: var(--text-mute); font-style: italic; margin-top: 0.25rem; }
+
+.ppv-price {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.85rem;
+  color: var(--no-text);
+  margin-top: 0.5rem;
+}
+
+.ppv-item-full {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ppv-item-full h3 { font-size: 0.6rem; letter-spacing: 0.15em; }
+.ppv-item-full p  { font-size: 0.75rem; color: var(--text-mute); font-style: italic; margin-top: 0.25rem; }
+.ppv-item-full .ppv-price { white-space: nowrap; margin-top: 0; }
+
+/* ── REFERENCE CARDS ── */
+.reference-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.reference-card-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.reference-card-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.5rem;
+  color: var(--text-mute);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.reference-card-frame {
+  width: 400px;
+  height: 500px;
+  border: none;
+  pointer-events: none;
+  display: block;
+}
+
+.reference-card-slot .btn { font-size: 0.5rem; }
+
+.download-both-wrapper { text-align: center; margin-bottom: 2.5rem; }
+.download-both-wrapper .btn { font-size: 0.5rem; }
+
+/* ── DM POLICY ── */
+.dm-policy {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 2.5rem;
+}
+
+.dm-policy h3 { margin-bottom: 0.75rem; }
+.spicy-cta    { text-align: center; margin-top: 1rem; }
+
+/* ── DOM SERVICES ── */
+.dom-services-section { padding: 5rem 0; }
+
+.dom-services-container {
+  max-width: 680px;
+  text-align: center;
+}
+
+.dom-services-section .sigil    { margin-bottom: 1.5rem; }
+.dom-services-section h2        { margin-bottom: 1.5rem; }
+.dom-services-section .bar-thin { margin-bottom: 2rem; }
+
+.dom-quote {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-dim);
+  line-height: 1.9;
+  text-align: left;
+  border-left: 2px solid var(--border2);
+  padding-left: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.dom-services-section p {
+  font-style: italic;
+  color: var(--text-dim);
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+/* ── PROCESS ── */
+.process-section {
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.process-step {
+  padding: 1.25rem 1rem;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.step-num {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.45rem;
+  color: var(--gold-dim);
+  letter-spacing: 0.2em;
+}
+
+.step-label {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+@media (max-width: 680px) {
+  .process-steps { grid-template-columns: repeat(2, 1fr); }
+}

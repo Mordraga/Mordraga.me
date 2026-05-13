@@ -290,6 +290,52 @@ a:hover { color: var(--gold-pale); }
 .badge-gold { border-color: var(--gold-dim); color: var(--gold); }
 .badge-accent { border-color: var(--accent2); color: var(--no-text); }
 
+/* ── PATH TAGS (home + services) ── */
+.path-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+/* ── PAGE HERO (connect + services) ── */
+.page-hero {
+  padding: 8rem 1.5rem 4rem;
+  text-align: center;
+  position: relative;
+}
+
+.page-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(139,26,26,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.page-hero-sigil {
+  font-size: 1rem;
+  color: var(--accent);
+  letter-spacing: 0.6em;
+  margin-bottom: 1.5rem;
+}
+
+.page-hero h1 { margin-bottom: 0.75rem; }
+
+.page-hero .subtitle {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-dim);
+  margin: 0 auto;
+}
+
+/* ── UTILITIES ── */
+.bar-absolute { position: absolute; top: 0; left: 0; right: 0; }
+
+.btn-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+.site-footer .bar { margin-bottom: 1.5rem; }
+
 /* ── ANIMATIONS ── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(20px); }
