@@ -1,0 +1,20 @@
+export const loveType = [
+  "Asexual","Bisexual","Gay","Lesbian","Pansexual","Heterosexual","Queer",
+  "Demisexual","Polysexual","Omnisexual","Androsexual","Gynosexual",
+  "Skoliosexual","Graysexual","Sapiosexual","Reciprosexual","Fraysexual",
+  "Aceflux","Lithosexual","Abrosexual","Questioning",
+  // Joke Preferences
+  "Voidsexual",
+  "Chaossexual",
+  "Homiosexual",
+  "Coffee-curious",
+  "Bardsexual",
+  "Lootsexual",
+  "Villainsexual",
+  "Vamposexual",
+  "NPCsexual",
+  "Rollsexual",
+  "Gay™",
+  "Mischievously queer",
+  "Goblincoded",
+];

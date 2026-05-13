@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s https://raw.githubusercontent.com/Mordraga/Super-Edgy-Character-Maker/main/scripts/Utilities/utilities.js)",
+      "Bash(curl -s https://raw.githubusercontent.com/Mordraga/Super-Edgy-Character-Maker/main/scripts/Data/mainData.js)",
+      "Bash(curl -s https://raw.githubusercontent.com/Mordraga/Super-Edgy-Character-Maker/main/scripts/Data/animalData.js)"
+    ]
+  }
+}

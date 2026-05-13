@@ -7,8 +7,46 @@
   font-size: 0.95rem;
 }
 
+/* ── CATEGORY HEADERS ── */
+.tools-category-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3rem 0 1.25rem;
+}
+
+.tools-category-header:first-of-type { margin-top: 0; }
+
+.tools-category-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  white-space: nowrap;
+}
+
+.tools-category-rule { flex: 1; }
+
 /* ── TOOLS GRID ── */
 .tools-grid { margin-bottom: 0; }
+
+/* ── FEATURED (Languages) ── */
+.tools-featured { display: block; }
+
+.tool-card--featured {
+  max-width: 560px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 2rem;
+}
+
+.tool-card--featured .tool-name,
+.tool-card--featured .tool-status,
+.tool-card--featured .tool-status-row { flex-basis: 100%; }
+
+.tool-card--featured .tool-desc { flex-basis: 100%; }
 
 /* ── TOOL CARD ── */
 .tool-card {
@@ -24,6 +62,12 @@
 }
 
 /* ── STATUS BADGE ── */
+.tool-status-row {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
 .tool-status {
   font-family: 'Cinzel Decorative', serif;
   font-size: 0.4rem;
@@ -34,9 +78,11 @@
   align-self: flex-start;
 }
 
-.status-live  { color: var(--yes-text);  border-color: var(--yes-text);  }
-.status-wip   { color: var(--maybe-text); border-color: var(--maybe-text); }
-.status-early { color: var(--text-mute); border-color: var(--text-mute); }
+.status-live    { color: var(--yes-text);   border-color: var(--yes-text);   }
+.status-active  { color: var(--yes-text);   border-color: var(--yes-text);   }
+.status-wip     { color: var(--maybe-text); border-color: var(--maybe-text); }
+.status-private { color: var(--text-mute);  border-color: var(--text-mute);  }
+.status-early   { color: var(--text-mute);  border-color: var(--text-mute);  }
 
 /* ── TOOL NAME ── */
 .tool-name {

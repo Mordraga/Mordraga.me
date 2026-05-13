@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Maker — Mordraga</title>
+  <meta name="description" content="Generate an extremely edgy character. One hundred percent a joke.">
+  <meta name="theme-color" content="#8b1a1a">
+  <link rel="stylesheet" href="../crypt.css">
+  <link rel="stylesheet" href="./styles/style.css">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e3d8aa38-b68a-4a19-8b81-6df9f7e8701f"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Mordraga</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Tools</a></li>
+        <li><a href="/connect/">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="cm-main">
+    <h1>Create your character</h1>
+    <p class="cm-subtitle">extremely edgy. one hundred percent a joke.</p>
+
+    <div class="card" id="characterContainer">
+      <h3>Character Information:</h3>
+      <div class="card">
+        <p id="nameDisplay">Name:</p>
+        <p id="genderDisplay">Gender:</p>
+        <p id="raceDisplay">Race:</p>
+        <p id="classDisplay">Class:</p>
+        <p id="weaponDisplay">Weapon:</p>
+        <p id="backgroundDisplay">Background:</p>
+        <p id="traitDisplay">Trait:</p>
+      </div>
+
+      <button id="toggleButton" class="button">Show More</button>
+
+      <div id="additionalInfo" class="collapsed">
+        <div class="card">
+          <div id="sexualityDisplay">Preference: ???</div>
+          <p id="flawDisplay">Flaw: ???</p>
+          <p id="godDisplay">God:</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cm-actions">
+      <button id="generateBtn">Generate Character</button>
+      <button id="saveCharacterBtn">Save Character</button>
+    </div>
+
+    <div class="card">
+      <div class="button-group">
+        <button id="viewSavedBtn">View Saved Characters</button>
+      </div>
+      <div id="savedCharactersPanel" style="display:none;">
+        <ul id="savedCharacterList"></ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="bar"></div>
+    <div class="footer-sigil">⸸ ✦ ⸸</div>
+    <div class="footer-name">Mordraga</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/services/">Services</a>
+      <a href="/tools/">Tools</a>
+      <a href="/connect/">Connect</a>
+    </div>
+    <div class="footer-copy">The Crypt · @Mordraga0 · she/they · ©2026</div>
+  </footer>
+
+  <script type="module" src="scripts/ui.js"></script>
+</body>
+</html>

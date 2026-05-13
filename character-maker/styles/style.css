@@ -1,0 +1,135 @@
+/* ── CHARACTER MAKER ── */
+.cm-main {
+  padding: 8rem 1.5rem 4rem;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.cm-main h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: #c9a84c;
+  text-align: center;
+}
+
+.cm-subtitle {
+  text-align: center;
+  font-style: italic;
+  color: #7a6d7a;
+  font-size: 0.9rem;
+  margin-top: -0.75rem;
+}
+
+.cm-main .card {
+  background: #141014;
+  border: 1px solid #2a1f2a;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cm-main .card h3 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: #7a6d7a;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.cm-main .card p,
+.cm-main .card div {
+  font-size: 0.95rem;
+  color: #d4c9d4;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.cm-main .card p:hover,
+.cm-main .card div:hover { color: #c9a84c; }
+
+#additionalInfo {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.35s ease;
+}
+
+#additionalInfo.expanded { max-height: 300px; }
+
+.button,
+.cm-main button {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  padding: 0.65rem 1.5rem;
+  border: 1px solid #3a2a3a;
+  background: none;
+  color: #7a6d7a;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+
+.button:hover,
+.cm-main button:hover {
+  border-color: #c9a84c;
+  color: #c9a84c;
+  background: #0f0d0f;
+}
+
+#generateBtn {
+  border-color: #8a6e2e;
+  color: #c9a84c;
+}
+
+#generateBtn:hover {
+  background: #1a1408;
+  border-color: #c9a84c;
+  color: #e8d49a;
+}
+
+.cm-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cm-actions button { align-self: auto; }
+
+.savedCharacterCard {
+  background: #0f0d0f;
+  border: 1px solid #2a1f2a;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.savedCharacterCard:hover { border-color: #3a2a3a; }
+
+.cardHeader {
+  font-size: 0.9rem;
+  color: #d4c9d4;
+  margin-bottom: 0.5rem;
+}
+
+.cardDetails p { font-size: 0.85rem; color: #7a6d7a; }
+
+.savedCharacterCard button {
+  margin-top: 0.75rem;
+  font-size: 0.45rem;
+  border-color: #6a1212;
+  color: #c97f7f;
+}
+
+.savedCharacterCard button:hover {
+  background: #150808;
+  border-color: #8b1a1a;
+  color: #e09f9f;
+}
+
+#savedCharacterList { list-style: none; padding: 0; margin-top: 0.75rem; }
