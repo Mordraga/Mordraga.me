@@ -1,372 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Mordraga — Tech Services</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --black: #080808;
-      --deep: #0f0d0f;
-      --surface: #141014;
-      --border: #2a1f2a;
-      --accent: #8b1a1a;
-      --gold: #c9a84c;
-      --gold-dim: #8a6e2e;
-      --text: #d4c9d4;
-      --text-dim: #7a6d7a;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Mordraga — Tech Services</title>
+    <link rel="stylesheet" href="./card-base.css">
+    <style>
+        /* SERVICES GRID */
+        .services {
+            padding: 0.6rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+        .info-service {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            margin: 0.15rem 0;
+        }
 
-    html, body {
-      height: 100%;
-      background: var(--black);
-    }
+        .services h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.55rem;
+            color: var(--gold);
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      color: var(--text);
-      padding: 0.5rem;
-    }
+        .services h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
 
-    .card {
-      width: 100%;
-      max-width: 400px;
-      background: var(--deep);
-      border: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.35rem;
+        }
 
-    .card::before, .card::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
-      z-index: 2;
-    }
-    .card::before { top: 0; }
-    .card::after { bottom: 0; }
+        .svc {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 2px solid var(--gold-dim);
+            padding: 0.4rem 0.5rem;
+        }
 
-    header {
-      text-align: center;
-      padding: 0.8rem 1rem 0.6rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--surface);
-    }
+        .svc-name {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.03em;
+        }
 
-    .sigil {
-      font-size: 1rem;
-      color: var(--accent);
-      letter-spacing: 0.4em;
-      margin-bottom: 0.2rem;
-    }
+        .svc-price {
+            font-size: 0.9rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin: 0.1rem 0;
+        }
 
-    h1 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 1.2rem;
-      color: var(--gold);
-      letter-spacing: 0.08em;
-    }
+        .svc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+            margin-top: 0.25rem;
+        }
 
-    .subtitle {
-      font-size: 0.65rem;
-      color: var(--text-dim);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      font-style: italic;
-      margin-top: 0.1rem;
-    }
+        .tag {
+            font-size: 0.58rem;
+            padding: 0.1rem 0.35rem;
+            border: 1px solid var(--gold-dim);
+            color: var(--gold);
+            font-style: italic;
+            letter-spacing: 0.04em;
+        }
 
-    .url {
-      font-size: 0.7rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      margin-top: 0.3rem;
-      font-style: italic;
-    }
+        /* HOURLY */
+        .hourly {
+            padding: 0.55rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
 
-    /* SERVICES GRID */
-    .services {
-      padding: 0.6rem 0.8rem;
-      border-bottom: 1px solid var(--border);
-    }
+        .hourly h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.55rem;
+            color: var(--gold);
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
 
-    .services h2 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 0.55rem;
-      color: var(--gold);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
+        .hourly h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
 
-    .services h2::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+        .rate-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 0.2rem 0;
+            font-size: 0.72rem;
+        }
 
-    .service-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.35rem;
-    }
+        .rate-row+.rate-row {
+            border-top: 1px solid var(--border);
+        }
 
-    .svc {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-left: 2px solid var(--gold-dim);
-      padding: 0.4rem 0.5rem;
-    }
+        .rate-label {
+            color: var(--text);
+            font-style: italic;
+        }
 
-    .svc-name {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--text);
-      letter-spacing: 0.03em;
-    }
+        .rate-price {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
 
-    .svc-price {
-      font-size: 0.9rem;
-      color: var(--gold);
-      font-weight: 600;
-      margin: 0.1rem 0;
-    }
+        /* PROCESS */
+        .process {
+            padding: 0.55rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
 
-    .svc-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.2rem;
-      margin-top: 0.25rem;
-    }
+        .process h2 {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.55rem;
+            color: var(--text-dim);
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
 
-    .tag {
-      font-size: 0.58rem;
-      padding: 0.1rem 0.35rem;
-      border: 1px solid var(--gold-dim);
-      color: var(--gold);
-      font-style: italic;
-      letter-spacing: 0.04em;
-    }
+        .process h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
 
-    /* HOURLY */
-    .hourly {
-      padding: 0.55rem 0.8rem;
-      border-bottom: 1px solid var(--border);
-    }
+        .step {
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+            padding: 0.18rem 0;
+            font-size: 0.7rem;
+        }
 
-    .hourly h2 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 0.55rem;
-      color: var(--gold);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
+        .step-num {
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 0.55rem;
+            color: var(--gold-dim);
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
 
-    .hourly h2::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+        .step-label {
+            color: var(--text);
+            font-style: italic;
+            line-height: 1.3;
+        }
 
-    .rate-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 0.2rem 0;
-      font-size: 0.72rem;
-    }
+        /* CONTACT */
+        .contact {
+            padding: 0.45rem 0.8rem;
+            border-bottom: 1px solid var(--border);
+            background: #0a080a;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            font-style: italic;
+        }
 
-    .rate-row + .rate-row {
-      border-top: 1px solid var(--border);
-    }
-
-    .rate-label { color: var(--text); font-style: italic; }
-    .rate-price { color: var(--gold); font-weight: 600; font-size: 0.85rem; }
-
-    /* PROCESS */
-    .process {
-      padding: 0.55rem 0.8rem;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .process h2 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 0.55rem;
-      color: var(--text-dim);
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .process h2::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .step {
-      display: flex;
-      align-items: baseline;
-      gap: 0.5rem;
-      padding: 0.18rem 0;
-      font-size: 0.7rem;
-    }
-
-    .step-num {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 0.55rem;
-      color: var(--gold-dim);
-      letter-spacing: 0.05em;
-      flex-shrink: 0;
-    }
-
-    .step-label {
-      color: var(--text);
-      font-style: italic;
-      line-height: 1.3;
-    }
-
-    /* CONTACT */
-    .contact {
-      padding: 0.45rem 0.8rem;
-      border-bottom: 1px solid var(--border);
-      background: #0a080a;
-      text-align: center;
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      font-style: italic;
-    }
-
-    .contact strong {
-      color: var(--gold);
-      font-style: normal;
-    }
-
-    footer {
-      text-align: center;
-      padding: 0.4rem;
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      background: var(--surface);
-    }
-  </style>
+        .contact strong {
+            color: var(--gold);
+            font-style: normal;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="card">
+    <div class="card">
 
-    <header>
-      <div class="sigil">✦ ⸸ ✦</div>
-      <h1>Mordraga</h1>
-      <div class="subtitle">Tech Services</div>
-      <div class="url">mordraga.me/services/</div>
-    </header>
+        <header>
+            <div class="sigil">✦ ⸸ ✦</div>
+            <h1>Mordraga</h1>
+            <div class="subtitle">Tech Services</div>
+            <div class="url">mordraga.me/services/</div>
+        </header>
 
-    <div class="services">
-      <h2>✦ The Dev Work</h2>
-      <div class="service-grid">
+        <div class="services">
+            <h2>✦ Dev Work &amp; Commission Work</h2>
 
-        <div class="svc">
-          <div class="svc-name">Static Site</div>
-          <div class="svc-price">$150–$200</div>
-          <div class="svc-tags">
-            <span class="tag">HTML/CSS</span>
-            <span class="tag">JS</span>
-          </div>
+            <span class="subtitle">Web Development</span>
+
+            <div class="service-grid " style="margin-top: 0.4rem;">
+                <div class="svc">
+                    <div class="svc-name">Static Site</div>
+                    <p class="info-service">Custom HTML/CSS/JS solution for your needs</p>
+                    <div class="svc-price">$150–$200</div>
+                    <div class="svc-tags">
+                        <span class="tag">HTML/CSS</span>
+                        <span class="tag">JS</span>
+                    </div>
+                </div>
+
+                <div class="svc">
+                    <div class="svc-name">Full Stack</div>
+                    <p class="info-service">Complete web application with backend and frontend</p>
+                    <div class="svc-price">$350–$500</div>
+                    <div class="svc-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">FastAPI</span>
+                        <span class="tag">Python</span>
+                    </div>
+                </div>
+
+                <div class="svc">
+                    <div class="svc-name">Commission Shop</div>
+                    <p class="info-service">Custom web development projects for clients</p>
+                    <div class="svc-price">$600–$900</div>
+                    <div class="svc-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Next.js</span>
+                    </div>
+                </div>
+
+                <div class="svc">
+                    <div class="svc-name">Custom Rust/Python</div>
+                    <p class="info-service">Tailored solutions in Rust or Python</p>
+                    <div class="svc-price">From $100</div>
+                    <div class="svc-tags">
+                        <span class="tag">Rust</span>
+                        <span class="tag">Python</span>
+                    </div>
+                </div>
+            </div>
+
+            <span class="subtitle">Custom Programs</span>
+
+            <div class="service-grid" style="margin-top: 0.4rem;">
+                <div class="svc">
+                    <div class="svc-name">Small Utility</div>
+                    <p class="info-service">Small tools and utilities for your needs</p>
+                    <div class="svc-price">$500-$1000</div>
+                    <div class="svc-tags">
+                        <span class="tag">Custom</span>
+                        <span class="tag">Utilities</span>
+                    </div>
+                </div>
+
+                <div class="svc">
+                    <div class="svc-name">Medium Project w/ UI</div>
+                    <p class="info-service">Medium-sized projects with user interfaces</p>
+                    <div class="svc-price">$1000-$2500</div>
+                    <div class="svc-tags">
+                        <span class="tag">Custom</span>
+                        <span class="tag">UI</span>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.services -->
+
+        <div class="hourly">
+            <h2>✦ Hourly</h2>
+            <div class="rate-row">
+                <div class="info-wrapper">
+                    <span class="rate-label">Security review</span>
+                    <p class="info-service">In-depth analysis of your codebase for vulnerabilities</p>
+                </div>
+                <span class="rate-price">$50/hr</span>
+            </div>
+            <div class="rate-row">
+                <div class="info-wrapper">
+                    <span class="rate-label">UX testing</span>
+                    <p class="info-service">User experience testing and feedback for your project</p>
+                </div>
+                <span class="rate-price">$25/hr</span>
+            </div>
         </div>
 
-        <div class="svc">
-          <div class="svc-name">Full Stack</div>
-          <div class="svc-price">$350–$500</div>
-          <div class="svc-tags">
-            <span class="tag">React</span>
-            <span class="tag">FastAPI</span>
-            <span class="tag">Python</span>
-          </div>
+        <div class="process">
+            <h2>How it works</h2>
+            <div class="step">
+                <span class="step-num">01</span>
+                <span class="step-label">DM on Twitter or Discord with your idea</span>
+            </div>
+            <div class="step">
+                <span class="step-num">02</span>
+                <span class="step-label">Scope it out — agree on price &amp; timeline</span>
+            </div>
+            <div class="step">
+                <span class="step-num">03</span>
+                <span class="step-label">$50 deposit holds your slot, work begins</span>
+            </div>
+            <div class="step">
+                <span class="step-num">04</span>
+                <span class="step-label">Review, revisions, final payment, delivery</span>
+            </div>
         </div>
 
-        <div class="svc">
-          <div class="svc-name">Commission Shop</div>
-          <div class="svc-price">$600–$900</div>
-          <div class="svc-tags">
-            <span class="tag">React</span>
-            <span class="tag">Next.js</span>
-          </div>
+        <div class="contact">
+            DM on <strong>Twitter</strong> or <strong>Discord</strong> · mordraga.me/connect/
         </div>
 
-        <div class="svc">
-          <div class="svc-name">Custom Rust/Python</div>
-          <div class="svc-price">From $100</div>
-          <div class="svc-tags">
-            <span class="tag">Rust</span>
-            <span class="tag">Python</span>
-          </div>
-        </div>
+        <footer>The Crypt · @Mordraga0 · she/they</footer>
 
-      </div>
-    </div>
-
-    <div class="hourly">
-      <h2>✦ Hourly</h2>
-      <div class="rate-row">
-        <span class="rate-label">Security review</span>
-        <span class="rate-price">$50/hr</span>
-      </div>
-      <div class="rate-row">
-        <span class="rate-label">UX testing</span>
-        <span class="rate-price">$25/hr</span>
-      </div>
-    </div>
-
-    <div class="process">
-      <h2>How it works</h2>
-      <div class="step">
-        <span class="step-num">01</span>
-        <span class="step-label">DM on Twitter or Discord with your idea</span>
-      </div>
-      <div class="step">
-        <span class="step-num">02</span>
-        <span class="step-label">Scope it out — agree on price &amp; timeline</span>
-      </div>
-      <div class="step">
-        <span class="step-num">03</span>
-        <span class="step-label">$50 deposit holds your slot, work begins</span>
-      </div>
-      <div class="step">
-        <span class="step-num">04</span>
-        <span class="step-label">Review, revisions, final payment, delivery</span>
-      </div>
-    </div>
-
-    <div class="contact">
-      DM on <strong>Twitter</strong> or <strong>Discord</strong> · mordraga.me/connect/
-    </div>
-
-    <footer>The Crypt · @Mordraga0 · she/they</footer>
-
-  </div>
+    </div><!-- /.card -->
 </body>
+
 </html>
