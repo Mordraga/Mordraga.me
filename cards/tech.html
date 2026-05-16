@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Mordraga — Tech Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #080808;
+      --deep: #0f0d0f;
+      --surface: #141014;
+      --border: #2a1f2a;
+      --accent: #8b1a1a;
+      --gold: #c9a84c;
+      --gold-dim: #8a6e2e;
+      --text: #d4c9d4;
+      --text-dim: #7a6d7a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--black);
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      color: var(--text);
+      padding: 0.5rem;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before, .card::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
+      z-index: 2;
+    }
+    .card::before { top: 0; }
+    .card::after { bottom: 0; }
+
+    header {
+      text-align: center;
+      padding: 0.8rem 1rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .subtitle {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-top: 0.1rem;
+    }
+
+    .url {
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    /* SERVICES GRID */
+    .services {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .services h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.55rem;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .services h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+    }
+
+    .svc {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--gold-dim);
+      padding: 0.4rem 0.5rem;
+    }
+
+    .svc-name {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.03em;
+    }
+
+    .svc-price {
+      font-size: 0.9rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin: 0.1rem 0;
+    }
+
+    .svc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem;
+      margin-top: 0.25rem;
+    }
+
+    .tag {
+      font-size: 0.58rem;
+      padding: 0.1rem 0.35rem;
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      font-style: italic;
+      letter-spacing: 0.04em;
+    }
+
+    /* HOURLY */
+    .hourly {
+      padding: 0.55rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hourly h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.55rem;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hourly h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .rate-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.2rem 0;
+      font-size: 0.72rem;
+    }
+
+    .rate-row + .rate-row {
+      border-top: 1px solid var(--border);
+    }
+
+    .rate-label { color: var(--text); font-style: italic; }
+    .rate-price { color: var(--gold); font-weight: 600; font-size: 0.85rem; }
+
+    /* PROCESS */
+    .process {
+      padding: 0.55rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .process h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.55rem;
+      color: var(--text-dim);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .process h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .step {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      padding: 0.18rem 0;
+      font-size: 0.7rem;
+    }
+
+    .step-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.55rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .step-label {
+      color: var(--text);
+      font-style: italic;
+      line-height: 1.3;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 0.45rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      background: #0a080a;
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    .contact strong {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    footer {
+      text-align: center;
+      padding: 0.4rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--surface);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <header>
+      <div class="sigil">✦ ⸸ ✦</div>
+      <h1>Mordraga</h1>
+      <div class="subtitle">Tech Services</div>
+      <div class="url">mordraga.me/services/</div>
+    </header>
+
+    <div class="services">
+      <h2>✦ The Dev Work</h2>
+      <div class="service-grid">
+
+        <div class="svc">
+          <div class="svc-name">Static Site</div>
+          <div class="svc-price">$150–$200</div>
+          <div class="svc-tags">
+            <span class="tag">HTML/CSS</span>
+            <span class="tag">JS</span>
+          </div>
+        </div>
+
+        <div class="svc">
+          <div class="svc-name">Full Stack</div>
+          <div class="svc-price">$350–$500</div>
+          <div class="svc-tags">
+            <span class="tag">React</span>
+            <span class="tag">FastAPI</span>
+            <span class="tag">Python</span>
+          </div>
+        </div>
+
+        <div class="svc">
+          <div class="svc-name">Commission Shop</div>
+          <div class="svc-price">$600–$900</div>
+          <div class="svc-tags">
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+          </div>
+        </div>
+
+        <div class="svc">
+          <div class="svc-name">Custom Rust/Python</div>
+          <div class="svc-price">From $100</div>
+          <div class="svc-tags">
+            <span class="tag">Rust</span>
+            <span class="tag">Python</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="hourly">
+      <h2>✦ Hourly</h2>
+      <div class="rate-row">
+        <span class="rate-label">Security review</span>
+        <span class="rate-price">$50/hr</span>
+      </div>
+      <div class="rate-row">
+        <span class="rate-label">UX testing</span>
+        <span class="rate-price">$25/hr</span>
+      </div>
+    </div>
+
+    <div class="process">
+      <h2>How it works</h2>
+      <div class="step">
+        <span class="step-num">01</span>
+        <span class="step-label">DM on Twitter or Discord with your idea</span>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <span class="step-label">Scope it out — agree on price &amp; timeline</span>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <span class="step-label">$50 deposit holds your slot, work begins</span>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <span class="step-label">Review, revisions, final payment, delivery</span>
+      </div>
+    </div>
+
+    <div class="contact">
+      DM on <strong>Twitter</strong> or <strong>Discord</strong> · mordraga.me/connect/
+    </div>
+
+    <footer>The Crypt · @Mordraga0 · she/they</footer>
+
+  </div>
+</body>
+</html>

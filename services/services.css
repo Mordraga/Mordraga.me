@@ -254,30 +254,15 @@
 .ppv-item-full p  { font-size: 0.75rem; color: var(--text-mute); font-style: italic; margin-top: 0.25rem; }
 .ppv-item-full .ppv-price { white-space: nowrap; margin-top: 0; }
 
-/* ── REFERENCE CARDS NOTE ── */
-.reference-cards-note {
-  text-align: center;
-  font-size: 0.85rem;
-  font-style: italic;
-  color: var(--text-dim);
-  max-width: 480px;
-  margin: 0 auto 2rem;
-  line-height: 1.7;
+/* ── REFERENCE CARDS SECTION ── */
+.cards-section {
+  padding: 5rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
-.fansly-link {
-  color: var(--accent);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
+.cards-section .section-header { margin-bottom: 3rem; }
 
-.fansly-link:hover {
-  color: #c97f7f;
-  border-bottom-color: currentColor;
-}
-
-/* ── REFERENCE CARDS ── */
 .reference-cards {
   display: flex;
   flex-wrap: wrap;
@@ -291,11 +276,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   gap: 0.75rem;
   background: var(--deep);
   border: 1px solid var(--border);
-  border-top: 2px solid var(--accent);
+  border-top: 2px solid var(--gold-dim);
   padding: 1.5rem;
   max-height: 220px;
   overflow: hidden;
@@ -339,8 +323,8 @@
 
 .reference-card-slot .btn { font-size: 0.5rem; }
 
-.download-both-wrapper { text-align: center; margin-bottom: 2.5rem; }
-.download-both-wrapper .btn { font-size: 0.5rem; }
+.download-all-wrapper { text-align: center; margin-bottom: 0; }
+.download-all-wrapper .btn { font-size: 0.5rem; }
 
 /* ── DM POLICY ── */
 .dm-policy {

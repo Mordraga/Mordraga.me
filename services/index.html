@@ -53,7 +53,7 @@
           <ul class="service-list">
             <li>Custom design</li>
             <li>Mobile responsive</li>
-            <li>Social &amp; Fansly integration</li>
+            <li>Social Media Integration</li>
           </ul>
           <div class="path-tags">
             <span class="badge badge-gold">HTML/CSS</span>
@@ -255,22 +255,40 @@
 
       </div>
 
-      <!-- REFERENCE CARDS -->
-      <div class="bar-thin"></div>
-      <h3 class="spicy-heading">⸸ Reference Cards</h3>
-      <p class="reference-cards-note">Both cards are provided for viewing and download. If you'd like custom content created for you, reach out on <a href="https://fansly.com/mordraga0" target="_blank" class="fansly-link">Fansly</a>.</p>
+      <!-- DM POLICY -->
+      <div class="bar-thin dm-divider"></div>
+      <div class="dm-policy">
+        <h3>⸸ DM Policy</h3>
+        <p>Draga decides the vibe. Don't push it.</p>
+      </div>
+
+      <div class="spicy-cta">
+        <a href="https://fansly.com/Mordraga0" class="btn btn-accent" target="_blank">⸸ Go to Fansly</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERENCE CARDS -->
+  <section class="cards-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="sigil">✦</div>
+        <h2>Reference Cards</h2>
+        <p>Shareable cards for services, pricing, and consent. Hover or click to expand — download to keep.</p>
+      </div>
+
       <div class="reference-cards">
 
         <div class="reference-card-slot">
-          <div class="reference-card-label">Boundaries &amp; Consent</div>
+          <div class="reference-card-label">Tech Services</div>
           <iframe
-            id="boundaries-frame"
-            src="../cards/boundaries.html"
+            id="tech-frame"
+            src="../cards/tech.html"
             scrolling="no"
             class="reference-card-frame"
-            title="Mordraga Boundaries &amp; Consent Card"
+            title="Mordraga Tech Card"
           ></iframe>
-          <button id="download-boundaries-btn" class="btn btn-accent">⬇ Save Boundaries Card</button>
+          <button id="download-tech-btn" class="btn btn-gold">⬇ Save Tech Card</button>
         </div>
 
         <div class="reference-card-slot">
@@ -282,23 +300,25 @@
             class="reference-card-frame"
             title="Mordraga Fansly Pricing Card"
           ></iframe>
-          <button id="download-fansly-btn" class="btn btn-accent">⬇ Save Fansly Card</button>
+          <button id="download-fansly-btn" class="btn btn-gold">⬇ Save Fansly Card</button>
+        </div>
+
+        <div class="reference-card-slot">
+          <div class="reference-card-label">Boundaries &amp; Consent</div>
+          <iframe
+            id="boundaries-frame"
+            src="../cards/boundaries.html"
+            scrolling="no"
+            class="reference-card-frame"
+            title="Mordraga Boundaries &amp; Consent Card"
+          ></iframe>
+          <button id="download-boundaries-btn" class="btn btn-gold">⬇ Save Boundaries Card</button>
         </div>
 
       </div>
-      <div class="download-both-wrapper">
-        <button id="download-both-btn" class="btn btn-ghost">⬇ Download Both Cards</button>
-      </div>
 
-      <!-- DM POLICY -->
-      <div class="bar-thin dm-divider"></div>
-      <div class="dm-policy">
-        <h3>⸸ DM Policy</h3>
-        <p>Draga decides the vibe. Don't push it.</p>
-      </div>
-
-      <div class="spicy-cta">
-        <a href="https://fansly.com/Mordraga0" class="btn btn-accent" target="_blank">⸸ Go to Fansly</a>
+      <div class="download-all-wrapper">
+        <button id="download-all-btn" class="btn btn-ghost">⬇ Download All Cards</button>
       </div>
     </div>
   </section>
@@ -343,6 +363,7 @@
     (function () {
       var bFrame = document.getElementById('boundaries-frame');
       var fFrame = document.getElementById('fansly-frame');
+      var tframe = document.getElementById('tech-frame');
 
       function autoSize(frame) {
         frame.addEventListener('load', function () {
@@ -353,6 +374,7 @@
 
       autoSize(bFrame);
       autoSize(fFrame);
+      autoSize(tframe);
 
       function downloadCard(frame, filename, cb) {
         var card = frame.contentDocument.querySelector('.card');
@@ -374,11 +396,18 @@
         downloadCard(fFrame, 'mordraga-fansly.png');
       });
 
-      document.getElementById('download-both-btn').addEventListener('click', function () {
+      document.getElementById('download-tech-btn').addEventListener('click', function () {
+        downloadCard(tframe, 'mordraga-tech.png');
+      });
+
+      document.getElementById('download-all-btn').addEventListener('click', function () {
         downloadCard(bFrame, 'mordraga-boundaries.png', function () {
           setTimeout(function () {
             downloadCard(fFrame, 'mordraga-fansly.png');
           }, 300);
+          setTimeout(function () {
+            downloadCard(tframe, 'mordraga-tech.png');
+          }, 600);
         });
       });
     })();
