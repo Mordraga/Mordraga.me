@@ -3,7 +3,12 @@
     "allow": [
       "Bash(curl -s https://raw.githubusercontent.com/Mordraga/Super-Edgy-Character-Maker/main/scripts/Utilities/utilities.js)",
       "Bash(curl -s https://raw.githubusercontent.com/Mordraga/Super-Edgy-Character-Maker/main/scripts/Data/mainData.js)",
-      "Bash(curl -s https://raw.githubusercontent.com/Mordraga/Super-Edgy-Character-Maker/main/scripts/Data/animalData.js)"
+      "Bash(curl -s https://raw.githubusercontent.com/Mordraga/Super-Edgy-Character-Maker/main/scripts/Data/animalData.js)",
+      "Bash(New-Item -ItemType Directory -Force \"C:\\\\Users\\\\Allison\\\\.claude\\\\projects\\\\c--Users-Allison-Github-Mordraga-me\\\\memory\")",
+      "Bash(Out-Null)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\Allison\\.claude\\projects\\c--Users-Allison-Github-Mordraga-me"
     ]
   }
 }

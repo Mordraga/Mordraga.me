@@ -1,0 +1,423 @@
+/* ── DOSSIER COVER ── */
+.dossier-cover {
+  padding: 8rem 1.5rem 3.5rem;
+  text-align: center;
+  position: relative;
+  border-bottom: 2px solid var(--border);
+}
+
+.dossier-cover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(139,26,26,0.10) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.dossier-org {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.dossier-operation {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1rem, 3vw, 1.6rem);
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.dossier-file-id {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 0.25rem;
+}
+
+.dossier-clearance {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  margin-bottom: 2rem;
+}
+
+.dossier-badges {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tl-badge {
+  display: inline-block;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  padding: 0.3rem 0.8rem;
+  border: 2px solid var(--accent);
+  color: var(--no-text);
+  text-transform: uppercase;
+}
+
+.sigma-badge {
+  display: inline-block;
+  font-family: 'Courier New', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--gold-dim);
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+.coop-badge {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--text-mute);
+}
+
+/* ── DOSSIER BODY ── */
+.dossier-body {
+  padding: 3.5rem 0;
+}
+
+.dossier-section {
+  max-width: 780px;
+  margin: 0 auto 2.5rem;
+  padding: 0 1.5rem;
+}
+
+.dossier-section-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.55rem;
+  color: var(--accent);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.dossier-text {
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  line-height: 1.85;
+  margin-bottom: 1rem;
+}
+
+/* ── REDACTION ── */
+.redacted {
+  background: var(--text);
+  color: var(--text);
+  display: inline;
+  padding: 0 2px;
+  user-select: none;
+  letter-spacing: 0;
+}
+
+/* ── META TABLE ── */
+.dossier-meta {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.4rem 1.5rem;
+  margin-bottom: 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1rem 1.25rem;
+}
+
+.dossier-key {
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  padding: 0.1rem 0;
+}
+
+.dossier-val {
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  padding: 0.1rem 0;
+}
+
+/* ── EYE SCALE TABLE ── */
+.eye-scale {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+}
+
+.eye-scale th {
+  color: var(--gold);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border2);
+  text-align: left;
+}
+
+.eye-scale td {
+  padding: 0.5rem 0.75rem;
+  color: var(--text-dim);
+  border-bottom: 1px solid var(--border);
+}
+
+.eye-scale tr:last-child td { border-bottom: none; }
+
+.eye-state-pink { color: #f5b7c0; font-weight: bold; }
+.eye-state-red { color: var(--no-text); font-weight: bold; }
+.eye-state-void { color: #5a0a0a; font-weight: bold; font-style: italic; }
+.eye-state-vacant { color: var(--text-mute); font-style: italic; }
+
+/* ── ASPECT MODES ── */
+.aspect-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.aspect-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 1rem;
+}
+
+.aspect-card-title {
+  font-family: 'Courier New', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.aspect-title-war    { color: var(--no-text); }
+.aspect-title-sex    { color: #c97fa0; }
+.aspect-title-know   { color: var(--gold); }
+.aspect-title-death  { color: var(--text-mute); }
+
+.aspect-card-desc {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.aspect-trigger {
+  font-size: 0.65rem;
+  color: var(--text-mute);
+  font-style: italic;
+  margin-top: 0.35rem;
+}
+
+/* ── OBJECTS OF INTEREST ── */
+.artifact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.artifact-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  align-items: start;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+}
+
+.artifact-item:last-child { border-bottom: none; }
+
+.artifact-icon { color: var(--accent); font-size: 1rem; }
+
+.artifact-name {
+  color: var(--text);
+  font-size: 0.78rem;
+  margin-bottom: 0.15rem;
+}
+
+.artifact-deity {
+  color: var(--gold);
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+}
+
+.artifact-note {
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  font-style: italic;
+  grid-column: 2;
+  margin-top: 0.1rem;
+}
+
+/* ── FAMILIAR LIST ── */
+.familiar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.familiar-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.familiar-item:last-child { border-bottom: none; }
+
+.familiar-bullet { color: var(--accent); flex-shrink: 0; }
+.familiar-name { color: var(--text); }
+.familiar-note { font-style: italic; color: var(--text-mute); margin-left: 0.35rem; }
+
+/* ── RITUAL OBSERVATIONS ── */
+.ritual-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ritual-item {
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+}
+
+.ritual-item:last-child { border-bottom: none; }
+
+.ritual-label {
+  color: var(--gold);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.ritual-desc { color: var(--text-dim); line-height: 1.6; }
+.ritual-note { color: var(--text-mute); font-style: italic; font-size: 0.7rem; display: block; margin-top: 0.15rem; }
+
+/* ── TRANSCRIPT ── */
+.transcript {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.transcript-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.62rem;
+  color: var(--text-mute);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.transcript-line {
+  margin-bottom: 0.6rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+.transcript-speaker { color: var(--gold); font-weight: bold; }
+.transcript-speaker.mrd { color: var(--no-text); }
+.transcript-speech { color: var(--text-dim); }
+
+.transcript-note {
+  font-style: italic;
+  color: var(--text-mute);
+  font-size: 0.7rem;
+  margin: 0.2rem 0 0.75rem 1rem;
+  display: block;
+}
+
+/* ── AGENT NOTES ── */
+.agent-note-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold-dim);
+  padding: 1rem 1.25rem;
+  margin-top: 1rem;
+}
+
+.agent-note-label {
+  font-family: 'Courier New', monospace;
+  font-size: 0.6rem;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.agent-note-text {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.75;
+  font-style: italic;
+}
+
+/* ── DOSSIER DIVIDER ── */
+.dossier-divider {
+  max-width: 780px;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+/* ── CLOSING STAMP ── */
+.dossier-closing {
+  max-width: 780px;
+  margin: 0 auto 4rem;
+  padding: 2rem 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.dossier-closing-text {
+  font-family: 'Courier New', monospace;
+  font-size: 0.72rem;
+  color: var(--text-mute);
+  letter-spacing: 0.05em;
+  line-height: 2;
+}
+
+.dossier-closing-sig {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.45rem;
+  color: var(--accent);
+  letter-spacing: 0.25em;
+  margin-top: 1.25rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .aspect-grid { grid-template-columns: 1fr; }
+  .dossier-meta { grid-template-columns: 1fr; gap: 0.25rem; }
+  .dossier-key { color: var(--accent); font-size: 0.62rem; }
+}
