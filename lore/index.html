@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../crypt.css">
   <link rel="stylesheet" href="./lore.css">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="e3d8aa38-b68a-4a19-8b81-6df9f7e8701f"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
 </head>
 <body>
 
@@ -115,7 +116,7 @@
         <span class="dossier-val">Long black, typically tied back. Always appears to have just exited a fight or a summoning. Red dyed streaks — possibly dyed. Classification: possibly not dyed.</span>
 
         <span class="dossier-key">EYES:</span>
-        <span class="dossier-val">Brown at baseline. See: Eye Color Scale.</span>
+        <span class="dossier-val">Pinkish-Brown at baseline. See: Eye Color Scale.</span>
 
         <span class="dossier-key">MARKINGS:</span>
         <span class="dossier-val">Rose tattoo across the clavicle. Significance being investigated.</span>
@@ -315,7 +316,7 @@
 
       <ul class="artifact-list">
         <li class="artifact-item">
-          <span class="artifact-icon">🌹</span>
+          <span class="artifact-icon">•</span>
           <div>
             <div class="artifact-name">Rose</div>
             <div class="artifact-deity">Astarte · Domain: Love, Sex, Desire</div>
@@ -325,7 +326,7 @@
           </div>
         </li>
         <li class="artifact-item">
-          <span class="artifact-icon">⚔</span>
+          <span class="artifact-icon">•</span>
           <div>
             <div class="artifact-name">Was Scepter (crossed sticks)</div>
             <div class="artifact-deity">Set · Domain: Chaos, Power, Will</div>
@@ -335,7 +336,7 @@
           </div>
         </li>
         <li class="artifact-item">
-          <span class="artifact-icon">✒</span>
+          <span class="artifact-icon">•</span>
           <div>
             <div class="artifact-name">Pen</div>
             <div class="artifact-deity">Thoth · Domain: Language, Thought, Forbidden Names</div>
@@ -345,7 +346,7 @@
           </div>
         </li>
         <li class="artifact-item">
-          <span class="artifact-icon">🦴</span>
+          <span class="artifact-icon">•</span>
           <div>
             <div class="artifact-name">Bird Skull (sticks in eye sockets)</div>
             <div class="artifact-deity">Anubis · Domain: Death, Silence, Sight Beyond</div>
@@ -395,6 +396,11 @@
           <span class="ritual-desc">Subject covers all reflective surfaces in Site-0312. Has done so consistently since first contact. When asked, she attributes this to a fear response she cannot specifically identify.</span>
           <span class="ritual-note">See: Site-0312 Environmental Standards (amended). The mirrors stay covered.</span>
         </li>
+        <li class="ritual-item">
+          <span class="ritual-label">Automatonophobia</span>
+          <span class="ritual-desc">Subject exhibits an intense fear of dolls and mannequins. This fear manifests in avoidance behaviors and physiological responses when exposed to such entities.</span>
+          <span class="ritual-note">Phobia was discovered while subject was asleep. See Incident Log </span>
+        </li>
       </ul>
     </div>
 
@@ -420,7 +426,7 @@
         </li>
         <li class="familiar-item">
           <span class="familiar-bullet">●</span>
-          <span><span class="familiar-name">Ragdoll Cat</span> <span class="familiar-note">— Felis silvestris catus · Absolutely a cat. Subject insists. Genetically: axolotl.</span></span>
+          <span><span class="familiar-name">Ragdoll Cat</span> <span class="familiar-note">— Felis silvestris catus · Absolutely a cat. Subject insists. Subject named said animal Honey. Genetically: axolotl.</span></span>
         </li>
         <li class="familiar-item">
           <span class="familiar-bullet">●</span>
@@ -546,6 +552,15 @@
 
     <div class="dossier-divider"><div class="bar-thin"></div></div>
 
+    <!-- INCIDENT LOGS -->
+    <div class="dossier-section fade-up-2">
+      <div class="dossier-section-title">⸸ Supplementary Documents — Incident Logs</div>
+      <p class="dossier-text">Filed addenda. Accessory to the primary dossier. Expand to view.</p>
+      <div class="incident-grid" id="incident-grid"></div>
+    </div>
+
+    <div class="dossier-divider"><div class="bar-thin"></div></div>
+
     <!-- CLOSING -->
     <div class="dossier-closing fade-up-3">
       <p class="dossier-closing-text">
@@ -584,5 +599,44 @@
     <div class="footer-copy">The Crypt · @Mordraga0 · she/they · ©2026</div>
   </footer>
 
+  <script>
+    const INCIDENTS = [
+      { id: 'IR-0312-001', title: 'Automatonophobia — Discovery Incident', file: 'incidents/ir-001.md' },
+    ];
+
+    function buildCard(inc) {
+      const el = document.createElement('details');
+      el.className = 'incident-card';
+      el.innerHTML = `
+        <summary class="incident-card-header">
+          <span class="incident-id">${inc.id}</span>
+          <span class="incident-title">${inc.title}</span>
+        </summary>
+        <div class="incident-body loading">Loading document…</div>
+      `;
+      let loaded = false;
+      el.addEventListener('toggle', async () => {
+        if (el.open && !loaded) {
+          loaded = true;
+          const body = el.querySelector('.incident-body');
+          try {
+            const res = await fetch(inc.file);
+            const text = await res.text();
+            body.classList.remove('loading');
+            body.innerHTML = marked.parse(text);
+          } catch {
+            body.classList.remove('loading');
+            body.textContent = '[Document unavailable.]';
+          }
+        }
+      });
+      return el;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('incident-grid');
+      INCIDENTS.forEach(inc => grid.appendChild(buildCard(inc)));
+    });
+  </script>
 </body>
 </html>

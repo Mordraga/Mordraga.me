@@ -417,6 +417,116 @@
   margin-top: 1.25rem;
 }
 
+/* ── INCIDENT LOGS ── */
+.incident-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 0.75rem;
+}
+
+.incident-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.incident-card[open] {
+  grid-column: 1 / -1;
+}
+
+.incident-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  list-style: none;
+  border-bottom: 1px solid transparent;
+  transition: background 0.15s;
+}
+
+.incident-card-header::marker,
+.incident-card-header::-webkit-details-marker { display: none; }
+
+.incident-card[open] .incident-card-header {
+  border-bottom-color: var(--border);
+}
+
+.incident-card-header:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+.incident-id {
+  font-family: 'Courier New', monospace;
+  font-size: 0.6rem;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.incident-title {
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.incident-body {
+  padding: 1.25rem 1.5rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  line-height: 1.85;
+}
+
+.incident-body.loading {
+  color: var(--text-mute);
+  font-style: italic;
+}
+
+.incident-body h1,
+.incident-body h2,
+.incident-body h3 {
+  font-family: 'Courier New', monospace;
+  font-size: 0.68rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 1.25rem 0 0.5rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: normal;
+}
+
+.incident-body h1 { margin-top: 0; }
+
+.incident-body p { margin-bottom: 0.75rem; }
+
+.incident-body hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1rem 0;
+}
+
+.incident-body strong { color: var(--text); }
+.incident-body em { color: var(--text-mute); font-style: italic; }
+
+.incident-body blockquote {
+  border-left: 2px solid var(--accent);
+  margin: 0.75rem 0;
+  padding: 0.25rem 1rem;
+  color: var(--text-mute);
+  font-style: italic;
+}
+
+.incident-body blockquote p { margin-bottom: 0.25rem; }
+
+.incident-body ul,
+.incident-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.incident-body li { margin-bottom: 0.2rem; }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
   .aspect-grid { grid-template-columns: 1fr; }
