@@ -135,12 +135,34 @@ async function downloadShareCard(score, verdict) {
     a.click();
 }
 
-function shareToX(score, verdict) {
-    const text = `She rated me ${score.toFixed(1)}/10.\n\n"${verdict}"`;
-    const params = new URLSearchParams({
-        text,
-        url: 'https://' + SITE_URL,
-        via: 'Mordraga0',
+async function shareToX(score, verdict) {
+    const canvas = await generateShareCard(score, verdict);
+    const tweetText = `She rated me ${score.toFixed(1)}/10.\n\n"${verdict}"`;
+    const tweetUrl  = 'https://twitter.com/intent/tweet?' + new URLSearchParams({
+        text: tweetText,
+        url:  'https://' + SITE_URL,
+        via:  'Mordraga0',
     });
-    window.open('https://twitter.com/intent/tweet?' + params, '_blank', 'noopener,noreferrer');
+
+    canvas.toBlob(async (blob) => {
+        const file = new File([blob], 'she-rated-me.png', { type: 'image/png' });
+
+        // Web Share API with file — works on mobile + Chrome/Edge desktop
+        if (navigator.canShare?.({ files: [file] })) {
+            try {
+                await navigator.share({ files: [file], text: tweetText });
+                return;
+            } catch (e) {
+                if (e.name === 'AbortError') return;
+                // share failed — fall through to download + tweet
+            }
+        }
+
+        // Desktop fallback: download image, then open tweet window
+        const a = document.createElement('a');
+        a.download = 'she-rated-me.png';
+        a.href = URL.createObjectURL(blob);
+        a.click();
+        setTimeout(() => window.open(tweetUrl, '_blank', 'noopener,noreferrer'), 400);
+    });
 }
