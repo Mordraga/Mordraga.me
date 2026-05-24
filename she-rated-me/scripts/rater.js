@@ -1,3 +1,6 @@
+import { downloadShareCard, shareToX } from './share.js';
+
+
 // ── DATA ─────────────────────────────────────────────────────────────────────
 
 const ALL_TAGS = [
@@ -44,18 +47,22 @@ const ALL_TAGS = [
 // Weights must sum to 1.0
 const WEIGHTS = { length: 0.40, girth: 0.40, shape: 0.20 };
 
-let averages = null;
-let prefs    = null;
+let averages  = null;
+let prefs     = null;
+let insults   = null;
+let lastStats = null;
 
 // ── DATA LOADING ──────────────────────────────────────────────────────────────
 
 async function loadData() {
-    const [avgRes, prefRes] = await Promise.all([
-        fetch('./scripts/average.json'),
-        fetch('./preferences.json'),
+    const [avgRes, prefRes, insultRes] = await Promise.all([
+        fetch(new URL('./jsons/average.json', import.meta.url)),
+        fetch(new URL('./jsons/preferences.json', import.meta.url)),
+        fetch(new URL('./jsons/insults.json', import.meta.url)),
     ]);
     averages = await avgRes.json();
     prefs    = await prefRes.json();
+    insults  = await insultRes.json();
     buildTagUI();
 }
 
@@ -194,23 +201,32 @@ function randResponse(arr) {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-
-function getVerdict(score) {
+function calcVerdict(score) {
 
     if (score >= 9.0) return randResponse(responses[9.0]);
     if (score >= 8.0) return randResponse(responses[8.0]);
     if (score >= 7.0) return randResponse(responses[7.0]);
     if (score >= 5.5) return randResponse(responses[5.5]);
     if (score >= 4.0) return randResponse(responses[4.0]);
-    if (score >= 0.0) return randResponse(responses[0.0]);
+    if (score > 0.0) return randResponse(responses[0.0]);
     return randResponse(responses["null"]);
+}
+
+function degradeUser(length) {
+    const tiers = insults["degrading-insults"]["length"];
+    if (length >= 8) return randResponse(tiers["extra-long"]);
+    if (length >= 7) return randResponse(tiers["long"]);
+    if (length >= 5) return randResponse(tiers["medium"]);
+    if (length >= 1) return randResponse(tiers["short"]);
+    return randResponse(tiers["micro"]);
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────────
 
-function render(score) {
+function render(score, verdict, stats) {
+    lastStats = stats;
     document.getElementById('final-rating').textContent = score.toFixed(1);
-    document.getElementById('commentary').textContent   = getVerdict(score);
+    document.getElementById('commentary').textContent   = verdict;
     document.getElementById('save-png').removeAttribute('hidden');
     document.getElementById('share-x').removeAttribute('hidden');
 }
@@ -220,13 +236,14 @@ function render(score) {
 function savePNG() {
     const score   = parseFloat(document.getElementById('final-rating').textContent);
     const verdict = document.getElementById('commentary').textContent;
-    downloadShareCard(score, verdict);
+    downloadShareCard(score, verdict, lastStats);
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadData().catch(console.error);
+export function init() {
+    document.addEventListener('DOMContentLoaded', () => {
+        loadData().catch(console.error);
 
     const unitSelect  = document.getElementById('inch-vs-cm');
     const lengthInput = document.getElementById('dick-length');
@@ -251,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const lengthEl = document.getElementById('dick-length');
         const girthEl  = document.getElementById('dick-girth');
         const unit     = document.getElementById('inch-vs-cm').value;
+        const degrade  = document.getElementById('degrade-mode').checked;
 
         const length = parseFloat(lengthEl.value);
         const girth  = parseFloat(girthEl.value);
@@ -263,7 +281,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (lengthBad || girthBad) return;
 
-        render(calculate(length, girth, unit));
+        const score        = calculate(length, girth, unit);
+        const lengthInches = toInches(length, unit);
+        const verdict      = (degrade && insults) ? degradeUser(lengthInches) : calcVerdict(score);
+        const tags         = [...document.querySelectorAll('.tag.tag-active')].map(b => b.textContent);
+        render(score, verdict, { length, girth, unit, tags });
     });
 
     document.getElementById('save-png').addEventListener('click', savePNG);
@@ -271,6 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('share-x').addEventListener('click', () => {
         const score   = parseFloat(document.getElementById('final-rating').textContent);
         const verdict = document.getElementById('commentary').textContent;
-        shareToX(score, verdict);
+        shareToX(score, verdict, lastStats);
     });
-});
+})};

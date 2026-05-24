@@ -22,6 +22,17 @@ function drawGradientBar(ctx, y, w) {
     ctx.fillRect(0, y, w, 2);
 }
 
+function countLines(ctx, text, maxWidth) {
+    const words = text.split(' ');
+    let line = '', count = 1;
+    for (const word of words) {
+        const test = line ? line + ' ' + word : word;
+        if (ctx.measureText(test).width > maxWidth && line) { count++; line = word; }
+        else line = test;
+    }
+    return count;
+}
+
 function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
     const words = text.split(' ');
     let line = '';
@@ -38,14 +49,24 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
     if (line) ctx.fillText(line, x, y);
 }
 
-async function generateShareCard(score, verdict) {
+async function generateShareCard(score, verdict, stats = null) {
     await document.fonts.ready;
 
-    const W = 520, H = 320;
+    const W = 520, SCALE = 4;
+
+    // Pre-measure tag lines so we can size the canvas before drawing
+    let tagLines = 0;
+    if (stats?.tags?.length) {
+        const mCtx = document.createElement('canvas').getContext('2d');
+        mCtx.font = '10px "Cinzel Decorative"';
+        tagLines = countLines(mCtx, stats.tags.join(' · '), W - 80);
+    }
+    const H = 320 + (stats ? tagLines * 16 : 0);
     const canvas = document.createElement('canvas');
-    canvas.width  = W;
-    canvas.height = H;
+    canvas.width  = W * SCALE;
+    canvas.height = H * SCALE;
     const ctx = canvas.getContext('2d');
+    ctx.scale(SCALE, SCALE);
     ctx.textAlign = 'center';
 
     // Background + border
@@ -111,6 +132,28 @@ async function generateShareCard(score, verdict) {
     ctx.fillStyle = C.textDim;
     wrapText(ctx, verdict, W / 2, 216, W - 80, 20);
 
+    // Stats section
+    if (stats) {
+        ctx.strokeStyle = C.border;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(80, 240); ctx.lineTo(W - 80, 240);
+        ctx.stroke();
+
+        const u = stats.unit === 'cm' ? 'cm' : '"';
+        ctx.font = '9px "Cinzel Decorative"';
+        ctx.letterSpacing = '0.1em';
+        ctx.fillStyle = C.gold;
+        ctx.fillText(`L: ${stats.length}${u}  ·  G: ${stats.girth}${u}`, W / 2, 256);
+
+        if (stats.tags.length) {
+            ctx.font = '10px "Cinzel Decorative"';
+            ctx.letterSpacing = '0.05em';
+            ctx.fillStyle = C.textDim;
+            wrapText(ctx, stats.tags.join(' · '), W / 2, 272, W - 80, 16);
+        }
+    }
+
     // Footer divider
     ctx.strokeStyle = C.border;
     ctx.lineWidth = 1;
@@ -127,16 +170,16 @@ async function generateShareCard(score, verdict) {
     return canvas;
 }
 
-async function downloadShareCard(score, verdict) {
-    const canvas = await generateShareCard(score, verdict);
+export async function downloadShareCard(score, verdict, stats = null) {
+    const canvas = await generateShareCard(score, verdict, stats);
     const a = document.createElement('a');
     a.download = 'she-rated-me.png';
     a.href = canvas.toDataURL('image/png');
     a.click();
 }
 
-async function shareToX(score, verdict) {
-    const canvas = await generateShareCard(score, verdict);
+export async function shareToX(score, verdict, stats = null) {
+    const canvas = await generateShareCard(score, verdict, stats);
     const tweetText = `She rated me ${score.toFixed(1)}/10.\n\n"${verdict}"`;
     const tweetUrl  = 'https://twitter.com/intent/tweet?' + new URLSearchParams({
         text: tweetText,
