@@ -1,0 +1,10 @@
+{
+  "unit": "inches",
+  "length": 6.0,
+  "girth": 6.0,
+  "tags": {
+    "preferred": ["curved-upward", "uncircumcised", "tapered", "thick-base"],
+    "neutral":   ["straight", "circumcised"],
+    "disliked":  ["unusually-smooth", "uniform"]
+  }
+}

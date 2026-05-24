@@ -1,0 +1,11 @@
+{
+    "unit": "inches",
+    "length":5.335,
+    "girth":4.6,
+    "shape": {
+        "head": "mushroom",
+        "shaft": "straight",
+        "base": "tapered",
+        "cut": "uncut"
+    }
+}

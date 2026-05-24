@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mordraga's Thoughts on You</title>
+  <meta name="description" content="Mordraga has thoughts on you. Submit your measurements for a verdict.">
+  <meta name="theme-color" content="#8b1a1a">
+  <link rel="stylesheet" href="../crypt.css">
+  <link rel="stylesheet" href="./dick-style.css">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e3d8aa38-b68a-4a19-8b81-6df9f7e8701f"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Mordraga</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/lore/">Lore</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Tools</a></li>
+        <li><a href="/connect/">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="bar bar-absolute"></div>
+    <div class="page-hero-sigil fade-up-1">⸸ ✦ ⸸</div>
+    <h1 class="fade-up-2">Mordraga's Thoughts on You</h1>
+    <p class="subtitle fade-up-3">Peer-reviewed. Probably.</p>
+  </section>
+
+  <main class="rater-main">
+    <div class="rater-wrap">
+
+      <div class="rating-section">
+        <h2>Final Rating</h2>
+        <p class="rating-out-of">Out of 10</p>
+        <p id="final-rating">—</p>
+        <span id="commentary">Submit your measurements for a verdict.</span>
+        <div class="share-row">
+          <button class="btn btn-ghost save-btn" id="save-png" hidden>Save as PNG</button>
+          <button class="btn btn-ghost save-btn" id="share-x" hidden>Share on X</button>
+        </div>
+      </div>
+
+      <div class="measure-section">
+        <label class="field-label" for="dick-length">Penis Length</label>
+        <input class="crypt-input" type="number" step="0.1" id="dick-length" placeholder="Enter length">
+      </div>
+
+      <div class="measure-section">
+        <label class="field-label" for="dick-girth">Penis Girth (circumference)</label>
+        <input class="crypt-input" type="number" step="0.1" id="dick-girth" placeholder="Enter girth">
+      </div>
+
+      <div class="measure-section">
+        <label class="field-label" for="inch-vs-cm">Units</label>
+        <select class="crypt-input" id="inch-vs-cm">
+          <option value="inches">Inches</option>
+          <option value="cm">Centimeters</option>
+        </select>
+      </div>
+
+      <div class="measure-section">
+        <p class="field-label">Shape / Characteristics</p>
+        <div id="tag-container"></div>
+      </div>
+
+      <div class="btn-section">
+        <button class="btn btn-gold">Rate My Dick</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="bar"></div>
+    <div class="footer-sigil">⸸ ✦ ⸸</div>
+    <div class="footer-name">Mordraga</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/lore/">Lore</a>
+      <a href="/services/">Services</a>
+      <a href="/tools/">Tools</a>
+      <a href="/connect/">Connect</a>
+    </div>
+    <div class="footer-copy">The Crypt · @Mordraga0 · she/they · ©2026</div>
+  </footer>
+
+  <script src="share.js"></script>
+  <script src="rater.js"></script>
+</body>
+</html>
