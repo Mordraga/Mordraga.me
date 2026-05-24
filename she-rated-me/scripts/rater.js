@@ -234,9 +234,10 @@ function render(score, verdict, stats) {
 // ── SAVE PNG ──────────────────────────────────────────────────────────────────
 
 function savePNG() {
-    const score   = parseFloat(document.getElementById('final-rating').textContent);
-    const verdict = document.getElementById('commentary').textContent;
-    downloadShareCard(score, verdict, lastStats);
+    const score      = parseFloat(document.getElementById('final-rating').textContent);
+    const verdict    = document.getElementById('commentary').textContent;
+    const shareStats = document.getElementById('include-stats').checked ? lastStats : null;
+    downloadShareCard(score, verdict, shareStats);
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
@@ -291,8 +292,9 @@ export function init() {
     document.getElementById('save-png').addEventListener('click', savePNG);
 
     document.getElementById('share-x').addEventListener('click', () => {
-        const score   = parseFloat(document.getElementById('final-rating').textContent);
-        const verdict = document.getElementById('commentary').textContent;
-        shareToX(score, verdict, lastStats);
+        const score      = parseFloat(document.getElementById('final-rating').textContent);
+        const verdict    = document.getElementById('commentary').textContent;
+        const shareStats = document.getElementById('include-stats').checked ? lastStats : null;
+        shareToX(score, verdict, shareStats);
     });
 })};
