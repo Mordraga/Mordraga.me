@@ -2,3 +2,6 @@
 /cards/patreon_price_card-1.html
 /cards/tier_progression.html
 /.claude
+*.json
+.claude/settings.local.json
+.claude/settings.local.json
