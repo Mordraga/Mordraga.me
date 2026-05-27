@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Boundaries Card Maker — Mordraga</title>
+  <meta name="description" content="Build your own BDSM boundaries & consent card. Set your roles, safewords, limits. Download as PNG.">
+  <meta property="og:title" content="Boundaries Card Maker — Mordraga">
+  <meta property="og:description" content="Build your own BDSM boundaries & consent card. Set your roles, safewords, limits. Download as PNG.">
+  <meta property="og:url" content="https://mordraga.me/boundaries-maker/">
+  <meta name="theme-color" content="#8b1a1a">
+  <link rel="stylesheet" href="../crypt.css">
+  <link rel="stylesheet" href="./maker.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e3d8aa38-b68a-4a19-8b81-6df9f7e8701f"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Mordraga</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/lore/">Lore</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Tools</a></li>
+        <li><a href="/connect/">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="maker-page-hero">
+    <div class="bar-absolute"></div>
+    <div class="hero-sigil">⸸ ✦ ⸸</div>
+    <h1>Boundaries Card Maker</h1>
+    <p class="hero-sub">Fill it in. Download the PNG. Share it. No data stored anywhere.</p>
+  </section>
+
+  <!-- MAKER -->
+  <div class="maker-container">
+
+    <!-- CARD PREVIEW -->
+    <div class="card-preview-wrap">
+      <div class="preview-label">✦ Live Preview ✦</div>
+      <div id="card-preview">
+        <div class="card-empty">Fill in the form below to build your card.</div>
+      </div>
+      <div class="preview-actions">
+        <button class="btn-download" id="btn-download">↓ Download as PNG</button>
+        <div class="preview-secondary">
+          <button class="btn-share" id="btn-share">Share on X</button>
+          <button class="btn-reset" id="btn-reset">Reset</button>
+        </div>
+      </div>
+      <p class="preview-note">Nothing is stored or sent anywhere — your card never leaves your browser.</p>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-col">
+
+      <!-- YOUR INFO -->
+      <div class="form-section">
+        <div class="form-section-title">✦ Your Info</div>
+
+        <div class="form-row">
+          <label class="form-label" for="input-name">Name</label>
+          <input class="form-input" id="input-name" type="text" placeholder="Your name or handle">
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="input-subtitle">Card subtitle <span style="opacity:0.5">(optional)</span></label>
+          <input class="form-input" id="input-subtitle" type="text" placeholder="Boundaries &amp; Consent Card">
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="input-url">Site / URL <span style="opacity:0.5">(optional)</span></label>
+          <input class="form-input" id="input-url" type="text" placeholder="yoursite.com or @handle">
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="input-footer">Footer text <span style="opacity:0.5">(optional)</span></label>
+          <input class="form-input" id="input-footer" type="text" placeholder="The Crypt · @handle · she/they">
+        </div>
+      </div>
+
+      <!-- SAFEWORDS -->
+      <div class="form-section">
+        <div class="form-section-title">✦ Safewords</div>
+
+        <div class="sw-row">
+          <span class="sw-dot green">●</span>
+          <input class="form-input" id="input-sw-green" type="text" placeholder="Green — e.g. CNC aware / consent negotiated">
+        </div>
+        <div class="sw-row">
+          <span class="sw-dot yellow">●</span>
+          <input class="form-input" id="input-sw-yellow" type="text" placeholder="Yellow — e.g. Hard stop">
+        </div>
+        <div class="sw-row">
+          <span class="sw-dot red">●</span>
+          <input class="form-input" id="input-sw-red" type="text" placeholder="Red — e.g. Receipt">
+        </div>
+      </div>
+
+      <!-- WHO YOU ARE -->
+      <div class="form-section">
+        <div class="form-section-title">✦ Who You Are</div>
+        <div class="role-chips-wrap" id="role-chips"></div>
+
+        <div class="custom-role-row">
+          <input class="form-input" id="custom-role-input" type="text" placeholder="Add custom role…">
+          <button class="btn-add" id="custom-role-add">Add</button>
+        </div>
+        <div class="pills-row" id="custom-role-list"></div>
+      </div>
+
+      <!-- WHEN SUBBING -->
+      <div class="form-section">
+        <div class="form-section-title">✦ When Subbing</div>
+        <div class="pills-row" id="list-sub"></div>
+        <div class="list-add-row">
+          <input class="form-input" id="input-sub" type="text" placeholder="e.g. Pet Play, Blood Play…">
+          <button class="btn-add" id="add-sub">Add</button>
+        </div>
+      </div>
+
+      <!-- WHEN DOMMING -->
+      <div class="form-section">
+        <div class="form-section-title">✦ When Domming</div>
+        <div class="pills-row" id="list-dom"></div>
+        <div class="list-add-row">
+          <input class="form-input" id="input-dom" type="text" placeholder="e.g. Overstimulation, Soft Dom…">
+          <button class="btn-add" id="add-dom">Add</button>
+        </div>
+      </div>
+
+      <!-- BOTH WAYS -->
+      <div class="form-section">
+        <div class="form-section-title">✦ Both Ways</div>
+        <div class="pills-row" id="list-both"></div>
+        <div class="list-add-row">
+          <input class="form-input" id="input-both" type="text" placeholder="e.g. Impact Play, Rough Play…">
+          <button class="btn-add" id="add-both">Add</button>
+        </div>
+      </div>
+
+      <!-- HARD LIMITS -->
+      <div class="form-section">
+        <div class="form-section-title form-section-title--hard">⸸ Hard Limits</div>
+        <div class="pills-row pills-row--hard" id="list-hard"></div>
+        <div class="list-add-row">
+          <input class="form-input" id="input-hard" type="text" placeholder="e.g. Breath play, Bathroom play…">
+          <button class="btn-add" id="add-hard">Add</button>
+        </div>
+      </div>
+
+      <!-- YELLOW-LIGHT NOTE -->
+      <div class="form-section">
+        <div class="form-section-title">✦ Yellow-Light Note <span style="font-size:0.45rem;opacity:0.5;letter-spacing:0.1em">(optional)</span></div>
+        <textarea class="form-textarea" id="input-note" placeholder="e.g. Anything outside this card — yellow light first. Always ask."></textarea>
+      </div>
+
+      <!-- DM POLICY -->
+      <div class="form-section">
+        <div class="form-section-title">✦ DM Policy <span style="font-size:0.45rem;opacity:0.5;letter-spacing:0.1em">(optional)</span></div>
+        <textarea class="form-textarea" id="input-dm" placeholder="e.g. DMs are open. Ask before you assume."></textarea>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"></div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="bar"></div>
+    <div class="footer-sigil">⸸ ✦ ⸸</div>
+    <div class="footer-name">Mordraga</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/lore/">Lore</a>
+      <a href="/services/">Services</a>
+      <a href="/tools/">Tools</a>
+      <a href="/connect/">Connect</a>
+      <a href="https://twitch.tv/mordraga0" target="_blank">Twitch</a>
+      <a href="https://twitter.com/mordraga0" target="_blank">Twitter</a>
+    </div>
+    <div class="footer-copy">The Crypt · @Mordraga0 · she/they · ©2026</div>
+  </footer>
+
+  <script type="module" src="./scripts/main.js"></script>
+
+</body>
+</html>
