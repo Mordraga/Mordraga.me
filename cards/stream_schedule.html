@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Mordraga — Schedule</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+    :root{--black:#080808;--deep:#0f0d0f;--surface:#141014;--border:#2a1f2a;--accent:#8b1a1a;--gold:#c9a84c;--gold-dim:#8a6e2e;--text:#d4c9d4;--text-dim:#7a6d7a}
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;background:var(--black)}
+    body{display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--text);padding:0.5rem}
+    .card{width:100%;max-width:320px;background:var(--deep);border:1px solid var(--border);position:relative;overflow:hidden}
+    .card::before,.card::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--gold),var(--accent),transparent);z-index:2}
+    .card::before{top:0}.card::after{bottom:0}
+    header{text-align:center;padding:0.8rem 1rem 0.6rem;border-bottom:1px solid var(--border);background:var(--surface)}
+    .sigil{font-size:1rem;color:var(--accent);letter-spacing:0.4em;margin-bottom:0.2rem}
+    h1{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold);letter-spacing:0.08em}
+    .subtitle{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.2em;text-transform:uppercase;font-style:italic;margin-top:0.1rem}
+    footer{text-align:center;padding:0.4rem;font-size:0.6rem;color:var(--text-dim);letter-spacing:0.15em;text-transform:uppercase;background:var(--surface)}
+
+    .sched-body {
+      padding: 1.4rem 1rem 1.2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .days {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .day {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      border: 1px solid var(--gold-dim);
+      padding: 0.3rem 0.65rem;
+      background: var(--surface);
+    }
+
+    .time-block {
+      margin-bottom: 0.25rem;
+    }
+
+    .time {
+      font-size: 1.3rem;
+      color: var(--text);
+      font-style: italic;
+      letter-spacing: 0.03em;
+      line-height: 1;
+    }
+
+    .tz {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0.35rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <header>
+      <div class="sigil">⸸ ✦ ⸸</div>
+      <h1>Schedule</h1>
+      <div class="subtitle">mordraga0</div>
+    </header>
+
+    <div class="sched-body">
+      <div class="days">
+        <span class="day">Sunday</span>
+        <span class="day">Monday</span>
+        <span class="day">Thursday</span>
+      </div>
+      <div class="time-block">
+        <div class="time">4:00 PM — 8:00 PM</div>
+        <div class="tz">Eastern Standard Time</div>
+      </div>
+    </div>
+
+    <footer>The Crypt · @Mordraga0 · she/they</footer>
+  </div>
+</body>
+</html>

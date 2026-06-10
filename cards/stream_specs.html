@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Mordraga — PC Specs</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+    :root{--black:#080808;--deep:#0f0d0f;--surface:#141014;--border:#2a1f2a;--accent:#8b1a1a;--gold:#c9a84c;--gold-dim:#8a6e2e;--text:#d4c9d4;--text-dim:#7a6d7a}
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;background:var(--black)}
+    body{display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--text);padding:0.5rem}
+    .card{width:100%;max-width:320px;background:var(--deep);border:1px solid var(--border);position:relative;overflow:hidden}
+    .card::before,.card::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--gold),var(--accent),transparent);z-index:2}
+    .card::before{top:0}.card::after{bottom:0}
+    header{text-align:center;padding:0.8rem 1rem 0.6rem;border-bottom:1px solid var(--border);background:var(--surface)}
+    .sigil{font-size:1rem;color:var(--accent);letter-spacing:0.4em;margin-bottom:0.2rem}
+    h1{font-family:'Cinzel Decorative',serif;font-size:1.1rem;color:var(--gold);letter-spacing:0.08em}
+    .subtitle{font-size:0.6rem;color:var(--text-dim);letter-spacing:0.2em;text-transform:uppercase;font-style:italic;margin-top:0.1rem}
+    footer{text-align:center;padding:0.4rem;font-size:0.6rem;color:var(--text-dim);letter-spacing:0.15em;text-transform:uppercase;background:var(--surface)}
+
+    .spec-list {
+      list-style: none;
+    }
+
+    .spec-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      padding: 0.38rem 1rem;
+      border-bottom: 1px solid #1a121a;
+    }
+
+    .spec-row:last-child { border-bottom: none; }
+
+    .spec-label {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.4rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      min-width: 48px;
+      flex-shrink: 0;
+    }
+
+    .spec-val {
+      font-size: 0.75rem;
+      color: var(--text);
+      font-style: italic;
+      flex: 1;
+      line-height: 1.3;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <header>
+      <div class="sigil">⸸ ✦ ⸸</div>
+      <h1>PC Specs</h1>
+      <div class="subtitle">mordraga0</div>
+    </header>
+
+    <ul class="spec-list">
+      <li class="spec-row">
+        <span class="spec-label">OS</span>
+        <span class="spec-val">Linux Mint 22.3 Zena</span>
+      </li>
+      <li class="spec-row">
+        <span class="spec-label">Mobo</span>
+        <span class="spec-val">ASUS ROG STRIX B450-F GAMING</span>
+      </li>
+      <li class="spec-row">
+        <span class="spec-label">CPU</span>
+        <span class="spec-val">AMD Ryzen 5 5500 · 6-core/12-thread · up to 4.27 GHz</span>
+      </li>
+      <li class="spec-row">
+        <span class="spec-label">GPU</span>
+        <span class="spec-val">NVIDIA GeForce RTX 3060</span>
+      </li>
+      <li class="spec-row">
+        <span class="spec-label">RAM</span>
+        <span class="spec-val">16 GB</span>
+      </li>
+      <li class="spec-row">
+        <span class="spec-label">Storage</span>
+        <span class="spec-val">465 GB NVMe (WD) · 931 GB External</span>
+      </li>
+      <li class="spec-row">
+        <span class="spec-label">Headset</span>
+        <span class="spec-val">Kingston HyperX 7.1</span>
+      </li>
+      <li class="spec-row">
+        <span class="spec-label">Webcam</span>
+        <span class="spec-val">EMEET HD C950</span>
+      </li>
+    </ul>
+
+    <footer>The Crypt · @Mordraga0 · she/they</footer>
+  </div>
+</body>
+</html>

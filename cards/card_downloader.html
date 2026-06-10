@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Mordraga — Card Downloader</title>
+  <link rel="stylesheet" href="../crypt.css">
+  <style>
+    body { background: var(--black); }
+
+    .page-header {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header .sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.75rem;
+    }
+
+    .page-header h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--text-dim);
+    }
+
+    .cards-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+    }
+
+    .reference-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .reference-card-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--gold-dim);
+      padding: 1.5rem;
+      max-height: 220px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: max-height 0.45s ease, border-color 0.2s ease;
+    }
+
+    .reference-card-slot::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: linear-gradient(to bottom, transparent, var(--deep));
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .reference-card-slot:hover::after,
+    .reference-card-slot.expanded::after {
+      opacity: 0;
+    }
+
+    .reference-card-label {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .reference-card-frame {
+      width: 400px;
+      height: 500px;
+      border: none;
+      pointer-events: none;
+      display: block;
+    }
+
+    .reference-card-slot .btn { font-size: 0.5rem; }
+
+    .section-label {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      padding-top: 2rem;
+    }
+
+    .section-label:first-child { padding-top: 0; }
+
+    .download-all-wrapper {
+      text-align: center;
+    }
+
+    .download-all-wrapper .btn { font-size: 0.5rem; }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <span class="nav-brand">Mordraga</span>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/lore/">Lore</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/">Tools</a></li>
+        <li><a href="/connect/">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <div class="sigil">⸸ ✦ ⸸</div>
+    <h1>Card Downloader</h1>
+    <p>Private card dump. How did you even get here?
+    </p>
+  </div>
+
+  <div class="cards-wrap">
+
+    <div class="section-label">Service Cards</div>
+    <div class="reference-cards">
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">Tech Services</div>
+        <iframe id="frame-tech" src="tech.html" scrolling="no" class="reference-card-frame" title="Tech Card"></iframe>
+        <button id="dl-tech" class="btn btn-gold">⬇ Save Tech Card</button>
+      </div>
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">Fansly Pricing</div>
+        <iframe id="frame-fansly" src="fansly.html" scrolling="no" class="reference-card-frame" title="Fansly Card"></iframe>
+        <button id="dl-fansly" class="btn btn-gold">⬇ Save Fansly Card</button>
+      </div>
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">Boundaries &amp; Consent</div>
+        <iframe id="frame-boundaries" src="boundaries.html" scrolling="no" class="reference-card-frame" title="Boundaries Card"></iframe>
+        <button id="dl-boundaries" class="btn btn-gold">⬇ Save Boundaries Card</button>
+      </div>
+
+    </div>
+
+    <div class="section-label">Stream Panels</div>
+    <div class="reference-cards">
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">Schedule</div>
+        <iframe id="frame-schedule" src="stream_schedule.html" scrolling="no" class="reference-card-frame" title="Schedule Card"></iframe>
+        <button id="dl-schedule" class="btn btn-gold">⬇ Save Schedule</button>
+      </div>
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">Social Links</div>
+        <iframe id="frame-socials" src="stream_socials.html" scrolling="no" class="reference-card-frame" title="Socials Card"></iframe>
+        <button id="dl-socials" class="btn btn-gold">⬇ Save Socials</button>
+      </div>
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">Rules of the Crypt</div>
+        <iframe id="frame-rules" src="stream_rules.html" scrolling="no" class="reference-card-frame" title="Rules Card"></iframe>
+        <button id="dl-rules" class="btn btn-gold">⬇ Save Rules</button>
+      </div>
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">About Me</div>
+        <iframe id="frame-about" src="stream_about.html" scrolling="no" class="reference-card-frame" title="About Card"></iframe>
+        <button id="dl-about" class="btn btn-gold">⬇ Save About</button>
+      </div>
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">Mai Commands</div>
+        <iframe id="frame-mai" src="stream_mai.html" scrolling="no" class="reference-card-frame" title="Mai Commands Card"></iframe>
+        <button id="dl-mai" class="btn btn-gold">⬇ Save Mai</button>
+      </div>
+
+      <div class="reference-card-slot">
+        <div class="reference-card-label">PC Specs</div>
+        <iframe id="frame-specs" src="stream_specs.html" scrolling="no" class="reference-card-frame" title="PC Specs Card"></iframe>
+        <button id="dl-specs" class="btn btn-gold">⬇ Save Specs</button>
+      </div>
+
+    </div>
+
+    <div class="download-all-wrapper">
+      <button id="dl-all" class="btn btn-ghost">⬇ Download All Cards</button>
+    </div>
+  </div>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    (function () {
+      var cards = [
+        { frameId: 'frame-tech',        btnId: 'dl-tech',        filename: 'mordraga-tech.png' },
+        { frameId: 'frame-fansly',      btnId: 'dl-fansly',      filename: 'mordraga-fansly.png' },
+        { frameId: 'frame-boundaries',  btnId: 'dl-boundaries',  filename: 'mordraga-boundaries.png' },
+        { frameId: 'frame-schedule',    btnId: 'dl-schedule',    filename: 'mordraga-stream-schedule.png' },
+        { frameId: 'frame-socials',     btnId: 'dl-socials',     filename: 'mordraga-stream-socials.png' },
+        { frameId: 'frame-rules',       btnId: 'dl-rules',       filename: 'mordraga-stream-rules.png' },
+        { frameId: 'frame-about',       btnId: 'dl-about',       filename: 'mordraga-stream-about.png' },
+        { frameId: 'frame-mai',         btnId: 'dl-mai',         filename: 'mordraga-stream-mai.png' },
+        { frameId: 'frame-specs',       btnId: 'dl-specs',       filename: 'mordraga-stream-specs.png' },
+      ];
+
+      function autoSize(frame) {
+        frame.addEventListener('load', function () {
+          var card = frame.contentDocument.querySelector('.card');
+          if (card) frame.style.height = (card.scrollHeight + 16) + 'px';
+        });
+      }
+
+      function downloadCard(frame, filename, cb) {
+        var card = frame.contentDocument.querySelector('.card');
+        if (!card) { if (cb) cb(); return; }
+        html2canvas(card, { scale: 2, useCORS: true }).then(function (canvas) {
+          var a = document.createElement('a');
+          a.download = filename;
+          a.href = canvas.toDataURL('image/png');
+          a.click();
+          if (cb) cb();
+        });
+      }
+
+      cards.forEach(function (c) {
+        var frame = document.getElementById(c.frameId);
+        autoSize(frame);
+        document.getElementById(c.btnId).addEventListener('click', function () {
+          downloadCard(frame, c.filename);
+        });
+      });
+
+      document.getElementById('dl-all').addEventListener('click', function () {
+        cards.forEach(function (c, i) {
+          setTimeout(function () {
+            downloadCard(document.getElementById(c.frameId), c.filename);
+          }, i * 300);
+        });
+      });
+
+      document.querySelectorAll('.reference-card-slot').forEach(function (slot) {
+        var fullHeight = 0;
+
+        function measure() {
+          slot.style.transition = 'none';
+          slot.style.maxHeight = 'none';
+          fullHeight = slot.scrollHeight;
+          slot.style.maxHeight = '';
+          slot.offsetHeight;
+          slot.style.transition = '';
+        }
+
+        var iframe = slot.querySelector('iframe');
+        if (iframe) {
+          iframe.addEventListener('load', function () {
+            setTimeout(measure, 0);
+          });
+        }
+
+        function expand()   { if (fullHeight) slot.style.maxHeight = fullHeight + 'px'; }
+        function collapse() { slot.style.maxHeight = ''; }
+
+        slot.addEventListener('mouseenter', expand);
+        slot.addEventListener('mouseleave', function () {
+          if (!slot.classList.contains('expanded')) collapse();
+        });
+
+        slot.addEventListener('click', function (e) {
+          if (!e.target.closest('.btn')) {
+            slot.classList.toggle('expanded');
+            slot.classList.contains('expanded') ? expand() : collapse();
+          }
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
