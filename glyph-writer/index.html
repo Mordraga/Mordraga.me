@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glyph Writer — Mordraga</title>
+  <meta name="description" content="Sigil generator. Draw your intent into form.">
+  <meta name="theme-color" content="#8b1a1a">
+  <link rel="stylesheet" href="../crypt.css">
+  <link rel="stylesheet" href="./sigil-style.css">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="e3d8aa38-b68a-4a19-8b81-6df9f7e8701f"></script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Mordraga</a>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/lore/">Lore</a></li>
+        <li><a href="/services/">Services</a></li>
+        <li><a href="/tools/" class="active">Tools</a></li>
+        <li><a href="/connect/">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="bar bar-absolute"></div>
+    <div class="page-hero-sigil fade-up-1">⸸ ✦ ⸸</div>
+    <h1 class="fade-up-2">Glyph Writer</h1>
+    <p class="subtitle fade-up-3">Draw your intent into form.</p>
+  </section>
+
+  <!-- TOOL -->
+  <main class="sigil-main">
+    <div class="sigil-layout">
+
+      <!-- CANVAS -->
+      <div class="canvas-panel card">
+        <canvas id="sigilCanvas"></canvas>
+        <div class="canvas-actions">
+          <button id="generateBtn" class="btn btn-gold">Generate</button>
+          <button id="exportBtn" class="btn btn-ghost">Export</button>
+        </div>
+      </div>
+
+      <!-- SETTINGS — class="settings-card" required by sigil-dom.js -->
+      <div class="settings-panel settings-card">
+
+        <details class="sigil-section card" open>
+          <summary class="sigil-summary">Input</summary>
+          <div class="sigil-section-body">
+            <input class="crypt-input" type="text" id="sigilText" placeholder="Enter sigil text…" />
+            <div class="sigil-checks">
+              <label><input type="checkbox" id="stripVowels"> Strip vowels</label>
+              <label><input type="checkbox" id="showInnerLabels"> Label path</label>
+            </div>
+          </div>
+        </details>
+
+        <details class="sigil-section card" open>
+          <summary class="sigil-summary">Line &amp; Shadow</summary>
+          <div class="sigil-section-body">
+            <div class="sigil-row">
+              <label class="sigil-field">
+                <span>Line color</span>
+                <input type="color" id="lineColor" value="#222222">
+              </label>
+              <label class="sigil-field">
+                <span>Line width</span>
+                <input type="range" id="lineWidth" min="1" max="8" step="0.5" value="2">
+              </label>
+            </div>
+            <div class="sigil-row">
+              <label class="sigil-field">
+                <span>Shadow blur</span>
+                <input type="range" id="shadowBlur" min="0" max="12" step="1" value="0">
+              </label>
+              <label class="sigil-field">
+                <span>Shadow alpha</span>
+                <input type="range" id="shadowAlpha" min="0" max="1" step="0.05" value="0.35">
+              </label>
+            </div>
+          </div>
+        </details>
+
+        <details class="sigil-section card" open>
+          <summary class="sigil-summary">Ring &amp; Geometry</summary>
+          <div class="sigil-section-body">
+            <div class="sigil-row">
+              <label class="sigil-field">
+                <span>Background color</span>
+                <input type="color" id="backgroundColor" value="#fafafa">
+              </label>
+              <label class="sigil-field">
+                <span>Transparency <em id="backgroundAlphaValue">0%</em></span>
+                <input type="range" id="backgroundAlpha" min="0" max="1" step="0.05" value="0">
+              </label>
+              <label class="sigil-field">
+                <span>Margin <em id="backgroundRingValue">0 px</em></span>
+                <input type="range" id="backgroundRingOffset" min="0" max="40" step="2" value="0">
+              </label>
+            </div>
+            <div class="sigil-checks">
+              <label><input type="checkbox" id="showGlyphs" checked> Show outer symbols</label>
+              <label><input type="checkbox" id="showOuterLabels"> Show ring letters</label>
+              <label><input type="checkbox" id="enforceSpacing" checked> Spread points</label>
+              <label><input type="checkbox" id="closePath"> Close sigil path</label>
+            </div>
+            <div class="sigil-row">
+              <label class="sigil-field">
+                <span>Glyph set</span>
+                <select class="crypt-input" id="glyphSet">
+                  <option value="alchemical" selected>Alchemical</option>
+                  <option value="runic">Runic</option>
+                  <option value="greek">Greek</option>
+                  <option value="coptic">Coptic</option>
+                  <option value="ogham">Ogham</option>
+                  <option value="hieroglyphs">Hieroglyphs</option>
+                </select>
+              </label>
+              <label class="sigil-field">
+                <span>Rotate <em><span id="rotationValue">0</span>°</em></span>
+                <input type="range" id="rotationOffset" min="-180" max="180" step="5" value="0">
+              </label>
+            </div>
+          </div>
+        </details>
+
+        <details class="sigil-section card">
+          <summary class="sigil-summary">Export</summary>
+          <div class="sigil-section-body">
+            <div class="sigil-row">
+              <label class="sigil-field">
+                <span>Format</span>
+                <select class="crypt-input" id="exportFormat">
+                  <option value="png" selected>PNG</option>
+                  <option value="jpeg">JPEG</option>
+                  <option value="svg">SVG</option>
+                </select>
+              </label>
+              <label class="sigil-field">
+                <span>Quality <em id="exportQualityValue">92%</em></span>
+                <input type="range" id="exportQuality" min="0.5" max="1" step="0.05" value="0.92">
+              </label>
+            </div>
+            <div class="sigil-row">
+              <label class="sigil-field">
+                <span>Width (px)</span>
+                <input class="crypt-input" type="number" id="exportWidth" min="100" max="2000" step="10" value="400">
+              </label>
+              <label class="sigil-field">
+                <span>Height (px)</span>
+                <input class="crypt-input" type="number" id="exportHeight" min="100" max="2000" step="10" value="400">
+              </label>
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="bar"></div>
+    <div class="footer-sigil">⸸ ✦ ⸸</div>
+    <div class="footer-name">Mordraga</div>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/lore/">Lore</a>
+      <a href="/services/">Services</a>
+      <a href="/tools/">Tools</a>
+      <a href="/connect/">Connect</a>
+    </div>
+    <div class="footer-copy">The Crypt · @Mordraga0 · she/they · ©2026</div>
+  </footer>
+
+  <script type="module" src="scripts/alpha-color-picker.js?v=20260116"></script>
+  <script type="module" src="scripts/sigil-dom.js?v=20260116"></script>
+</body>
+</html>
