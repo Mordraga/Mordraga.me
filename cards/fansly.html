@@ -108,31 +108,6 @@
       background: var(--surface);
     }
 
-    .card-h2 {
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 0.55rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 0.4rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .card-h2::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .card-h2--gold { color: var(--gold); }
-    .card-h2--dim  { color: var(--text-dim); }
-    .card-h2--yes  { color: var(--yes-text); }
-    .card-h2--no   { color: var(--no-text); }
-    .card-h2--red  { color: var(--accent); }
-  </style>
-  <style>
     .tiers {
       padding: 0.6rem 0.8rem;
       display: flex;
@@ -295,6 +270,14 @@
       color: var(--text-dim);
     }
 
+    .ppv-item .ppv-note,
+    .ppv-item-full .ppv-note {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      font-style: italic;
+      margin-top: 0.15rem;
+    }
+
     .dm {
       padding: 0.5rem 0.8rem;
       border-bottom: 1px solid var(--border);
@@ -325,7 +308,6 @@
       color: var(--text);
       line-height: 1.5;
     }
-
   </style>
 </head>
 <body>
@@ -345,11 +327,13 @@
           <span class="tier-name">Devoted</span>
           <span class="tier-price">$5<span>/mo</span></span>
         </div>
-        <div class="tier-desc">Welcome to the spicy part of the crypt~ Astarte is pleased to see you.</div>
+        <div class="tier-desc">Welcome to the spicy part of the crypt~ Astarte is pleased to see you. The door is open.</div>
         <ul class="tier-perks">
           <li>Full explicit photo &amp; video feed</li>
           <li>PPV access unlocked</li>
           <li>Priority DM response</li>
+          <li>Custom content requests open</li>
+          <li>DMs open — I decide the vibe</li>
         </ul>
       </div>
 
@@ -361,8 +345,7 @@
         <div class="tier-desc">Closest proximity. The altar knows your name.</div>
         <ul class="tier-perks">
           <li>Everything in Devoted</li>
-          <li>Custom content requests open</li>
-          <li>DMs open — I decide the vibe</li>
+          <li>Interactive sessions available</li>
           <li>One free content piece per month. Video, audio, or photo set. You pick.</li>
         </ul>
       </div>
@@ -401,10 +384,26 @@
           <div class="ppv-price">$15–30<span> / 5–10 photos</span></div>
         </div>
 
-        <span class="ppv-content-type">Other</span>
+        <span class="ppv-content-type">Interactive Sessions</span>
+        <div class="ppv-item">
+          <div class="ppv-type">10 minutes</div>
+          <div class="ppv-price">$50</div>
+          <div class="ppv-note">$5/min</div>
+        </div>
+        <div class="ppv-item">
+          <div class="ppv-type">20 minutes</div>
+          <div class="ppv-price">$90</div>
+          <div class="ppv-note">$4.50/min</div>
+        </div>
+        <div class="ppv-item">
+          <div class="ppv-type">30 minutes</div>
+          <div class="ppv-price">$120</div>
+          <div class="ppv-note">$4/min</div>
+        </div>
         <div class="ppv-item-full">
-          <div class="ppv-type">Full Custom Request</div>
-          <div class="ppv-price">Varies<span> — DM to request, quote provided after review</span></div>
+          <div class="ppv-type">60 minutes</div>
+          <div class="ppv-price">$210</div>
+          <div class="ppv-note">$3.50/min · Vessel only · paid upfront · DM to book</div>
         </div>
 
       </div>
