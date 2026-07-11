@@ -29,6 +29,17 @@
       line-height: 1.4;
     }
 
+    .section-title {
+      display: block;
+      padding: 0.5rem 1rem 0.3rem;
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
     .cmd-list {
       list-style: none;
     }
@@ -51,7 +62,6 @@
 
     .cmd-name::before {
       content: '!';
-      color: var(--accent);
     }
 
     .cmd-desc {
@@ -66,12 +76,12 @@
   <div class="card">
     <header>
       <div class="sigil">⸸ ✦ ⸸</div>
-      <h1>Mai</h1>
-      <div class="subtitle">AI Stream Companion</div>
+      <h1>Commands</h1>
+      <div class="subtitle">Interactive stuff~</div>
     </header>
 
-    <div class="intro">An AI I developed and actively maintain — talk to her, she talks back~</div>
-
+    <div class="intro">A small list of commands you can use! Some are routed through Mai's AI, other's not~</div>
+    <span class="section-title">Mai Commands</span>
     <ul class="cmd-list">
       <li class="cmd-item">
         <div class="cmd-name">lurk</div>
@@ -93,7 +103,25 @@
         <div class="cmd-name">spicytwitch</div>
         <div class="cmd-desc">Where to find my... other stuff.</div>
       </li>
+      <span class="section-title">Fun Commands</span>
+      <li class="cmd-item">
+        <div class="cmd-name">degen</div>
+        <div class="cmd-desc">How much of a degenerate you are? Let Mai decide!</div>
+      </li>
+      <li class="cmd-item">
+        <div class="cmd-name">intriguing</div>
+        <div class="cmd-desc">How intriguing you are to Mai?</div>
+      </li>
+      <li class="cmd-item">
+        <div class="cmd-name">bonk</div>
+        <div class="cmd-desc">Smack me with a hammer~</div>
+      </li>
+      <li class="cmd-item">
+        <div class="cmd-name">hug @{user}</user></div>
+        <div class="cmd-desc">Give the specified user a hug~</div>
+      </li>
     </ul>
+
 
     <footer>The Crypt · @Mordraga0 · she/they</footer>
   </div>
