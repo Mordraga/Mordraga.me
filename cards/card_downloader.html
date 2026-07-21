@@ -246,7 +246,7 @@
       function downloadCard(frame, filename, cb) {
         var card = frame.contentDocument.querySelector('.card');
         if (!card) { if (cb) cb(); return; }
-        html2canvas(card, { scale: 2, useCORS: true }).then(function (canvas) {
+        html2canvas(card, { scale: 3, useCORS: true }).then(function (canvas) {
           var a = document.createElement('a');
           a.download = filename;
           a.href = canvas.toDataURL('image/png');
