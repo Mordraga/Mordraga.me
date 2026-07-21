@@ -24,7 +24,7 @@ function renderRoles() {
   </div>`;
 }
 
-function renderItems(items, cls) {
+function renderItems(items) {
   return items.map(i => `<li>${esc(i)}</li>`).join('');
 }
 

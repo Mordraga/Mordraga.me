@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Mordraga — Dom</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+    :root {
+      --black:    #080808;
+      --deep:     #0f0d0f;
+      --surface:  #141014;
+      --border:   #2a1f2a;
+      --accent:   #8b1a1a;
+      --accent-dim: #5c1212;
+      --gold:     #c9a84c;
+      --gold-dim: #8a6e2e;
+      --text:     #d4c9d4;
+      --text-dim: #7a6d7a;
+      --yes-text: #7fc97f;
+      --no-text:  #c97f7f;
+      --dom-text: #8b0000;
+      --sub-text: #4a0e4e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--black);
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      color: var(--text);
+      padding: 0.5rem;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before,
+    .card::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
+      z-index: 2;
+    }
+    .card::before { top: 0; }
+    .card::after  { bottom: 0; }
+
+    header {
+      text-align: center;
+      padding: 0.8rem 1rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .subtitle {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-top: 0.1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 0.4rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--surface);
+    }
+  </style>
+  <style>
+    /* SAFEWORDS */
+    .safewords {
+      display: flex;
+      justify-content: center;
+      gap: 0.8rem;
+      padding: 0.5rem 1rem;
+      background: #0a080a;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sw {
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-style: italic;
+    }
+
+    .sw .dot { font-size: 0.85rem; line-height: 1; }
+    .sw.green .dot { color: #4caf50; }
+    .sw.yellow .dot { color: #ffc107; }
+    .sw.red .dot { color: #f44336; }
+    .sw.green { color: #7fc97f; }
+    .sw.yellow { color: #c9a84c; }
+    .sw.red { color: #c97f7f; }
+
+    /* BDSM BADGES */
+    .bdsm-bar {
+      display: flex;
+      flex-direction: column;
+      padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .bdsm-label {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
+
+    .badge {
+      font-size: 0.68rem;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid var(--gold-dim);
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    /* SECTIONS */
+    .section {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .section h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .dom-header { color: var(--dom-text); }
+
+    ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    ul + h3 {
+      margin-top: 0.4rem;
+    }
+
+    li {
+      font-size: 0.78rem;
+      padding: 0.2rem 0.4rem 0.2rem 0.8rem;
+      line-height: 1.3;
+      position: relative;
+    }
+
+    h3 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    li::before {
+      content: '·';
+      position: absolute;
+      left: 0.15rem;
+      font-size: 1rem;
+      line-height: 1;
+      top: 0.1rem;
+    }
+
+    .dom-col li { background: #1a0a0a; color: var(--dom-text); }
+    .dom-col li::before { color: var(--dom-text); }
+
+    /* TASK / REWARD MECHANICS */
+    .task-breakdown li,
+    .reward-breakdown li {
+      background: var(--surface);
+      border-left: 2px solid var(--gold-dim);
+      color: var(--text);
+      padding-left: 0.9rem;
+    }
+
+    .task-breakdown li::before,
+    .reward-breakdown li::before {
+      content: '→';
+      color: var(--gold);
+      font-size: 0.7rem;
+      top: 0.25rem;
+    }
+
+    .task-breakdown li strong,
+    .reward-breakdown li strong,
+    .reward-note p strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .reward-note {
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      background: #0f0d08;
+      border-left: 2px solid var(--gold-dim);
+    }
+
+    .reward-note p {
+      font-size: 0.72rem;
+      color: var(--gold);
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    /* YELLOW NOTE */
+    .yellow-note {
+      padding: 0.4rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      background: #0f0d08;
+      font-size: 0.72rem;
+      color: #c9a84c;
+      font-style: italic;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+
+    /* DM */
+    .dm-section {
+      padding: 0.5rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dm-section h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .dm-section p {
+      font-size: 0.78rem;
+      color: var(--text);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <header>
+      <div class="sigil">⸸ ✦ ⸸</div>
+      <h1>Mordraga</h1>
+      <div class="subtitle">Dom Boundaries & Consent Card</div>
+    </header>
+
+    <div class="safewords">
+      <span class="sw green"><span class="dot">●</span> "Green Light"</span>
+      <span class="sw yellow"><span class="dot">●</span> "Yellow Light/Pause"</span>
+      <span class="sw red"><span class="dot">●</span> "Receipt"</span>
+      <span class="sw green"><span class="dot">●</span>CNC Aware. Negiotiate first.</span>
+    </div>
+
+    <div class="bdsm-bar">
+      <div class="bdsm-label">Titles</div>
+      <div class="badges">
+        <span class="badge">Master</span>
+        <span class="badge">Mistress</span>
+        <span class="badge">Goddess</span>
+        <span class="badge">Mommy</span>
+      </div>
+    </div>
+
+    <div class="section dom-col">
+      <h3 class="dom-header">Style</h3>
+      <ul>
+        <li>Goal Oriented Task Giver: I assign, you complete</li>
+        <li>Spoil with Rewards for good behavior.</li>
+        <li>Soft Dom</li>
+        <li>Rope Bondage</li>
+      </ul>
+
+      <h3 class="dom-header">Punishments</h3>
+      <ul>
+        <li>Humiliation (Public)</li>
+        <li>Humiliation (Private)</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3 class="dom-header">How tasks work</h3>
+      <ul class="task-breakdown">
+        <li>Tasks are assigned by me, and you complete them.</li>
+        <li>Tasks can be anything from simple chores to more complex challenges.</li>
+        <li>Completion of tasks will be a reward of your choice.</li>
+        <li>Partial completion will be a reward of <strong>my</strong> choice.</li>
+        <li>Failure to complete a task will result in a punishment of <strong>my</strong> choice.</li>
+        <li>Tasks will be assigned with a clear deadline and expectations.</li>
+        <li>Communication is key: if a task is unclear or unmanageable, let me know.</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3 class="dom-header">Rewards</h3>
+      <ul class="reward-breakdown">
+        <li>Rewards can be anything from praise, affection, or a special treat.</li>
+        <li>Rewards will be given based on the quality and timeliness of task completion.</li>
+        <li>Rewards can be negotiated before task assignment if desired.</li>
+        <li>Rewards will be given in a timely manner after task completion.</li>
+      </ul>
+      <div class="reward-note">
+        <p>Note: Rewards are a privilege, not a right. They are given at my discretion based on your behavior and task completion. Sometimes dog's get treats. Sometimes they don't.</p>
+      </div>
+    </div>
+
+    <div class="yellow-note">
+      🟡 Just tell me what you want sweetie and I'll do my best to give it to you~
+    </div>
+
+    <div class="dm-section">
+      <h2>⸸ DM Policy</h2>
+      <p>DMs are open. I do what I want. Sometimes free, sometimes not — I decide based on vibes. Don't push it.</p>
+    </div>
+
+    <footer>The Crypt · @Mordraga0 · she/they</footer>
+
+  </div>
+</body>
+</html>

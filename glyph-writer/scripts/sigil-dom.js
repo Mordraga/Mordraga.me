@@ -101,7 +101,6 @@ if (exportBtn) {
     handleGenerate();
     exportSigil();
   });
-  rerenderEvents.forEach(evt => exportBtn.addEventListener(evt, requestRender));
 }
 
 const CONTROL_IDS = [
@@ -113,8 +112,6 @@ const CONTROL_IDS = [
   'rotationOffset',
   'lineWidth',
   'lineColor',
-  'backgroundColor',
-  'backgroundAlpha',
   'backgroundRingOffset',
   'shadowBlur',
   'shadowAlpha',
@@ -137,7 +134,7 @@ initAlphaColorPicker({
   colorInputId: 'backgroundColor',
   alphaInputId: 'backgroundAlpha',
   alphaLabelId: 'backgroundAlphaValue',
-  onChange: handleGenerate
+  onChange: requestRender
 });
 updateExportQualityLabel();
 updateBackgroundRingLabel();

@@ -316,6 +316,18 @@
           <button id="download-boundaries-btn" class="btn btn-gold">⬇ Save Boundaries Card</button>
         </div>
 
+        <div class="reference-card-slot">
+          <div class="reference-card-label">Dom Card</div>
+          <iframe
+            id="dom-frame"
+            src="../cards/dom.html"
+            scrolling="no"
+            class="reference-card-frame"
+            title="Mordraga Dom Card"
+          ></iframe>
+          <button id="download-dom-btn" class="btn btn-gold">⬇ Save Dom Card</button>
+        </div>
+
       </div>
 
       <div class="download-all-wrapper">
@@ -331,10 +343,10 @@
       <h2>Dom Services</h2>
       <div class="bar-thin"></div>
       <blockquote class="dom-quote">
-        I'm naturally flirty and a switch, so if I end up dominant in your dynamic, it happened for a reason. My style reads the room. Soft when you need held, rough when you need broken. I'm a rigger by nature, control through rope, through presence, through knowing exactly what I'm doing and why.
+        I'm not a stereotypical dominatrix. I exist to motivate you in a fun way, while still being fully capable of putting you in your place. My style: I assign tasks, you complete them. Good behavior gets spoiled with rewards of your choosing. Slip up, and humiliation — public or private — is the price.
       </blockquote>
       <p>
-        I don't charge for this. If it meant something, my Ko-fi is there. If you want to talk, my DMs are open. We talk first. Always.
+        I don't charge for this. If it meant something, my Ko-fi is there. If you want to talk, my DMs are open. We talk first. Always. Full breakdown of how tasks, rewards, and punishments work is on my <a href="../cards/dom.html" target="_blank">Dom Card</a> above.
       </p>
       <div class="btn-row">
         <a href="https://ko-fi.com/mordraga0" class="btn btn-ghost" target="_blank">Ko-fi →</a>
@@ -366,6 +378,7 @@
       var bFrame = document.getElementById('boundaries-frame');
       var fFrame = document.getElementById('fansly-frame');
       var tframe = document.getElementById('tech-frame');
+      var dFrame = document.getElementById('dom-frame');
 
       function autoSize(frame) {
         frame.addEventListener('load', function () {
@@ -377,6 +390,7 @@
       autoSize(bFrame);
       autoSize(fFrame);
       autoSize(tframe);
+      autoSize(dFrame);
 
       function downloadCard(frame, filename, cb) {
         var card = frame.contentDocument.querySelector('.card');
@@ -402,6 +416,10 @@
         downloadCard(tframe, 'mordraga-tech.png');
       });
 
+      document.getElementById('download-dom-btn').addEventListener('click', function () {
+        downloadCard(dFrame, 'mordraga-dom.png');
+      });
+
       document.getElementById('download-all-btn').addEventListener('click', function () {
         downloadCard(bFrame, 'mordraga-boundaries.png', function () {
           setTimeout(function () {
@@ -410,6 +428,9 @@
           setTimeout(function () {
             downloadCard(tframe, 'mordraga-tech.png');
           }, 600);
+          setTimeout(function () {
+            downloadCard(dFrame, 'mordraga-dom.png');
+          }, 900);
         });
       });
     })();
