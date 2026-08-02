@@ -99,6 +99,11 @@
       display: block;
     }
 
+    /* schedule card has clickable Live/Scheduled badges — let clicks through */
+    #frame-schedule {
+      pointer-events: auto;
+    }
+
     .reference-card-slot .btn { font-size: 0.5rem; }
 
     .section-label {
@@ -119,9 +124,101 @@
     }
 
     .download-all-wrapper .btn { font-size: 0.5rem; }
+
+    /* ── LOCK OVERLAY ── */
+    .lock-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .lock-overlay.unlocked { display: none; }
+
+    .lock-card {
+      width: 100%;
+      max-width: 320px;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .lock-card::before,
+    .lock-card::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
+    }
+    .lock-card::before { top: 0; }
+    .lock-card::after  { bottom: 0; }
+
+    .lock-card .sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.75rem;
+    }
+
+    .lock-card h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.4rem;
+    }
+
+    .lock-card p {
+      font-size: 0.75rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+    }
+
+    .lock-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      padding: 0.6rem 0.8rem;
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.9rem;
+    }
+
+    .lock-input:focus { outline: none; border-color: var(--gold-dim); }
+
+    .lock-error {
+      font-size: 0.7rem;
+      color: var(--no-text, #c97f7f);
+      font-style: italic;
+      min-height: 1.2em;
+      margin-bottom: 0.6rem;
+    }
   </style>
 </head>
 <body>
+
+  <div class="lock-overlay" id="lock-overlay">
+    <div class="lock-card">
+      <div class="sigil">⸸ ✦ ⸸</div>
+      <h2>Restricted</h2>
+      <p>Passcode required.</p>
+      <input type="password" id="lock-input" class="lock-input" placeholder="passcode" autocomplete="off">
+      <div class="lock-error" id="lock-error"></div>
+      <button id="lock-submit" class="btn btn-gold">Enter</button>
+    </div>
+  </div>
 
   <nav class="site-nav">
     <div class="nav-inner">
@@ -219,6 +316,46 @@
       <button id="dl-all" class="btn btn-ghost">⬇ Download All Cards</button>
     </div>
   </div>
+
+  <script>
+    // Deterrent-only passcode gate — SHA-256 hash of the passcode, not the
+    // passcode itself. Static site, no backend: this stops casual snooping,
+    // not anyone who opens devtools. Don't reuse a real password here.
+    (function () {
+      var LOCK_HASH = 'd04f88ae7b7b008ce5b049830629b741c6e380d37aa42ab9ba23a36d5e526dd5';
+      var overlay = document.getElementById('lock-overlay');
+      var input   = document.getElementById('lock-input');
+      var error   = document.getElementById('lock-error');
+      var submit  = document.getElementById('lock-submit');
+
+      if (sessionStorage.getItem('cd_unlocked') === '1') {
+        overlay.classList.add('unlocked');
+      }
+
+      async function sha256Hex(text) {
+        var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+        return Array.from(new Uint8Array(buf)).map(function (b) {
+          return b.toString(16).padStart(2, '0');
+        }).join('');
+      }
+
+      async function tryUnlock() {
+        var hash = await sha256Hex(input.value);
+        if (hash === LOCK_HASH) {
+          sessionStorage.setItem('cd_unlocked', '1');
+          overlay.classList.add('unlocked');
+        } else {
+          error.textContent = 'Wrong passcode.';
+          input.value = '';
+        }
+      }
+
+      submit.addEventListener('click', tryUnlock);
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') tryUnlock();
+      });
+    })();
+  </script>
 
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <script>

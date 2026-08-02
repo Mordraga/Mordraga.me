@@ -6,7 +6,7 @@
   <title>Mordraga — Schedule</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
-    :root{--black:#080808;--deep:#0f0d0f;--surface:#141014;--border:#2a1f2a;--accent:#8b1a1a;--gold:#c9a84c;--gold-dim:#8a6e2e;--text:#d4c9d4;--text-dim:#7a6d7a}
+    :root{--black:#080808;--deep:#0f0d0f;--surface:#141014;--border:#2a1f2a;--accent:#8b1a1a;--gold:#c9a84c;--gold-dim:#8a6e2e;--text:#d4c9d4;--text-dim:#7a6d7a;--yes-text:#7fc97f}
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;background:var(--black)}
     body{display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--text);padding:0.5rem}
@@ -40,7 +40,7 @@
 
     .day-row {
       display: flex;
-      align-items: baseline;
+      align-items: center;
       justify-content: space-between;
       gap: 0.6rem;
       padding: 0.5rem 0.2rem;
@@ -82,6 +82,33 @@
       white-space: nowrap;
     }
 
+    /* stream status badge — same tag treatment as the tools page's .tool-status */
+    .status-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.3rem;
+    }
+
+    .sched-status {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.45rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border: 1px solid;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      background: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .sched-status:hover { filter: brightness(1.3); }
+
+    .status-live     { color: var(--yes-text); border-color: var(--yes-text); }
+    .status-not-live { color: var(--text-dim); border-color: var(--border); }
+
     .tz {
       font-size: 0.58rem;
       color: var(--text-dim);
@@ -102,35 +129,58 @@
       <div class="week-of" id="week-of">Week of —</div>
     </header>
 
-    <!-- EDIT WEEKLY: update day/time/topic below every Sunday, then re-export via card_downloader.html -->
+    <!-- EDIT WEEKLY: update day/time/topic below every Sunday, then re-export via card_downloader.html.
+         Click a row's status badge to toggle Live/Scheduled while a stream is actually running. -->
     <div class="sched-body">
       <div class="day-row">
         <div class="day-info">
           <span class="day">Sunday</span>
           <span class="topic">ROR2 but Spicy</span>
         </div>
-        <span class="time">7:00 PM — 11:00 PM</span>
+        <div class="status-col">
+          <span class="sched-status status-not-live">Scheduled</span>
+          <span class="time">7:00 PM — 11:00 PM</span>
+        </div>
+      </div>
+      <div class="day-row">
+        <div class="day-info">
+          <span class="day">Tuesday</span>
+          <span class="topic">Devotional work for Astarte</span>
+        </div>
+        <div class="status-col">
+          <span class="sched-status status-not-live">Scheduled</span>
+          <span class="time">7:00 PM — 11:00 PM</span>
+        </div>
       </div>
       <div class="day-row">
         <div class="day-info">
           <span class="day">Monday</span>
           <span class="topic">Liminal Industries returns!</span>
         </div>
-        <span class="time">7:00 PM — 11:00 PM</span>
+        <div class="status-col">
+          <span class="sched-status status-not-live">Scheduled</span>
+          <span class="time">7:00 PM — 11:00 PM</span>
+        </div>
       </div>
       <div class="day-row">
         <div class="day-info">
           <span class="day">Wednesday</span>
           <span class="topic">TBD</span>
         </div>
-        <span class="time">7:00 PM — 11:00 PM</span>
+        <div class="status-col">
+          <span class="sched-status status-not-live">Scheduled</span>
+          <span class="time">7:00 PM — 11:00 PM</span>
+        </div>
       </div>
       <div class="day-row">
         <div class="day-info">
           <span class="day">Thursday</span>
           <span class="topic">Star Technology with @ThatOtherTurtle</span>
         </div>
-        <span class="time">7:00 PM — 11:00 PM</span>
+        <div class="status-col">
+          <span class="sched-status status-not-live">Scheduled</span>
+          <span class="time">7:00 PM — 11:00 PM</span>
+        </div>
       </div>
       <div class="tz">Eastern Standard Time</div>
     </div>
@@ -146,6 +196,15 @@
     sunday.setDate(today.getDate() + daysUntilSunday);
     document.getElementById('week-of').textContent =
       'Week of ' + sunday.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+    // Click a status badge to toggle Live/Scheduled
+    document.querySelectorAll('.sched-status').forEach(function (badge) {
+      badge.addEventListener('click', function () {
+        var live = badge.classList.toggle('status-live');
+        badge.classList.toggle('status-not-live', !live);
+        badge.textContent = live ? 'Live' : 'Scheduled';
+      });
+    });
   </script>
 </body>
 </html>
