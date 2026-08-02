@@ -224,10 +224,12 @@
     <div class="lock-card">
       <div class="sigil">⸸ ✦ ⸸</div>
       <h2>Restricted</h2>
+      <p>Authorized F.E.T.B. Researchers Only</p>
       <p>Passcode required.</p>
       <input type="password" id="lock-input" class="lock-input" placeholder="passcode" autocomplete="off">
       <div class="lock-error" id="lock-error"></div>
       <button id="lock-submit" class="btn btn-gold">Enter</button>
+      <button id="lock-back" class="btn btn-ghost" onclick="window.location.href='/'">Back to Home</button>
     </div>
   </div>
 
@@ -425,6 +427,12 @@
       });
 
       document.querySelectorAll('.reference-card-slot').forEach(function (slot) {
+        // pinned slot (schedule) stays permanently open — skip the hover
+        // expand/collapse wiring entirely so it can't snap shut, and so
+        // moving the mouse into its clickable iframe can't cross a
+        // document boundary and misfire mouseleave on this element.
+        if (slot.classList.contains('reference-card-slot--pinned')) return;
+
         var fullHeight = 0;
 
         function measure() {
