@@ -99,7 +99,18 @@
       display: block;
     }
 
-    /* schedule card has clickable Live/Scheduled badges — let clicks through */
+    /* schedule card is the interactive outlier — always open, clickable, no hover-collapse */
+    .reference-card-slot--pinned {
+      max-height: none;
+      overflow: visible;
+      cursor: default;
+      margin-bottom: 3rem;
+    }
+
+    .reference-card-slot--pinned::after {
+      display: none;
+    }
+
     #frame-schedule {
       pointer-events: auto;
     }
@@ -242,6 +253,17 @@
 
   <div class="cards-wrap">
 
+    <div class="section-label">This Week — Live Editor</div>
+    <div class="reference-cards">
+
+      <div class="reference-card-slot reference-card-slot--pinned">
+        <div class="reference-card-label">Click badges to toggle Manifest / Veiled</div>
+        <iframe id="frame-schedule" src="stream_schedule.html" scrolling="no" class="reference-card-frame" title="Schedule Card"></iframe>
+        <button id="dl-schedule" class="btn btn-gold">⬇ Save Schedule</button>
+      </div>
+
+    </div>
+
     <div class="section-label">Service Cards</div>
     <div class="reference-cards">
 
@@ -273,12 +295,6 @@
 
     <div class="section-label">Stream Panels</div>
     <div class="reference-cards">
-
-      <div class="reference-card-slot">
-        <div class="reference-card-label">Schedule</div>
-        <iframe id="frame-schedule" src="stream_schedule.html" scrolling="no" class="reference-card-frame" title="Schedule Card"></iframe>
-        <button id="dl-schedule" class="btn btn-gold">⬇ Save Schedule</button>
-      </div>
 
       <div class="reference-card-slot">
         <div class="reference-card-label">Social Links</div>

@@ -82,6 +82,15 @@
       white-space: nowrap;
     }
 
+    /* click-to-edit fields — content lives in localStorage, not source */
+    [contenteditable="true"] {
+      cursor: text;
+      outline: none;
+      border-bottom: 1px dotted var(--border);
+    }
+    [contenteditable="true"]:hover  { border-bottom-color: var(--gold-dim); }
+    [contenteditable="true"]:focus  { border-bottom-color: var(--gold); }
+
     /* stream status badge — same tag treatment as the tools page's .tool-status */
     .status-col {
       display: flex;
@@ -129,57 +138,60 @@
       <div class="week-of" id="week-of">Week of —</div>
     </header>
 
-    <!-- EDIT WEEKLY: update day/time/topic below every Sunday, then re-export via card_downloader.html.
-         Click a row's status badge to toggle Live/Scheduled while a stream is actually running. -->
+    <!-- EDIT WEEKLY: day names below are structural (they key localStorage — don't rename lightly).
+         Topic and time are click-to-edit in the browser and persist via localStorage; the "TBD"
+         here is just the fallback shown before you've ever set a value on this browser.
+         Click a row's status badge to toggle Manifest/Veiled while a stream is actually running.
+         Re-export via card_downloader.html whenever you're ready to post. -->
     <div class="sched-body">
       <div class="day-row">
         <div class="day-info">
           <span class="day">Sunday</span>
-          <span class="topic">ROR2 but Spicy</span>
+          <span class="topic" contenteditable="true" data-key="sunday-topic">TBD</span>
         </div>
         <div class="status-col">
-          <span class="sched-status status-not-live">Scheduled</span>
-          <span class="time">7:00 PM — 11:00 PM</span>
+          <span class="sched-status status-not-live">Veiled</span>
+          <span class="time" contenteditable="true" data-key="sunday-time">TBD</span>
         </div>
       </div>
       <div class="day-row">
         <div class="day-info">
           <span class="day">Tuesday</span>
-          <span class="topic">Devotional work for Astarte</span>
+          <span class="topic" contenteditable="true" data-key="tuesday-topic">TBD</span>
         </div>
         <div class="status-col">
-          <span class="sched-status status-not-live">Scheduled</span>
-          <span class="time">7:00 PM — 11:00 PM</span>
+          <span class="sched-status status-not-live">Veiled</span>
+          <span class="time" contenteditable="true" data-key="tuesday-time">TBD</span>
         </div>
       </div>
       <div class="day-row">
         <div class="day-info">
           <span class="day">Monday</span>
-          <span class="topic">Liminal Industries returns!</span>
+          <span class="topic" contenteditable="true" data-key="monday-topic">TBD</span>
         </div>
         <div class="status-col">
-          <span class="sched-status status-not-live">Scheduled</span>
-          <span class="time">7:00 PM — 11:00 PM</span>
+          <span class="sched-status status-not-live">Veiled</span>
+          <span class="time" contenteditable="true" data-key="monday-time">TBD</span>
         </div>
       </div>
       <div class="day-row">
         <div class="day-info">
           <span class="day">Wednesday</span>
-          <span class="topic">TBD</span>
+          <span class="topic" contenteditable="true" data-key="wednesday-topic">TBD</span>
         </div>
         <div class="status-col">
-          <span class="sched-status status-not-live">Scheduled</span>
-          <span class="time">7:00 PM — 11:00 PM</span>
+          <span class="sched-status status-not-live">Veiled</span>
+          <span class="time" contenteditable="true" data-key="wednesday-time">TBD</span>
         </div>
       </div>
       <div class="day-row">
         <div class="day-info">
           <span class="day">Thursday</span>
-          <span class="topic">Star Technology with @ThatOtherTurtle</span>
+          <span class="topic" contenteditable="true" data-key="thursday-topic">TBD</span>
         </div>
         <div class="status-col">
-          <span class="sched-status status-not-live">Scheduled</span>
-          <span class="time">7:00 PM — 11:00 PM</span>
+          <span class="sched-status status-not-live">Veiled</span>
+          <span class="time" contenteditable="true" data-key="thursday-time">TBD</span>
         </div>
       </div>
       <div class="tz">Eastern Standard Time</div>
@@ -197,12 +209,27 @@
     document.getElementById('week-of').textContent =
       'Week of ' + sunday.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-    // Click a status badge to toggle Live/Scheduled
+    // Click a status badge to toggle Manifest/Veiled
     document.querySelectorAll('.sched-status').forEach(function (badge) {
       badge.addEventListener('click', function () {
         var live = badge.classList.toggle('status-live');
         badge.classList.toggle('status-not-live', !live);
-        badge.textContent = live ? 'Live' : 'Scheduled';
+        badge.textContent = live ? 'Manifest' : 'Veiled';
+      });
+    });
+
+    // Click-to-edit topic/time fields, persisted per-browser via localStorage
+    document.querySelectorAll('[data-key]').forEach(function (el) {
+      var storageKey = 'sched_' + el.dataset.key;
+      var saved = localStorage.getItem(storageKey);
+      if (saved !== null) el.textContent = saved;
+
+      el.addEventListener('blur', function () {
+        localStorage.setItem(storageKey, el.textContent.trim());
+      });
+
+      el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
       });
     });
   </script>
