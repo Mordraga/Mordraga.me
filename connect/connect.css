@@ -28,12 +28,16 @@
 .platform-card.discord-card  { border-top: 2px solid #5865f244; }
 .platform-card.youtube-card  { border-top: 2px solid #ff000044; }
 .platform-card.fansly-card   { border-top: 2px solid var(--accent); }
+.platform-card.kofi-card     { border-top: 2px solid #ff5e5b44; }
+.platform-card.throne-card   { border-top: 2px solid #c9a84c44; }
 
 .platform-card:hover.twitch-card  { border-color: #9146ff88; }
 .platform-card:hover.twitter-card { border-color: #1d9bf088; }
 .platform-card:hover.discord-card { border-color: #5865f288; }
 .platform-card:hover.youtube-card { border-color: #ff000088; }
 .platform-card:hover.fansly-card  { border-color: var(--accent); }
+.platform-card:hover.kofi-card    { border-color: #ff5e5b88; }
+.platform-card:hover.throne-card  { border-color: #c9a84c88; }
 
 .platform-name {
   font-family: 'Cinzel Decorative', serif;
@@ -93,6 +97,43 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 2rem;
+}
+
+/* ── SUPPORT SECTION ── */
+.support-section {
+  padding: 5rem 0;
+  background: var(--deep);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+.support-section .sigil { margin-bottom: 1.5rem; }
+.support-section h2     { margin-bottom: 0.75rem; }
+
+.support-section > .container > p {
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  font-style: italic;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+.support-free {
+  margin-top: 3rem;
+}
+
+.support-free .bar-thin {
+  margin-bottom: 2rem;
+}
+
+.support-free-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 1.25rem;
 }
 
 /* ── CONTACT SECTION ── */
