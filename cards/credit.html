@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Mordraga — Credits</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+    :root {
+      --black:    #080808;
+      --deep:     #0f0d0f;
+      --surface:  #141014;
+      --border:   #2a1f2a;
+      --accent:   #8b1a1a;
+      --accent-dim: #5c1212;
+      --gold:     #c9a84c;
+      --gold-dim: #8a6e2e;
+      --text:     #d4c9d4;
+      --text-dim: #7a6d7a;
+      --yes-text: #7fc97f;
+      --no-text:  #c97f7f;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      background: var(--black);
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      color: var(--text);
+      padding: 0.5rem;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before,
+    .card::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
+      z-index: 2;
+    }
+    .card::before { top: 0; }
+    .card::after  { bottom: 0; }
+
+    header {
+      text-align: center;
+      padding: 0.8rem 1rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .subtitle {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-top: 0.1rem;
+    }
+
+    .url {
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      padding: 0.4rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: var(--surface);
+    }
+
+    .card-h2 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .card-h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .card-h2--gold { color: var(--gold); }
+    .card-h2--dim  { color: var(--text-dim); }
+    .card-h2--yes  { color: var(--yes-text); }
+    .card-h2--no   { color: var(--no-text); }
+    .card-h2--red  { color: var(--accent); }
+
+    .section {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+  </style>
+  <style>
+    .artist_group {
+      margin-bottom: 0.9rem;
+    }
+
+    .artist_group:last-child {
+      margin-bottom: 0;
+    }
+
+    .artist_name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .emote_list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .emote_portion {
+      flex: 0 0 calc((100% - 1.5rem) / 4);
+      max-width: calc((100% - 1.5rem) / 4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      text-align: center;
+    }
+
+    .emote_portion img {
+      width: 56px;
+      height: 56px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    .emote_portion p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .emote_subheading {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-style: italic;
+      margin: 0.5rem 0 0.4rem;
+      text-align: center;
+    }
+
+    .emote_subheading:first-of-type {
+      margin-top: 0;
+    }
+
+    .artist_links {
+      margin-top: 0.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .artist_group {
+      border-bottom: solid var(--border) 2px;
+      margin-bottom: 6px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <header>
+      <div class="sigil">⸸ ✦ ⸸</div>
+      <h1>Mordraga</h1>
+      <div class="subtitle">Credits</div>
+    </header>
+    <section class="section">
+      <h2 class="card-h2 card-h2--gold">✦ Emotes</h2>
+
+      <div class="artist_group">
+        <h3 class="artist_name">Misc</h3>
+        <p class="emote_subheading">Rei</p>
+        <ul class="emote_list">
+          <li class="emote_portion">
+            <img src="assets/images/Rei/smirk.png" alt="Smirk emote by Rei">
+            <p>Smirk</p>
+          </li>
+        </ul>
+        <div class="artist_links">x.com/PixxieRei</div>
+
+        <p class="emote_subheading">Specklini</p>
+        <ul class="emote_list">
+          <li class="emote_portion">
+            <img src="assets/images/specklini/Mordraga_Animated_Butt125x125(1).gif" alt="Jiggle emote by Specklini">
+            <p>Jiggle</p>
+          </li>
+        </ul>
+        <div class="artist_links">vgen.co/specklini</div>
+      </div>
+
+      <div class="artist_group">
+        <h3 class="artist_name">Mimi</h3>
+        <ul class="emote_list">
+          <li class="emote_portion">
+            <img src="assets/images/Mimi%20Emotes/1/1_56px.png" alt="Meh emote by Mimi">
+            <p>Meh</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Mimi%20Emotes/2/2_56px.png" alt="Happ emote by Mimi">
+            <p>Happ</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Mimi%20Emotes/3/3_56px.png" alt="Panicc emote by Mimi">
+            <p>Panicc</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Mimi%20Emotes/4/4_56px.png" alt="Pog emote by Mimi">
+            <p>Pog</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Mimi%20Emotes/5/5_56px.png" alt="Boreddd emote by Mimi">
+            <p>Boreddd</p>
+          </li>
+        </ul>
+        <div class="artist_links">x.com/mimi_nemra</div>
+      </div>
+
+      <div class="artist_group">
+        <h3 class="artist_name">EmoteLab</h3>
+        <p class="emote_subheading">Static</p>
+        <ul class="emote_list">
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/4k.png" alt="4k emote">
+            <p>4k</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/angry.png" alt="Angy emote">
+            <p>Angy</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/muted.png" alt="MUTED emote">
+            <p>MUTED</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/confus.png" alt="Confus emote">
+            <p>Confus</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/huh.png" alt="Huh emote">
+            <p>Huh</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/jail.png" alt="Jail emote">
+            <p>Jail</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/lurk.png" alt="Lurk emote">
+            <p>Lurk</p>
+          </li>
+        </ul>
+
+        <p class="emote_subheading">Animated</p>
+        <ul class="emote_list">
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/Mordraga_Pat_2026-06-17-16-07-27.gif" alt="Pat emote">
+            <p>Pat</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/Mordraga_Lick_2026-06-26-15-50-33.gif" alt="Lick emote">
+            <p>Lick</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/Mordraga_Lightstick%201_2026-06-18-02-07-42.gif" alt="Rave emote">
+            <p>Rave</p>
+          </li>
+          <li class="emote_portion">
+            <img src="assets/images/Emotelabs/Mordraga_Luv%201_2026-06-18-02-10-38.gif" alt="Luv emote">
+            <p>Luv</p>
+          </li>
+        </ul>
+        <div class="artist_links">store.steampowered.com/app/4301100/EmoteLab</div>
+      </div>
+    </section>
+
+    <footer>The Crypt · @Mordraga0 · she/they</footer>
+  </div>
+</body>
+</html>
