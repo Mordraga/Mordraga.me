@@ -328,6 +328,12 @@
         <button id="dl-specs" class="btn btn-gold">⬇ Save Specs</button>
       </div>
 
+      <div class="reference-card-slot">
+        <div class="reference-card-label">Credit / Emotes</div>
+        <iframe id="frame-credit" src="credit.html" scrolling="no" class="reference-card-frame" title="Credit Card"></iframe>
+        <button id="dl-credit" class="btn btn-gold">⬇ Save Credit</button>
+      </div>
+
     </div>
 
     <div class="download-all-wrapper">
@@ -338,7 +344,8 @@
   <script>
     // Deterrent-only passcode gate — SHA-256 hash of the passcode, not the
     // passcode itself. Static site, no backend: this stops casual snooping,
-    // not anyone who opens devtools. Don't reuse a real password here.
+    // not anyone who opens devtools.
+    // If you see this. Hi~!
     (function () {
       var LOCK_HASH = 'd04f88ae7b7b008ce5b049830629b741c6e380d37aa42ab9ba23a36d5e526dd5';
       var overlay = document.getElementById('lock-overlay');
