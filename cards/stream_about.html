@@ -8,7 +8,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
     :root{--black:#080808;--deep:#0f0d0f;--surface:#141014;--border:#2a1f2a;--accent:#8b1a1a;--gold:#c9a84c;--gold-dim:#8a6e2e;--text:#d4c9d4;--text-dim:#7a6d7a}
     *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;background:var(--black)}
+    html,body{height:100%;background:var(--black);max-width:400px;}
     body{display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:300;color:var(--text);padding:0.5rem}
     .card{width:100%;max-width:320px;background:var(--deep);border:1px solid var(--border);position:relative;overflow:hidden}
     .card::before,.card::after{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--gold),var(--accent),transparent);z-index:2}
@@ -22,6 +22,7 @@
     .about-list {
       list-style: none;
       padding: 0.4rem 0;
+      margin-left: 2px;
     }
 
     .about-list li {
@@ -30,6 +31,7 @@
       line-height: 1.35;
       position: relative;
       border-bottom: 1px solid #1a121a;
+      wrap: break-word;
     }
 
     .about-list li:last-child { border-bottom: none; }
@@ -53,15 +55,25 @@
     </header>
 
     <ul class="about-list">
-      <li>26 · She/They</li>
-      <li>Tend to get distracted. (woops)</li>
-      <li>Quiet but get me talking! I don't mind!</li>
-      <li>Pagan</li>
+      <h3>Basic Info</h3>
+      <li>27 · She/They</li>
+      <li>Transfemme</li>
       <li>Married/Polyam</li>
+
+      <h3>Personality</h3>
+      <li>AuDHD, so expect some interesting quirks like distractions or hyperfocus~</li>
+      <li>Colorblind, I can see colors, just have troubles with them. Specifically reds and greens~</li>
+      <li>Will yap about what I'm doing, No inner monologue. :D</li>
+
+      <h3>Interests</h3>
+      <li>Programmer and software dev</li>
+      <li>Gamer</li>
       <li>Spicy creator~</li>
+
+      <h3></h3>
     </ul>
 
-    <footer>The Crypt · @Mordraga0 · she/they</footer>
+    <footer>The Crypt · @Mordraga0 · https://mordraga.me</footer>
   </div>
 </body>
 </html>
