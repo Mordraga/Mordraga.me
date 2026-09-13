@@ -42,11 +42,30 @@
 
     .cmd-list {
       list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      max-width: 33%;
     }
 
     .cmd-item {
       padding: 0.45rem 1rem;
       border-bottom: 1px solid #1a121a;
+      margin-left: 0.2rem;
+    }
+
+    .cmd-alias {
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      margin-top: 0.2rem;
+    }
+
+    .cmd-alias-text {
+      font-family: monospace;
+      background: var(--surface);
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.2rem;
     }
 
     .cmd-item:last-child { border-bottom: none; }
@@ -81,8 +100,16 @@
     </header>
 
     <div class="intro">A small list of commands you can use! Some are routed through Mai's AI, other's not~</div>
-    <span class="section-title">Mai Commands</span>
+    <span class="section-title">Utilities</span>
     <ul class="cmd-list">
+      <li class="cmd-item">
+        <div class="cmd-name">command</div>
+        <div class="cmd-desc">Get Mai to tell you all the stream commands</div>
+        <div class="cmd-alias">
+          <span class="cmd-alias-text">cmd</span>
+          <span class="cmd-alias-text">cmds</span>
+        </div>
+      </li>
       <li class="cmd-item">
         <div class="cmd-name">lurk</div>
         <div class="cmd-desc">Tells Mai you are lurking</div>
@@ -102,23 +129,48 @@
       <li class="cmd-item">
         <div class="cmd-name">spicytwitch</div>
         <div class="cmd-desc">Where to find my... other stuff.</div>
+        <div class="cmd-alias">
+          <span class="cmd-alias-text">spicysite</span>
+          <span class="cmd-alias-text">bluetwitch</span>
+        </div>
       </li>
-      <span class="section-title">Fun Commands</span>
+      <li class="cmd-item">
+        <div class="cmd-name">fansly</div>
+        <div class="cmd-desc">Where to find my... other stuff. But make it ToS inappropriate.</div>
+      </li>
+    </ul>
+    <span class="section-title">Fun Commands</span>
+    <ul class="cmd-list"> 
       <li class="cmd-item">
         <div class="cmd-name">degen</div>
         <div class="cmd-desc">How much of a degenerate you are? Let Mai decide!</div>
+        <div class="cmd-alias">
+          <span class="cmd-alias-text">degenerate</span>
+        </div>
       </li>
       <li class="cmd-item">
         <div class="cmd-name">intriguing</div>
         <div class="cmd-desc">How intriguing you are to Mai?</div>
+        <div class="cmd-alias">
+          <span class="cmd-alias-text">intrest</span>
+          <span class="cmd-alias-text">intrig</span>
+          <span class="cmd-alias-text">intresting</span>
+        </div>
       </li>
       <li class="cmd-item">
-        <div class="cmd-name">bonk</div>
-        <div class="cmd-desc">Smack me with a hammer~</div>
+        <div class="cmd-name">hot</div>
+        <div class="cmd-desc">How hot you are to Mai?</div>
+        <div class="cmd-alias">
+          <span class="cmd-alias-text">heat</span>
+          <span class="cmd-alias-text">sexy</span>
+        </div>
       </li>
       <li class="cmd-item">
-        <div class="cmd-name">hug @{user}</user></div>
-        <div class="cmd-desc">Give the specified user a hug~</div>
+        <div class="cmd-name">kiss</div>
+        <div class="cmd-desc">Let Mai know you want to kiss her!</div>
+        <div class="cmd-alias">
+          <span class="cmd-alias-text">smooch</span>
+          <span class="cmd-alias-text">mwah</span>
       </li>
     </ul>
 
