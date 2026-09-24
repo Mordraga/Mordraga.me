@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Devil's Advocate — How to Play</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devil's Advocate — Rules of the Debate</title>
 
+  <!--
+    Landscape card, 1650 x 1200 (11:8). Discord fits an inline image inside a
+    box of roughly 550 x 400: a tall card gets squeezed to a sliver by that
+    height, while this shape fills the box, so it shows as large as Discord
+    allows. Screenshot the .card element at this size.
+  -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
 
@@ -14,284 +20,168 @@
       --surface:    #141014;
       --surface-2:  #110e11;
       --border:     #2a1f2a;
-
       --accent:     #8b1a1a;
-      --accent-dim: #5c1212;
-
       --gold:       #c9a84c;
       --gold-dim:   #8a6e2e;
-
       --text:       #d4c9d4;
-      --text-dim:   #7a6d7a;
+      --text-dim:   #8a7d8a;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      min-height: 100%;
-      background: var(--black);
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: var(--black); }
     body {
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 1rem;
-
       font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
+      font-weight: 400;
       color: var(--text);
     }
 
-    .card {
-      width: 100%;
-      max-width: 620px;
+    /* ---------- CARD (fixed 1650 x 1200) ---------- */
 
+    .card {
+      width: 1650px;
+      height: 1200px;
+      flex: none;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
       background: var(--deep);
       border: 1px solid var(--border);
-
       position: relative;
       overflow: hidden;
     }
 
-    .card::before,
-    .card::after {
+    .card::before, .card::after {
       content: '';
       position: absolute;
-
-      left: 0;
-      right: 0;
-
-      height: 2px;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          var(--accent),
-          var(--gold),
-          var(--accent),
-          transparent
-        );
-
+      left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
       z-index: 2;
     }
-
-    .card::before {
-      top: 0;
-    }
-
-    .card::after {
-      bottom: 0;
-    }
+    .card::before { top: 0; }
+    .card::after  { bottom: 0; }
 
     /* ---------- HEADER ---------- */
 
     header {
       text-align: center;
-
-      padding: 1.15rem 1.25rem 1rem;
-
+      padding: 30px 40px 24px;
       border-bottom: 1px solid var(--border);
       background: var(--surface);
     }
-
-    .sigil {
-      font-size: 1rem;
-      color: var(--accent);
-
-      letter-spacing: 0.45em;
-
-      margin-bottom: 0.25rem;
-    }
-
+    .sigil { font-size: 28px; color: var(--accent); letter-spacing: 0.5em; margin-bottom: 8px; }
     h1 {
       font-family: 'Cinzel Decorative', serif;
-
-      font-size: 1.55rem;
+      font-size: 84px;
+      line-height: 1.05;
       color: var(--gold);
-
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }
-
     .subtitle {
-      margin-top: 0.2rem;
-
-      font-size: 0.7rem;
+      margin-top: 12px;
+      font-size: 26px;
       color: var(--text-dim);
-
-      letter-spacing: 0.22em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       font-style: italic;
     }
 
     /* ---------- CONTENT ---------- */
 
-    .content {
-      padding: 1.2rem 1.4rem 1.35rem;
-    }
-
-    section + section {
-      margin-top: 1.25rem;
-    }
+    .content { padding: 34px 64px; min-height: 0; }
+    .cols { display: grid; gap: 52px; height: 100%; }
+    .col { display: flex; flex-direction: column; gap: 34px; min-height: 0; }
+    .col.spread { justify-content: space-between; }
 
     .card-h2 {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-
-      margin-bottom: 0.55rem;
-
+      gap: 16px;
+      margin-bottom: 16px;
       font-family: 'Cinzel Decorative', serif;
-      font-size: 0.68rem;
-
+      font-size: 24px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-
       color: var(--gold);
     }
+    .card-h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .card-h2::after {
-      content: '';
+    p { font-size: 34px; line-height: 1.34; }
+    em { color: #ebe0eb; }
+    strong { color: var(--gold); font-weight: 600; }
 
-      flex: 1;
-      height: 1px;
+    /* ---------- STEPS ---------- */
 
-      background: var(--border);
-    }
-
-    p {
-      font-size: 1rem;
-      line-height: 1.4;
-    }
-
-    em {
-      color: #e0d5e0;
-    }
-
-    strong {
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    /* ---------- ROUND STEPS ---------- */
-
-    .steps {
-      display: grid;
-      gap: 0.65rem;
-    }
-
+    .steps { display: grid; gap: 22px; }
     .step {
-      display: grid;
-
-      grid-template-columns: 2.2rem 1fr;
-
-      gap: 0.75rem;
-
-      padding: 0.7rem 0.75rem;
-
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 24px 28px;
       background: var(--surface-2);
       border: 1px solid var(--border);
     }
-
+    .step-top { display: flex; align-items: center; gap: 18px; }
     .step-number {
-      width: 2.2rem;
-      height: 2.2rem;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
+      flex: none;
+      width: 58px; height: 58px;
+      display: flex; align-items: center; justify-content: center;
       border: 1px solid var(--gold-dim);
-
       font-family: 'Cinzel Decorative', serif;
-
-      font-size: 0.8rem;
+      font-size: 28px;
       color: var(--gold);
     }
-
-    .step-content h3 {
-      margin-bottom: 0.15rem;
-
+    .step h3 {
       font-family: 'Cinzel Decorative', serif;
-
-      font-size: 0.72rem;
+      font-size: 27px;
+      line-height: 1.2;
       color: var(--gold);
-
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
+    .step p { font-size: 30px; line-height: 1.3; }
 
-    .step-content p {
-      font-size: 0.9rem;
-      line-height: 1.3;
-    }
-
-    /* ---------- CALLOUT ---------- */
+    /* ---------- CALLOUTS ---------- */
 
     .judgment {
-      margin-top: 1.25rem;
-
-      padding: 0.85rem 1rem;
-
+      padding: 24px 26px;
       border-top: 1px solid var(--gold-dim);
       border-bottom: 1px solid var(--gold-dim);
-
       text-align: center;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          rgba(201, 168, 76, 0.04),
-          transparent
-        );
+      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.07), transparent);
     }
-
     .judgment .small {
       display: block;
-
-      margin-bottom: 0.25rem;
-
-      font-size: 0.68rem;
+      margin-bottom: 10px;
+      font-size: 21px;
       color: var(--text-dim);
-
-      letter-spacing: 0.16em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
     }
-
     .judgment strong {
       font-family: 'Cinzel Decorative', serif;
-
-      font-size: 0.8rem;
-
-      letter-spacing: 0.08em;
+      font-size: 38px;
+      line-height: 1.3;
+      letter-spacing: 0.05em;
     }
-
-    /* ---------- WATCH ---------- */
-
-    .watch {
-      text-align: center;
-    }
-
-    .watch p {
-      font-size: 0.9rem;
+    .judgment .link {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-style: italic;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+      color: var(--gold);
     }
 
     .url {
       display: block;
-
-      margin-top: 0.45rem;
-
-      font-size: 0.8rem;
+      margin-top: 14px;
+      font-size: 48px;
       color: var(--gold);
-
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       font-style: italic;
     }
 
@@ -299,39 +189,26 @@
 
     footer {
       text-align: center;
-
-      padding: 0.55rem;
-
+      padding: 20px;
       border-top: 1px solid var(--border);
-
-      font-size: 0.62rem;
+      font-size: 22px;
       color: var(--text-dim);
-
-      letter-spacing: 0.17em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-
       background: var(--surface);
     }
 
-    /* ---------- SMALL SCREENS ---------- */
-
-    @media (max-width: 500px) {
-      body {
-        padding: 0.4rem;
-      }
-
-      .content {
-        padding: 1rem;
-      }
-
-      h1 {
-        font-size: 1.25rem;
-      }
-
-      p {
-        font-size: 0.92rem;
-      }
-    }
+    .cols { grid-template-columns: 4fr 8fr; }
+    .steps { grid-template-columns: 1fr; gap: 16px; }
+    .col p { font-size: 29px; line-height: 1.3; }
+    .col { gap: 26px; }
+    .judgment { padding: 18px 22px; }
+    .judgment strong { font-size: 31px; }
+    .step { flex-direction: row; gap: 20px; padding: 13px 24px; align-items: flex-start; }
+    .step-number { width: 50px; height: 50px; font-size: 25px; }
+    .step .body { display: block; }
+    .step h3 { font-size: 23px; margin-bottom: 4px; }
+    .step p { font-size: 25.5px; line-height: 1.25; }
   </style>
 </head>
 
@@ -341,218 +218,69 @@
 
     <header>
       <div class="sigil">⸸ ✦ ⸸</div>
-
       <h1>Devil's Advocate</h1>
-
-      <div class="subtitle">
-        Rules of the Debate
-      </div>
+      <div class="subtitle">Rules of the Debate</div>
     </header>
 
-
     <div class="content">
+      <div class="cols">
 
-      <!-- GOLDEN RULE -->
+        <div class="col spread">
 
-      <section>
+          <section>
+            <h2 class="card-h2">✦ The Golden Rule</h2>
+            <p>
+              You are here to <strong>defend the side you are given.</strong>
+              Your actual opinion does not matter. The Cauldron chooses your position,
+              and once chosen, you commit to the bit.
+            </p>
+          </section>
 
-        <h2 class="card-h2">
-          ✦ The Golden Rule
-        </h2>
+          <section>
+            <h2 class="card-h2">✦ Etiquette</h2>
+            <p>
+              Argue the <strong>position</strong>, not the person. Be ridiculous. Be theatrical.
+              Bring receipts. Challenge arguments freely, but don't turn a stupid debate into an actual fight.
+            </p>
+          </section>
 
-        <p>
-          You are here to <strong>defend the side you are given.</strong>
-          Your actual opinion does not matter.
-          The Cauldron chooses your position, and once chosen,
-          you commit to the bit.
-        </p>
-
-      </section>
-
-
-      <!-- RULES -->
-
-      <section>
-
-        <h2 class="card-h2">
-          ✦ Rules of the Debate
-        </h2>
-
-        <div class="steps">
-
-          <div class="step">
-
-            <div class="step-number">
-              1
-            </div>
-
-            <div class="step-content">
-
-              <h3>No Choosing Sides</h3>
-
-              <p>
-                Your side is assigned at random.
-                You may agree with it, hate it, or consider it an
-                affront to everything you believe.
-                <strong>Defend it anyway.</strong>
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              2
-            </div>
-
-            <div class="step-content">
-
-              <h3>Fifteen Minutes to Conspire</h3>
-
-              <p>
-                Once sides are revealed, contestants mute in Discord
-                and return to their own chats.
-                You have <strong>15 minutes</strong> to research,
-                gather arguments, consult your chat, and prepare your case.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              3
-            </div>
-
-            <div class="step-content">
-
-              <h3>Make Your Case</h3>
-
-              <p>
-                Return to The Debate Hall when called.
-                Each contestant gets up to <strong>15 minutes</strong>
-                to argue their position.
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              4
-            </div>
-
-            <div class="step-content">
-
-              <h3>New Evidence May Be Answered</h3>
-
-              <p>
-                If a contestant introduces a new argument or piece of evidence,
-                the other side gets the opportunity to respond.
-                The debate continues until
-                <strong>both sides have made their case.</strong>
-              </p>
-
-            </div>
-
-          </div>
-
-
-          <div class="step">
-
-            <div class="step-number">
-              5
-            </div>
-
-            <div class="step-content">
-
-              <h3>Chat Judges Persuasion</h3>
-
-              <p>
-                Chat votes before and after the debate.
-                Victory goes to whoever moved the audience furthest
-                toward their assigned side.
-                <strong>You are trying to change minds.</strong>
-              </p>
-
-            </div>
-
+          <div class="judgment">
+            <span class="small">Above all else</span>
+            <strong>Take the argument seriously.<br>Do not take yourselves seriously.</strong>
           </div>
 
         </div>
 
-      </section>
-
-
-      <!-- ETIQUETTE -->
-
-      <section>
-
-        <h2 class="card-h2">
-          ✦ Etiquette
-        </h2>
-
-        <p>
-          Argue the <strong>position</strong>, not the person.
-          Be ridiculous. Be theatrical. Bring receipts.
-          Challenge arguments freely, but don't turn a stupid debate
-          into an actual fight.
-        </p>
-
-      </section>
-
-
-      <!-- IMPORTANT -->
-
-      <div class="judgment">
-
-        <span class="small">
-          Above all else
-        </span>
-
-        <strong>
-          Take the argument seriously.<br>
-          Do not take yourselves seriously.
-        </strong>
+        <section>
+          <h2 class="card-h2">✦ Rules of the Debate</h2>
+          <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <div class="body"><h3>No Choosing Sides</h3><p>Your side is assigned at random. You may agree with it, hate it, or consider it an affront to everything you believe. <strong>Defend it anyway.</strong></p></div>
+          </div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <div class="body"><h3>Fifteen Minutes to Conspire</h3><p>Once sides are revealed, contestants mute in Discord and return to their own chats. You have <strong>15 minutes</strong> to research, gather arguments, consult your chat, and prepare your case.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <div class="body"><h3>Make Your Case</h3><p>Return to The Debate Hall when called. Each contestant gets up to <strong>15 minutes</strong> to argue their position.</p></div>
+          </div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <div class="body"><h3>New Evidence May Be Answered</h3><p>If a contestant introduces a new argument or piece of evidence, the other side gets to respond. The debate continues until <strong>both sides have made their case.</strong></p></div>
+          </div>
+          <div class="step">
+            <div class="step-number">5</div>
+            <div class="body"><h3>Chat Judges Persuasion</h3><p>Chat votes before and after the debate. Victory goes to whoever moved the audience furthest toward their assigned side. <strong>You are trying to change minds.</strong></p></div>
+          </div>
+          </div>
+        </section>
 
       </div>
-
-
-      <!-- HELP -->
-
-      <section class="watch">
-
-        <h2 class="card-h2">
-          ✦ Before Your Round
-        </h2>
-
-        <p>
-          Join the contestant lobby, make sure your stream and audio
-          are ready, and wait to be summoned to
-          <strong>The Debate Hall.</strong>
-        </p>
-
-        <span class="url">
-          advocate.mordraga.me
-        </span>
-
-      </section>
-
     </div>
 
-
-    <footer>
-      The Cauldron Chooses · The Witches Suffer · Chat Judges
-    </footer>
+    <footer>The Cauldron Chooses · The Witches Suffer · Chat Judges</footer>
 
   </article>
 

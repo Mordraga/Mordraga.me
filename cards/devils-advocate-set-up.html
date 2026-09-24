@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Devil's Advocate — How to Play</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devil's Advocate — Getting Ready</title>
 
+  <!--
+    Landscape card, 1650 x 1200 (11:8). Discord fits an inline image inside a
+    box of roughly 550 x 400: a tall card gets squeezed to a sliver by that
+    height, while this shape fills the box, so it shows as large as Discord
+    allows. Screenshot the .card element at this size.
+  -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
 
@@ -14,284 +20,168 @@
       --surface:    #141014;
       --surface-2:  #110e11;
       --border:     #2a1f2a;
-
       --accent:     #8b1a1a;
-      --accent-dim: #5c1212;
-
       --gold:       #c9a84c;
       --gold-dim:   #8a6e2e;
-
       --text:       #d4c9d4;
-      --text-dim:   #7a6d7a;
+      --text-dim:   #8a7d8a;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      min-height: 100%;
-      background: var(--black);
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { background: var(--black); }
     body {
       display: flex;
-      align-items: center;
       justify-content: center;
-      padding: 1rem;
-
       font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
+      font-weight: 400;
       color: var(--text);
     }
 
-    .card {
-      width: 100%;
-      max-width: 620px;
+    /* ---------- CARD (fixed 1650 x 1200) ---------- */
 
+    .card {
+      width: 1650px;
+      height: 1200px;
+      flex: none;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
       background: var(--deep);
       border: 1px solid var(--border);
-
       position: relative;
       overflow: hidden;
     }
 
-    .card::before,
-    .card::after {
+    .card::before, .card::after {
       content: '';
       position: absolute;
-
-      left: 0;
-      right: 0;
-
-      height: 2px;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          var(--accent),
-          var(--gold),
-          var(--accent),
-          transparent
-        );
-
+      left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--gold), var(--accent), transparent);
       z-index: 2;
     }
-
-    .card::before {
-      top: 0;
-    }
-
-    .card::after {
-      bottom: 0;
-    }
+    .card::before { top: 0; }
+    .card::after  { bottom: 0; }
 
     /* ---------- HEADER ---------- */
 
     header {
       text-align: center;
-
-      padding: 1.15rem 1.25rem 1rem;
-
+      padding: 30px 40px 24px;
       border-bottom: 1px solid var(--border);
       background: var(--surface);
     }
-
-    .sigil {
-      font-size: 1rem;
-      color: var(--accent);
-
-      letter-spacing: 0.45em;
-
-      margin-bottom: 0.25rem;
-    }
-
+    .sigil { font-size: 28px; color: var(--accent); letter-spacing: 0.5em; margin-bottom: 8px; }
     h1 {
       font-family: 'Cinzel Decorative', serif;
-
-      font-size: 1.55rem;
+      font-size: 84px;
+      line-height: 1.05;
       color: var(--gold);
-
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
     }
-
     .subtitle {
-      margin-top: 0.2rem;
-
-      font-size: 0.7rem;
+      margin-top: 12px;
+      font-size: 26px;
       color: var(--text-dim);
-
-      letter-spacing: 0.22em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
       font-style: italic;
     }
 
     /* ---------- CONTENT ---------- */
 
-    .content {
-      padding: 1.2rem 1.4rem 1.35rem;
-    }
-
-    section + section {
-      margin-top: 1.25rem;
-    }
+    .content { padding: 34px 64px; min-height: 0; }
+    .cols { display: grid; gap: 52px; height: 100%; }
+    .col { display: flex; flex-direction: column; gap: 34px; min-height: 0; }
+    .col.spread { justify-content: space-between; }
 
     .card-h2 {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-
-      margin-bottom: 0.55rem;
-
+      gap: 16px;
+      margin-bottom: 16px;
       font-family: 'Cinzel Decorative', serif;
-      font-size: 0.68rem;
-
+      font-size: 24px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-
       color: var(--gold);
     }
+    .card-h2::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .card-h2::after {
-      content: '';
+    p { font-size: 34px; line-height: 1.34; }
+    em { color: #ebe0eb; }
+    strong { color: var(--gold); font-weight: 600; }
 
-      flex: 1;
-      height: 1px;
+    /* ---------- STEPS ---------- */
 
-      background: var(--border);
-    }
-
-    p {
-      font-size: 1rem;
-      line-height: 1.4;
-    }
-
-    em {
-      color: #e0d5e0;
-    }
-
-    strong {
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    /* ---------- ROUND STEPS ---------- */
-
-    .steps {
-      display: grid;
-      gap: 0.65rem;
-    }
-
+    .steps { display: grid; gap: 22px; }
     .step {
-      display: grid;
-
-      grid-template-columns: 2.2rem 1fr;
-
-      gap: 0.75rem;
-
-      padding: 0.7rem 0.75rem;
-
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 24px 28px;
       background: var(--surface-2);
       border: 1px solid var(--border);
     }
-
+    .step-top { display: flex; align-items: center; gap: 18px; }
     .step-number {
-      width: 2.2rem;
-      height: 2.2rem;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
+      flex: none;
+      width: 58px; height: 58px;
+      display: flex; align-items: center; justify-content: center;
       border: 1px solid var(--gold-dim);
-
       font-family: 'Cinzel Decorative', serif;
-
-      font-size: 0.8rem;
+      font-size: 28px;
       color: var(--gold);
     }
-
-    .step-content h3 {
-      margin-bottom: 0.15rem;
-
+    .step h3 {
       font-family: 'Cinzel Decorative', serif;
-
-      font-size: 0.72rem;
+      font-size: 27px;
+      line-height: 1.2;
       color: var(--gold);
-
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
+    .step p { font-size: 30px; line-height: 1.3; }
 
-    .step-content p {
-      font-size: 0.9rem;
-      line-height: 1.3;
-    }
-
-    /* ---------- CALLOUT ---------- */
+    /* ---------- CALLOUTS ---------- */
 
     .judgment {
-      margin-top: 1.25rem;
-
-      padding: 0.85rem 1rem;
-
+      padding: 24px 26px;
       border-top: 1px solid var(--gold-dim);
       border-bottom: 1px solid var(--gold-dim);
-
       text-align: center;
-
-      background:
-        linear-gradient(
-          90deg,
-          transparent,
-          rgba(201, 168, 76, 0.04),
-          transparent
-        );
+      background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.07), transparent);
     }
-
     .judgment .small {
       display: block;
-
-      margin-bottom: 0.25rem;
-
-      font-size: 0.68rem;
+      margin-bottom: 10px;
+      font-size: 21px;
       color: var(--text-dim);
-
-      letter-spacing: 0.16em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
     }
-
     .judgment strong {
       font-family: 'Cinzel Decorative', serif;
-
-      font-size: 0.8rem;
-
-      letter-spacing: 0.08em;
+      font-size: 38px;
+      line-height: 1.3;
+      letter-spacing: 0.05em;
     }
-
-    /* ---------- WATCH ---------- */
-
-    .watch {
-      text-align: center;
-    }
-
-    .watch p {
-      font-size: 0.9rem;
+    .judgment .link {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-style: italic;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+      color: var(--gold);
     }
 
     .url {
       display: block;
-
-      margin-top: 0.45rem;
-
-      font-size: 0.8rem;
+      margin-top: 14px;
+      font-size: 48px;
       color: var(--gold);
-
-      letter-spacing: 0.08em;
+      letter-spacing: 0.05em;
       font-style: italic;
     }
 
@@ -299,39 +189,23 @@
 
     footer {
       text-align: center;
-
-      padding: 0.55rem;
-
+      padding: 20px;
       border-top: 1px solid var(--border);
-
-      font-size: 0.62rem;
+      font-size: 22px;
       color: var(--text-dim);
-
-      letter-spacing: 0.17em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-
       background: var(--surface);
     }
 
-    /* ---------- SMALL SCREENS ---------- */
-
-    @media (max-width: 500px) {
-      body {
-        padding: 0.4rem;
-      }
-
-      .content {
-        padding: 1rem;
-      }
-
-      h1 {
-        font-size: 1.25rem;
-      }
-
-      p {
-        font-size: 0.92rem;
-      }
-    }
+    .cols { grid-template-columns: 1fr; grid-template-rows: auto auto 1fr; gap: 34px; }
+    .row { display: grid; gap: 30px; }
+    .row.three { grid-template-columns: repeat(3, 1fr); }
+    .row.two { grid-template-columns: 1fr 1fr; }
+    .step p { font-size: 27px; line-height: 1.28; }
+    .block p { font-size: 29px; line-height: 1.3; }
+    .judgment .link { font-size: 36px; }
+    .judgment strong { font-size: 34px; }
   </style>
 </head>
 
@@ -341,214 +215,68 @@
 
     <header>
       <div class="sigil">⸸ ✦ ⸸</div>
-
       <h1>Devil's Advocate</h1>
-
-      <div class="subtitle">
-        Getting Ready
-      </div>
+      <div class="subtitle">Getting Ready</div>
     </header>
 
-
     <div class="content">
+      <div class="cols">
 
-      <!-- INTRO -->
+        <section class="block">
+          <h2 class="card-h2">✦ Before the Ritual</h2>
+          <p>
+            Before your round begins, take a moment to get your stream, audio, and show tools ready.
+            Once everything is set, all that's left is to <strong>wait for the Cauldron.</strong>
+          </p>
+        </section>
 
-      <section>
-
-        <h2 class="card-h2">
-          ✦ Before the Ritual
-        </h2>
-
-        <p>
-          Before your round begins, take a moment to get your stream,
-          audio, and show tools ready.
-          Once everything is set, all that's left is to
-          <strong>wait for the Cauldron.</strong>
-        </p>
-
-      </section>
-
-
-      <!-- SETUP -->
-
-      <section>
-
-        <h2 class="card-h2">
-          ✦ Pre-Show Checklist
-        </h2>
-
-        <div class="steps">
-
+        <div class="row three">
           <div class="step">
-
-            <div class="step-number">
-              1
-            </div>
-
-            <div class="step-content">
-
-              <h3>Prepare Your Stream</h3>
-
-              <p>
-                Make sure your mic, model, capture, and Discord audio
-                are working before your round begins.
-              </p>
-
-            </div>
-
+            <div class="step-top"><div class="step-number">1</div><h3>Prepare Your Stream</h3></div>
+            <p>Make sure your mic, model, capture, and Discord audio are working before your round begins.</p>
           </div>
-
-
           <div class="step">
-
-            <div class="step-number">
-              2
-            </div>
-
-            <div class="step-content">
-
-              <h3>Join the Debate Hall</h3>
-
-              <p>
-                Join the Discord call before your scheduled round
-                and wait for the hosts to get everyone situated.
-              </p>
-
-            </div>
-
+            <div class="step-top"><div class="step-number">2</div><h3>Join the Debate Hall</h3></div>
+            <p>Join the Discord call before your scheduled round and wait for the hosts to get everyone situated.</p>
           </div>
-
-
           <div class="step">
-
-            <div class="step-number">
-              3
-            </div>
-
-            <div class="step-content">
-
-              <h3>Open Your Contestant Link</h3>
-
-              <p>
-                Open the contestant link sent to you by the hosts.
-                Your link belongs to your seat for that round.
-                If your seat is reset, you'll receive a
-                <strong>new contestant link.</strong>
-              </p>
-
-            </div>
-
+            <div class="step-top"><div class="step-number">3</div><h3>Open Your Contestant Link</h3></div>
+            <p>Open the link the hosts sent you. It belongs to your seat for that round. If your seat is reset, you'll get a <strong>new contestant link.</strong></p>
           </div>
-
         </div>
 
-      </section>
+        <div class="row two">
 
+          <section class="block">
+            <h2 class="card-h2">✦ OBS Overlay</h2>
+            <p>
+              Add the show overlay to OBS as a <strong>Browser Source.</strong>
+              The session stays the same between rounds, so once it's added you can leave it configured.
+            </p>
+            <div class="judgment" style="margin-top: 20px;">
+              <span class="small">Browser Source</span>
+              <strong class="link">https://advocate.mordraga.me/<br>overlay.html?session=BCBDBF</strong>
+            </div>
+          </section>
 
-      <!-- OBS -->
-
-      <section>
-
-        <h2 class="card-h2">
-          ✦ OBS Overlay
-        </h2>
-
-        <p>
-          Add the show overlay to OBS as a
-          <strong>Browser Source.</strong>
-          The show uses the same session between rounds, so once
-          you've added it, you can leave it configured.
-        </p>
-
-        <div class="judgment">
-
-          <span class="small">
-            Browser Source
-          </span>
-
-          <strong>
-            https://advocate.mordraga.me/<br>
-            overlay.html?session=BCBDBF
-          </strong>
+          <section class="block">
+            <h2 class="card-h2">✦ Your Audience</h2>
+            <p>
+              Give the audience link to your chat. They watch the debate here and cast their opening and closing votes.
+              They can also enter the session code <strong>BCBDBF</strong> on the site.
+            </p>
+            <div class="judgment" style="margin-top: 20px;">
+              <span class="small">Audience Voting</span>
+              <strong class="link">https://advocate.mordraga.me/<br>watch.html?session=BCBDBF</strong>
+            </div>
+          </section>
 
         </div>
-
-      </section>
-
-
-      <!-- AUDIENCE -->
-
-      <section>
-
-        <h2 class="card-h2">
-          ✦ Your Audience
-        </h2>
-
-        <p>
-          Give the audience link to your chat.
-          This is where your viewers watch the current debate state
-          and cast their opening and closing votes.
-        </p>
-
-        <div class="judgment">
-
-          <span class="small">
-            Audience Voting
-          </span>
-
-          <strong>
-            https://advocate.mordraga.me/<br>
-            watch.html?session=BCBDBF
-          </strong>
-
-        </div>
-
-      </section>
-
-
-      <!-- SESSION -->
-
-      <section class="watch">
-
-        <h2 class="card-h2">
-          ✦ Session Code
-        </h2>
-
-        <p>
-          The session stays the same across rounds,
-          contestant changes, new topics, and archives.
-          Your audience can also enter the code directly on the site.
-        </p>
-
-        <span class="url">
-          BCBDBF
-        </span>
-
-      </section>
-
-
-      <!-- READY -->
-
-      <div class="judgment">
-
-        <span class="small">
-          Everything working?
-        </span>
-
-        <strong>
-          You're ready.<br>
-          The Cauldron handles the rest.
-        </strong>
 
       </div>
-
     </div>
 
-
-    <footer>
-      The Cauldron Chooses · The Witches Suffer · Chat Judges
-    </footer>
+    <footer>The Cauldron Chooses · The Witches Suffer · Chat Judges</footer>
 
   </article>
 
