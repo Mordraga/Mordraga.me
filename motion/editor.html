@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Motion Editor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Give HTML/SVG a timeline: import an SVG, keyframe its parts, preview in the browser, render transparent video.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<!--
+  Motion editor: select parts of an HTML/SVG document, keyframe them on a timeline, render to video.
+  Open it through serve.py (python serve.py → http://localhost:8790/editor.html); it saves to projects/
+  and renders to out/. Logic is in editor.js; the preview is player.html running runtime.js.
+-->
+<style>
+  :root {
+    --black:    #080808;
+    --deep:     #0f0d0f;
+    --surface:  #141014;
+    --raised:   #1c171c;
+    --border:   #2a1f2a;
+    --border2:  #3a2a3a;
+    --accent:   #8b1a1a;
+    --alarm:    #c43a3a;
+    --gold:     #c9a84c;
+    --gold-dim: #8a6e2e;
+    --text:     #d4c9d4;
+    --dim:      #7a6d7a;
+    --mute:     #4a3f4a;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--black); color: var(--text);
+               font: 13px/1.4 'Inter', system-ui, sans-serif; overflow: hidden; }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  button {
+    background: var(--raised); border: 1px solid var(--border2); border-radius: 3px;
+    padding: 4px 10px; cursor: pointer; white-space: nowrap;
+  }
+  button:hover { border-color: var(--gold-dim); }
+  button.primary { background: var(--accent); border-color: var(--alarm); }
+  button.danger:hover { border-color: var(--alarm); color: #f0b0b0; }
+  input, select, textarea {
+    background: var(--deep); border: 1px solid var(--border2); border-radius: 3px; padding: 3px 6px; min-width: 0;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--gold-dim); }
+  textarea { width: 100%; resize: vertical; font-family: Consolas, monospace; font-size: 12px; }
+  label { color: var(--dim); }
+
+  .app {
+    display: grid; height: 100%;
+    grid-template: 'top top top' 44px 'layers stage side' 1fr 'time time time' 260px / 230px 1fr 310px;
+  }
+
+  /* ── top bar ── */
+  .top {
+    grid-area: top; display: flex; align-items: center; gap: 6px; padding: 0 10px;
+    background: var(--surface); border-bottom: 1px solid var(--border);
+  }
+  .brand { font-family: 'Cinzel', serif; color: var(--gold); letter-spacing: .15em; margin-right: 10px; }
+  .sep { width: 1px; height: 22px; background: var(--border2); margin: 0 4px; }
+  #status { margin-left: auto; color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 40%; }
+  #status.bad { color: var(--alarm); }
+  #status.offer { display: flex; align-items: center; gap: 6px; max-width: none; overflow: visible; color: var(--gold); }
+  #status.offer button { padding: 2px 8px; }
+  .hidden-input { display: none; }
+
+  /* ── panels ── */
+  .panel { background: var(--surface); overflow: auto; min-height: 0; }
+  .panel h3 {
+    margin: 0; padding: 8px 10px; font: 600 11px 'Inter'; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold); border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface); z-index: 1;
+  }
+  #layers { grid-area: layers; border-right: 1px solid var(--border); }
+  .layer {
+    display: flex; align-items: center; gap: 6px; padding: 3px 8px; cursor: pointer; white-space: nowrap;
+    border-left: 2px solid transparent;
+  }
+  .layer:hover { background: var(--raised); }
+  .layer.sel { background: #2a1a1f; border-left-color: var(--gold); }
+  .layer .tag { color: var(--mute); font-family: Consolas, monospace; font-size: 11px; }
+  .layer .nm { overflow: hidden; text-overflow: ellipsis; }
+  .layer .anim { color: var(--gold); font-size: 9px; }
+  .layer.dragging { opacity: .4; }
+  .layer.drop-before { box-shadow: inset 0 2px var(--gold); }
+  .layer.drop-after { box-shadow: inset 0 -2px var(--gold); }
+  .layer.drop-inside { background: rgba(201,168,76,.15); outline: 1px dashed var(--gold); outline-offset: -1px; }
+  #layer-list { min-height: calc(100% - 34px); padding-bottom: 24px; }
+  #layer-list.drop-end { box-shadow: inset 0 -2px var(--gold); }
+
+  /* ── stage ── */
+  #viewport {
+    grid-area: stage; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;
+    background: var(--black);
+  }
+  #canvas {
+    position: relative; flex: none; overflow: visible; box-shadow: 0 0 0 1px var(--border2);
+    background: #141014 repeating-conic-gradient(#1c171c 0 25%, #141014 0 50%) 0 0 / 24px 24px;
+  }
+  #frame { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; background: transparent; }
+  #selbox {
+    position: absolute; pointer-events: none; border: 1px solid var(--gold); display: none;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.6); z-index: 2;
+  }
+  /* sizing handles — the box ignores the mouse, the handles don't */
+  .handle {
+    position: absolute; width: 9px; height: 9px; margin: -5px 0 0 -5px; pointer-events: auto;
+    background: var(--black); border: 1px solid var(--gold);
+  }
+  .handle:hover { background: var(--gold); }
+  .h-nw { left: 0;   top: 0;   cursor: nwse-resize; }
+  .h-n  { left: 50%; top: 0;   cursor: ns-resize; }
+  .h-ne { left: 100%; top: 0;  cursor: nesw-resize; }
+  .h-e  { left: 100%; top: 50%; cursor: ew-resize; }
+  .h-se { left: 100%; top: 100%; cursor: nwse-resize; }
+  .h-s  { left: 50%; top: 100%; cursor: ns-resize; }
+  .h-sw { left: 0;   top: 100%; cursor: nesw-resize; }
+  .h-w  { left: 0;   top: 50%; cursor: ew-resize; }
+  /* faint crosshair on 0,0 — the canvas centre */
+  #origin { position: absolute; inset: 0; pointer-events: none; }
+  #origin::before, #origin::after { content: ''; position: absolute; background: rgba(201,168,76,.22); }
+  #origin::before { left: 50%; top: 0; bottom: 0; width: 1px; }
+  #origin::after { top: 50%; left: 0; right: 0; height: 1px; }
+  #hint { position: absolute; bottom: 8px; left: 10px; color: var(--mute); font-size: 11px; pointer-events: none; }
+
+  /* ── inspector ── */
+  #side { grid-area: side; border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+  .tabs { display: flex; border-bottom: 1px solid var(--border); flex: none; }
+  .tabs button { flex: 1; border: 0; border-radius: 0; background: transparent; padding: 9px; color: var(--dim); }
+  .tabs button.on { color: var(--gold); box-shadow: inset 0 -2px var(--gold); }
+  #inspector { flex: 1; overflow: auto; padding: 10px; }
+  .sect { margin-bottom: 14px; }
+  .sect > .title { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 6px; }
+  .row { display: flex; align-items: center; gap: 6px; margin-bottom: 5px; }
+  .row > label { width: 88px; flex: none; }
+  .row > input, .row > select { flex: 1; }
+  .row .unit { color: var(--mute); width: 16px; font-size: 11px; }
+  .key {
+    width: 20px; height: 20px; padding: 0; border: 0; background: transparent; color: var(--mute); font-size: 12px; flex: none;
+  }
+  .key.has { color: var(--gold-dim); }
+  .key.on { color: var(--gold); }
+  .swatch { width: 26px; height: 22px; padding: 0 1px; flex: none; }
+  .muted { color: var(--mute); }
+  .btns { display: flex; gap: 6px; flex-wrap: wrap; }
+  details { margin-bottom: 10px; }
+  summary { cursor: pointer; color: var(--dim); margin-bottom: 6px; }
+
+  /* ── timeline ── */
+  #timeline { grid-area: time; border-top: 1px solid var(--border); display: flex; flex-direction: column; }
+  .tl-bar { display: flex; align-items: center; gap: 6px; padding: 5px 10px; border-bottom: 1px solid var(--border); flex: none; }
+  #time { font-family: Consolas, monospace; color: var(--gold); min-width: 150px; }
+  #tl-body { flex: 1; overflow: auto; position: relative; user-select: none; }
+  .tl-row { display: flex; height: 22px; }
+  .tl-label {
+    width: 190px; flex: none; position: sticky; left: 0; z-index: 2; background: var(--surface);
+    border-right: 1px solid var(--border); padding: 0 8px; display: flex; align-items: center; gap: 6px;
+    white-space: nowrap; overflow: hidden;
+  }
+  .tl-label .x { margin-left: auto; color: var(--mute); cursor: pointer; }
+  .tl-label .x:hover { color: var(--alarm); }
+  .tl-row.el .tl-label { color: var(--gold-dim); font-weight: 600; cursor: pointer; }
+  .tl-row.prop .tl-label { padding-left: 20px; color: var(--dim); }
+  .tl-row.sel .tl-label { color: var(--text); }
+  .tl-row.el.sel .tl-label { color: var(--gold); }
+  .tl-lane { flex: 1; position: relative; border-bottom: 1px solid #1a141a; }
+  .tl-row.prop.sel .tl-lane { background: rgba(139,26,26,.08); }
+  .tl-ruler { position: sticky; top: 0; z-index: 3; height: 24px; }
+  .tl-ruler .tl-label { z-index: 4; color: var(--mute); }
+  .tl-ruler .tl-lane { background: var(--surface); border-bottom: 1px solid var(--border); cursor: ew-resize; }
+  .tick { position: absolute; bottom: 0; width: 1px; height: 6px; background: var(--border2); }
+  .tick.major { height: 11px; background: var(--mute); }
+  .tick span { position: absolute; bottom: 11px; left: 3px; font-size: 10px; color: var(--dim); }
+  .seg { position: absolute; top: 10px; height: 2px; background: var(--border2); }
+  .seg.eased { background: var(--gold-dim); opacity: .55; }
+  .dia {
+    position: absolute; top: 5px; width: 11px; height: 11px; margin-left: -5.5px; transform: rotate(45deg);
+    background: var(--gold-dim); border: 1px solid var(--black); cursor: grab;
+  }
+  .dia:hover { background: var(--gold); }
+  .dia.on { background: #f3e2a8; box-shadow: 0 0 0 2px var(--accent); }
+  #playhead { position: absolute; top: 0; width: 1px; background: var(--alarm); pointer-events: none; z-index: 5; }
+  #playhead::before {
+    content: ''; position: absolute; top: 0; left: -5px; border: 5px solid transparent; border-top: 7px solid var(--alarm);
+  }
+  .tl-empty { padding: 14px 200px; color: var(--mute); }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <span class="brand">MOTION</span>
+    <select id="open-list" title="Open a saved project"></select>
+    <button id="btn-new">New</button>
+    <button id="btn-open-file" title="Open a .json project from disk">Open file…</button>
+    <button id="btn-save" class="primary" title="Ctrl+S">Save</button>
+    <button id="btn-download" title="Download the project .json">Download</button>
+    <div class="sep"></div>
+    <button id="btn-import-svg">Import SVG</button>
+    <button id="btn-import-img">Image</button>
+    <button id="btn-add-text">Text</button>
+    <button id="btn-add-box">Box</button>
+    <div class="sep"></div>
+    <button id="btn-undo" title="Ctrl+Z">Undo</button>
+    <button id="btn-redo" title="Ctrl+Y">Redo</button>
+    <div class="sep"></div>
+    <select id="render-format" title="webm: OBS · mov: Premiere / Resolve / After Effects · gif: Discord / socials · png: frames">
+      <option value="webm">WebM (alpha)</option>
+      <option value="mov">ProRes 4444 .mov</option>
+      <option value="gif">GIF (cropped, loops)</option>
+      <option value="png">PNG frames</option>
+    </select>
+    <button id="btn-render" class="primary">Render</button>
+    <span id="status"></span>
+    <input type="file" id="file-json" class="hidden-input" accept=".json,application/json">
+    <input type="file" id="file-svg" class="hidden-input" accept=".svg,image/svg+xml">
+    <input type="file" id="file-img" class="hidden-input" accept="image/*">
+  </div>
+
+  <div id="layers" class="panel"><h3>Layers</h3><div id="layer-list"></div></div>
+
+  <div id="viewport">
+    <div id="canvas"><iframe id="frame" src="player.html?embed"></iframe><div id="origin"></div><div id="selbox"></div></div>
+    <div id="hint">click: select · double-click: select inside a group · drag: move (keys X/Y at the playhead)</div>
+  </div>
+
+  <div id="side">
+    <div class="tabs">
+      <button id="tab-element" class="on">Element</button>
+      <button id="tab-document">Document</button>
+    </div>
+    <div id="inspector"></div>
+  </div>
+
+  <div id="timeline">
+    <div class="tl-bar">
+      <button id="btn-start" title="Home">⏮</button>
+      <button id="btn-play" title="Space">▶</button>
+      <span id="time"></span>
+      <div class="sep"></div>
+      <span class="muted">Drag diamonds to retime (Shift: no snapping) · double-click a lane to add a key · Delete removes the selected key · ←/→ step a frame</span>
+    </div>
+    <div id="tl-body"></div>
+  </div>
+</div>
+<script src="runtime.js"></script>
+<script src="editor.js"></script>
+</body>
+</html>
