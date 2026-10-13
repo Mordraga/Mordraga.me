@@ -126,6 +126,30 @@
       text-align: center;
       margin-top: 0.7rem;
     }
+
+    /* while rendering the card for posting: hide the click-to-edit underlines */
+    .exporting [contenteditable="true"] { border-bottom-color: transparent; }
+
+    /* ---- posting panel (standalone page only; hidden inside card_downloader) ---- */
+    body.editing { height: auto; min-height: 100%; flex-direction: column; gap: 1rem; padding: 1.5rem 1rem; }
+    .poster { display: none; width: 100%; max-width: 320px; background: var(--deep); border: 1px solid var(--border); padding: 0.9rem 1rem; font-size: 0.85rem; }
+    body.editing .poster { display: block; }
+    .poster h2 { font-family: 'Cinzel Decorative', serif; font-size: 0.7rem; letter-spacing: 0.15em; color: var(--gold); margin-bottom: 0.6rem; }
+    .poster label { display: block; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin: 0.7rem 0 0.25rem; }
+    .poster input, .poster textarea { width: 100%; background: var(--black); color: var(--text); border: 1px solid var(--border); font: inherit; font-size: 0.85rem; padding: 0.4rem 0.5rem; }
+    .poster input:focus, .poster textarea:focus { outline: none; border-color: var(--gold-dim); }
+    .poster textarea { min-height: 9rem; resize: vertical; }
+    .poster .row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.7rem; }
+    .poster button { font-family: 'Cinzel Decorative', serif; font-size: 0.55rem; letter-spacing: 0.12em; padding: 0.45rem 0.7rem; background: var(--surface); color: var(--gold); border: 1px solid var(--gold-dim); cursor: pointer; }
+    .poster button:hover:not(:disabled) { border-color: var(--gold); }
+    .poster button:disabled { opacity: 0.5; cursor: default; }
+    .poster button.ghost { color: var(--text-dim); border-color: var(--border); }
+    .poster .count { font-size: 0.7rem; color: var(--text-dim); text-align: right; margin-top: 0.15rem; }
+    .poster .count.over { color: #d06a6a; }
+    .poster .status { margin-top: 0.8rem; font-size: 0.8rem; line-height: 1.45; color: var(--text); }
+    .poster .status .bad { color: #d06a6a; }
+    .poster .status .good { color: var(--yes-text); }
+    .poster .who { font-size: 0.7rem; color: var(--text-dim); font-style: italic; }
   </style>
 </head>
 <body>
@@ -142,7 +166,10 @@
          Topic and time are click-to-edit in the browser and persist via localStorage; the "TBD"
          here is just the fallback shown before you've ever set a value on this browser.
          Click a row's status badge to toggle Manifest/Veiled while a stream is actually running.
-         Re-export via card_downloader.html whenever you're ready to post. -->
+         To post: open this page on its own (not in card_downloader), sign in with Twitch, and hit
+         "Save week" in the panel under the card - api.mordraga.me posts the card + caption to
+         Discord and X at the weekly post time (or "Post now"). Re-export via card_downloader.html
+         for anything else. -->
     <div class="sched-body">
       <div class="day-row">
         <div class="day-info">
@@ -157,21 +184,21 @@
       <div class="day-row">
         <div class="day-info">
           <span class="day">Monday</span>
-          <span class="topic" contenteditable="true" data-key="tuesday-topic">TBD</span>
-        </div>
-        <div class="status-col">
-          <span class="sched-status status-not-live">Veiled</span>
-          <span class="time" contenteditable="true" data-key="tuesday-time">TBD</span>
-        </div>
-      </div>
-      <div class="day-row">
-        <div class="day-info">
-          <span class="day">Tuesday</span>
           <span class="topic" contenteditable="true" data-key="monday-topic">TBD</span>
         </div>
         <div class="status-col">
           <span class="sched-status status-not-live">Veiled</span>
           <span class="time" contenteditable="true" data-key="monday-time">TBD</span>
+        </div>
+      </div>
+      <div class="day-row">
+        <div class="day-info">
+          <span class="day">Tuesday</span>
+          <span class="topic" contenteditable="true" data-key="tuesday-topic">TBD</span>
+        </div>
+        <div class="status-col">
+          <span class="sched-status status-not-live">Veiled</span>
+          <span class="time" contenteditable="true" data-key="tuesday-time">TBD</span>
         </div>
       </div>
       <div class="day-row">
@@ -214,20 +241,59 @@
           <span class="time" contenteditable="true" data-key="saturday-time">TBD</span>
         </div>
       </div>
-      <div class="tz">Eastern Standard Time</div>
+      <div class="tz">Eastern Time</div>
     </div>
 
     <footer>The Crypt · @Mordraga0 · she/they</footer>
   </div>
 
+  <section class="poster" id="poster" aria-label="Post schedule">
+    <h2>Post to Discord &amp; X</h2>
+    <div id="signed-out" hidden>
+      <p class="who">Sign in to save this week for the automatic post.</p>
+      <div class="row"><button id="sign-in" type="button">Sign in with Twitch</button></div>
+    </div>
+    <div id="signed-in" hidden>
+      <p class="who" id="who"></p>
+      <label for="week-input">Week of (Sunday)</label>
+      <input type="date" id="week-input" step="7">
+      <label for="caption">Caption</label>
+      <textarea id="caption" maxlength="2000"></textarea>
+      <div class="count" id="caption-count"></div>
+      <div class="row">
+        <button id="save" type="button">Save week</button>
+        <button id="post-now" type="button" class="ghost">Post now</button>
+        <button id="fill-caption" type="button" class="ghost">Rewrite caption</button>
+      </div>
+      <div class="status" id="status" role="status"></div>
+    </div>
+  </section>
+
   <script>
-    // Sunday of the current week (or today, if today is Sunday)
+    // Sunday of the upcoming week (or today, if today is Sunday)
     var today = new Date();
     var daysUntilSunday = (7 - today.getDay()) % 7;
     var sunday = new Date(today);
     sunday.setDate(today.getDate() + daysUntilSunday);
-    document.getElementById('week-of').textContent =
-      'Week of ' + sunday.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+    function showWeekOf(date) {
+      document.getElementById('week-of').textContent =
+        'Week of ' + date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+    showWeekOf(sunday);
+
+    // One-time fix: Monday and Tuesday used to save into each other's keys.
+    try {
+      if (localStorage.getItem('sched_keys_fixed') !== '1') {
+        ['topic', 'time'].forEach(function (field) {
+          var mon = localStorage.getItem('sched_monday-' + field);
+          var tue = localStorage.getItem('sched_tuesday-' + field);
+          if (tue !== null) localStorage.setItem('sched_monday-' + field, tue); else localStorage.removeItem('sched_monday-' + field);
+          if (mon !== null) localStorage.setItem('sched_tuesday-' + field, mon); else localStorage.removeItem('sched_tuesday-' + field);
+        });
+        localStorage.setItem('sched_keys_fixed', '1');
+      }
+    } catch (e) {}
 
     // Click a status badge to toggle Manifest/Veiled
     document.querySelectorAll('.sched-status').forEach(function (badge) {
@@ -252,6 +318,246 @@
         if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
       });
     });
+  </script>
+
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <script>
+    // Posting panel: saves the week (card image + caption) to api.mordraga.me,
+    // which posts it to Discord and X at the weekly post time. Only on the
+    // standalone page - inside card_downloader's iframe the card stays bare.
+    (function () {
+      if (window.self !== window.top) return;
+      document.body.classList.add('editing');
+
+      var API = new URLSearchParams(location.search).get('api') || 'https://api.mordraga.me';
+      var DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      var SHORT = { sunday: 'Sun', monday: 'Mon', tuesday: 'Tue', wednesday: 'Wed', thursday: 'Thu', friday: 'Fri', saturday: 'Sat' };
+      var X_LIMIT = 280;
+
+      var $ = function (id) { return document.getElementById(id); };
+      var weekInput = $('week-input'), caption = $('caption'), statusEl = $('status');
+      var current = null; // last ScheduleWeekOut from the server
+
+      function api(path, opts) {
+        opts = opts || {};
+        opts.credentials = 'include';
+        opts.headers = Object.assign({ 'X-Devils-Advocate': '1' }, opts.headers || {});
+        return fetch(API + path, opts).then(function (resp) {
+          return resp.json().catch(function () { return {}; }).then(function (body) {
+            if (!resp.ok) {
+              var err = new Error(typeof body.detail === 'string' ? body.detail : 'Server said ' + resp.status);
+              err.status = resp.status;
+              throw err;
+            }
+            return body;
+          });
+        });
+      }
+
+      function iso(date) {
+        return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+      }
+      function fromIso(text) {
+        var p = text.split('-').map(Number);
+        return new Date(p[0], p[1] - 1, p[2]);
+      }
+      function field(day, part) { return document.querySelector('[data-key="' + day + '-' + part + '"]'); }
+      function blank(text) { return !text || /^tbd$/i.test(text.trim()); }
+
+      function readDays() {
+        return DAYS.map(function (day) {
+          return { day: day, topic: field(day, 'topic').textContent.trim(), time: field(day, 'time').textContent.trim() };
+        });
+      }
+      function writeDays(days) {
+        days.forEach(function (d) {
+          ['topic', 'time'].forEach(function (part) {
+            var text = d[part] || 'TBD';
+            field(d.day, part).textContent = text;
+            try { localStorage.setItem('sched_' + d.day + '-' + part, text); } catch (e) {}
+          });
+        });
+      }
+
+      function defaultCaption() {
+        var week = fromIso(weekInput.value);
+        var lines = readDays().filter(function (d) { return !blank(d.topic) || !blank(d.time); }).map(function (d) {
+          var parts = [];
+          if (!blank(d.topic)) parts.push(d.topic);
+          if (!blank(d.time)) parts.push(d.time + ' ET');
+          return SHORT[d.day] + ' — ' + parts.join(' · ');
+        });
+        return '⸸ This week in the Crypt · ' + week.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ⸸\n\n' +
+          (lines.length ? lines.join('\n') : 'Schedule TBD') + '\n\nSee you there 🖤';
+      }
+
+      function updateCount() {
+        var n = caption.value.trim().length;
+        var el = $('caption-count');
+        el.textContent = n + ' / ' + X_LIMIT + ' for X' + (/https?:\/\//.test(caption.value) ? ' · links cost more on X' : '');
+        el.classList.toggle('over', n > X_LIMIT);
+      }
+
+      function when(isoText) {
+        return new Date(isoText).toLocaleString('en-US', {
+          timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+        }) + ' ET';
+      }
+      var NAMES = { discord: 'Discord', x: 'X' };
+
+      function esc(text) {
+        var div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+
+      function renderStatus(week, note) {
+        var html = note ? '<div>' + note + '</div>' : '';
+        var targets = week.targets.map(function (t) { return NAMES[t] || t; }).join(' + ');
+        if (!week.saved) {
+          html += '<div>Not saved yet — nothing will post for this week.</div>';
+        } else if (week.post_started_at) {
+          var all = week.targets.concat(Object.keys(week.results).filter(function (t) { return week.targets.indexOf(t) < 0; }));
+          html += all.map(function (t) {
+            var r = week.results[t];
+            if (!r) return '<div>' + (NAMES[t] || t) + ': not posted yet</div>';
+            return r.ok
+              ? '<div class="good">' + (NAMES[t] || t) + ': posted ✓</div>'
+              : '<div class="bad">' + (NAMES[t] || t) + ': failed — ' + esc(r.detail || 'unknown error') + '</div>';
+          }).join('');
+        } else if (!week.targets.length) {
+          html += '<div class="bad">Saved, but the server has no Discord webhook or X keys yet, so nothing will post.</div>';
+        } else if (!week.autopost) {
+          html += '<div>Saved. Auto-post is switched off on the server — use Post now.</div>';
+        } else if (new Date(week.post_at) < new Date()) {
+          html += '<div>Saved, but this week’s post time (' + when(week.post_at) + ') has passed — use Post now.</div>';
+        } else {
+          html += '<div class="good">Saved. Posts ' + when(week.post_at) + ' to ' + targets + '.</div>';
+        }
+        statusEl.innerHTML = html;
+
+        var failed = week.post_started_at && week.targets.some(function (t) { return !(week.results[t] || {}).ok; });
+        $('post-now').textContent = failed ? 'Retry failed' : 'Post now';
+        $('post-now').disabled = !week.saved || !week.targets.length || (week.post_started_at && !failed);
+      }
+
+      function loadWeek() {
+        var sundayDate = fromIso(weekInput.value);
+        showWeekOf(sundayDate);
+        statusEl.textContent = 'Loading…';
+        return api('/schedule/v1/weeks/' + weekInput.value).then(function (week) {
+          current = week;
+          if (week.saved) {
+            writeDays(week.days);
+            caption.value = week.caption;
+          } else {
+            caption.value = defaultCaption();
+          }
+          updateCount();
+          renderStatus(week);
+        }).catch(showError);
+      }
+
+      function showError(err) {
+        if (err.status === 401) return showSignedOut();
+        statusEl.innerHTML = '<div class="bad">' + esc(err.message || 'Something went wrong') + '</div>';
+      }
+
+      function renderCard() {
+        var card = document.querySelector('.card');
+        if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+        card.classList.add('exporting');
+        return document.fonts.ready.then(function () {
+          return html2canvas(card, { scale: 2, useCORS: true, backgroundColor: null });
+        }).then(function (canvas) {
+          card.classList.remove('exporting');
+          return canvas.toDataURL('image/png');
+        }, function (err) {
+          card.classList.remove('exporting');
+          throw err;
+        });
+      }
+
+      function busy(on) {
+        ['save', 'post-now', 'fill-caption'].forEach(function (id) { $(id).disabled = on; });
+        weekInput.disabled = on;
+      }
+
+      $('save').addEventListener('click', function () {
+        if (fromIso(weekInput.value).getDay() !== 0) return showError(new Error('Pick a Sunday for the week.'));
+        if (!caption.value.trim()) caption.value = defaultCaption();
+        var note = current && current.post_started_at
+          ? 'Saved — but this week was already posted, so it won’t go out again.' : '';
+        busy(true);
+        statusEl.textContent = 'Rendering card…';
+        renderCard().then(function (image) {
+          statusEl.textContent = 'Saving…';
+          return api('/schedule/v1/weeks/' + weekInput.value, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ days: readDays(), caption: caption.value, image: image })
+          });
+        }).then(function (week) {
+          current = week;
+          busy(false);
+          renderStatus(week, note);
+        }).catch(function (err) {
+          busy(false);
+          if (current) renderStatus(current);
+          showError(err);
+        });
+      });
+
+      $('post-now').addEventListener('click', function () {
+        if (!current || !current.saved) return;
+        var targets = current.targets.map(function (t) { return NAMES[t] || t; }).join(' + ');
+        if (!confirm('Post the saved week of ' + weekInput.value + ' to ' + targets + ' right now?\n\n(Unsaved edits on the card are not included — Save first.)')) return;
+        busy(true);
+        statusEl.textContent = 'Posting…';
+        api('/schedule/v1/weeks/' + weekInput.value + '/post', { method: 'POST' })
+          .then(function (week) {
+            current = week;
+            busy(false);
+            renderStatus(week);
+          }).catch(function (err) {
+            busy(false);
+            renderStatus(current);
+            showError(err);
+          });
+      });
+
+      $('fill-caption').addEventListener('click', function () {
+        caption.value = defaultCaption();
+        updateCount();
+      });
+      caption.addEventListener('input', updateCount);
+      weekInput.addEventListener('change', function () {
+        if (fromIso(weekInput.value).getDay() !== 0) return showError(new Error('Pick a Sunday for the week.'));
+        loadWeek();
+      });
+
+      function showSignedOut() {
+        $('signed-in').hidden = true;
+        $('signed-out').hidden = false;
+      }
+      $('sign-in').addEventListener('click', function () {
+        var back = new URL(location.href);
+        back.searchParams.delete('auth');
+        location.href = API + '/devils-advocate/v1/auth/twitch/login?return=' + encodeURIComponent(back.toString());
+      });
+
+      weekInput.value = iso(sunday);
+      api('/devils-advocate/v1/auth/me').then(function (me) {
+        if (!me.authenticated) return showSignedOut();
+        $('who').textContent = 'Signed in as ' + (me.display_name || me.login || 'admin');
+        $('signed-in').hidden = false;
+        return loadWeek();
+      }).catch(function () {
+        $('signed-out').hidden = false;
+        $('signed-out').querySelector('.who').textContent = 'Can’t reach ' + API + ' right now.';
+        $('sign-in').hidden = true;
+      });
+    })();
   </script>
 </body>
 </html>
