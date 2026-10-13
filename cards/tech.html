@@ -167,8 +167,9 @@
 
         .service-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 0.35rem;
+            justify-items: stretch;
         }
 
         .svc {
@@ -332,14 +333,49 @@
         </header>
 
         <div class="services">
-            <h2>✦ Dev Work &amp; Commission Work</h2>
+            <h2>✦ Dev Work &amp; Commissions</h2>
 
+            <!-- CREATOR TOOLS -->
+            <span class="subtitle">Creator &amp; Stream Tools</span>
+
+            <div class="service-grid" style="margin-top: 0.4rem;">
+                <div class="svc">
+                    <div class="svc-name">Stream Overlay / Browser Source</div>
+                    <p class="info-service">
+                        Custom OBS overlays, collab layouts, widgets, and interactive browser sources
+                    </p>
+                    <div class="svc-price">From $50</div>
+                    <div class="svc-tags">
+                        <span class="tag">OBS</span>
+                        <span class="tag">HTML/CSS</span>
+                        <span class="tag">JS</span>
+                    </div>
+                </div>
+
+                <div class="svc">
+                    <div class="svc-name">Stream Automation</div>
+                    <p class="info-service">
+                        Custom Twitch, Discord, and stream workflow automation
+                    </p>
+                    <div class="svc-price">From $100</div>
+                    <div class="svc-tags">
+                        <span class="tag">Twitch</span>
+                        <span class="tag">Discord</span>
+                        <span class="tag">Automation</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- WEBSITES -->
             <span class="subtitle">Web Development</span>
 
-            <div class="service-grid " style="margin-top: 0.4rem;">
+            <div class="service-grid" style="margin-top: 0.4rem;">
                 <div class="svc">
-                    <div class="svc-name">Static Site</div>
-                    <p class="info-service">Custom HTML/CSS/JS solution for your needs</p>
+                    <div class="svc-name">Simple Website</div>
+                    <p class="info-service">
+                        Portfolio, landing page, commission page, or other small custom website
+                    </p>
                     <div class="svc-price">$150–$200</div>
                     <div class="svc-tags">
                         <span class="tag">HTML/CSS</span>
@@ -348,9 +384,11 @@
                 </div>
 
                 <div class="svc">
-                    <div class="svc-name">Full Stack</div>
-                    <p class="info-service">Complete web application with backend and frontend</p>
-                    <div class="svc-price">$350–$500</div>
+                    <div class="svc-name">Web Application</div>
+                    <p class="info-service">
+                        Interactive web application with custom frontend and backend functionality
+                    </p>
+                    <div class="svc-price">From $350</div>
                     <div class="svc-tags">
                         <span class="tag">React</span>
                         <span class="tag">FastAPI</span>
@@ -359,50 +397,61 @@
                 </div>
 
                 <div class="svc">
-                    <div class="svc-name">Commission Shop</div>
-                    <p class="info-service">Custom web development projects for clients</p>
-                    <div class="svc-price">$600–$900</div>
+                    <div class="svc-name">Advanced Web Project</div>
+                    <p class="info-service">
+                        Larger custom websites, platforms, shops, dashboards, and integrated systems
+                    </p>
+                    <div class="svc-price">From $600</div>
                     <div class="svc-tags">
                         <span class="tag">React</span>
                         <span class="tag">Next.js</span>
-                    </div>
-                </div>
-
-                <div class="svc">
-                    <div class="svc-name">Custom Rust/Python</div>
-                    <p class="info-service">Tailored solutions in Rust or Python</p>
-                    <div class="svc-price">From $100</div>
-                    <div class="svc-tags">
-                        <span class="tag">Rust</span>
-                        <span class="tag">Python</span>
+                        <span class="tag">Custom</span>
                     </div>
                 </div>
             </div>
 
-            <span class="subtitle">Custom Programs</span>
+
+            <!-- SOFTWARE -->
+            <span class="subtitle">Custom Software</span>
 
             <div class="service-grid" style="margin-top: 0.4rem;">
                 <div class="svc">
-                    <div class="svc-name">Small Utility</div>
-                    <p class="info-service">Small tools and utilities for your needs</p>
-                    <div class="svc-price">$500-$1000</div>
+                    <div class="svc-name">Small Script / Tool</div>
+                    <p class="info-service">
+                        Small custom scripts, integrations, and purpose-built tools
+                    </p>
+                    <div class="svc-price">From $100</div>
                     <div class="svc-tags">
-                        <span class="tag">Custom</span>
-                        <span class="tag">Utilities</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Rust</span>
                     </div>
                 </div>
 
                 <div class="svc">
-                    <div class="svc-name">Medium Project w/ UI</div>
-                    <p class="info-service">Medium-sized projects with user interfaces</p>
-                    <div class="svc-price">$1000-$2500</div>
+                    <div class="svc-name">Custom Application</div>
+                    <p class="info-service">
+                        Larger standalone utilities and applications built around your workflow
+                    </p>
+                    <div class="svc-price">From $500</div>
                     <div class="svc-tags">
                         <span class="tag">Custom</span>
                         <span class="tag">UI</span>
                     </div>
                 </div>
+
+                <div class="svc">
+                    <div class="svc-name">Something Weird?</div>
+                    <p class="info-service">
+                        Have an idea that doesn't fit neatly into a box? Send it to me.
+                    </p>
+                    <div class="svc-price">Let's talk</div>
+                    <div class="svc-tags">
+                        <span class="tag">???</span>
+                        <span class="tag">Gremlin Engineering</span>
+                    </div>
+                </div>
             </div>
-        </div><!-- /.services -->
+        </div>
 
         <div class="hourly">
             <h2>✦ Hourly</h2>

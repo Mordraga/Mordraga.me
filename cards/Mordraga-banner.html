@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mordraga — VGen Banner</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+    :root {
+      --black:    #080808;
+      --deep:     #0f0d0f;
+      --surface:  #141014;
+      --border:   #2a1f2a;
+      --accent:   #8b1a1a;
+      --accent-dim: #5c1212;
+      --gold:     #c9a84c;
+      --gold-dim: #8a6e2e;
+      --text:     #d4c9d4;
+      --text-dim: #7a6d7a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { background: var(--black); }
+
+    /* VGen profile banner: 1920x1080, center-cropped to a wide strip on desktop.
+       Everything important sits inside the centre band (.safe). */
+    .banner {
+      width: 1920px;
+      height: 1080px;
+      position: relative;
+      overflow: hidden;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse 55% 45% at 50% 50%, rgba(139, 26, 26, 0.22), transparent 70%),
+        radial-gradient(ellipse 90% 80% at 50% 50%, var(--deep), var(--black) 85%);
+    }
+
+    /* faint ritual circle behind the name */
+    .circle {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 900px; height: 900px;
+      transform: translate(-50%, -50%);
+      opacity: 0.09;
+    }
+
+    /* gold/red rules framing the centre band */
+    .rule {
+      position: absolute;
+      left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent) 20%, var(--gold) 50%, var(--accent) 80%, transparent);
+    }
+    .rule--top    { top: 330px; }
+    .rule--bottom { bottom: 330px; }
+
+    .band {
+      position: absolute;
+      left: 0; right: 0;
+      top: 332px; bottom: 332px;
+      background: linear-gradient(90deg, transparent, rgba(20, 16, 20, 0.85) 25%, rgba(20, 16, 20, 0.85) 75%, transparent);
+    }
+
+    .safe {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .sigil {
+      font-size: 40px;
+      color: var(--accent);
+      letter-spacing: 0.4em;
+      margin-bottom: 18px;
+      padding-left: 0.4em; /* balance trailing letter-spacing */
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-weight: 700;
+      font-size: 150px;
+      line-height: 1;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      padding-left: 0.08em;
+      text-shadow: 0 0 40px rgba(201, 168, 76, 0.25), 0 4px 0 rgba(0, 0, 0, 0.6);
+    }
+
+    .subtitle {
+      font-size: 34px;
+      color: var(--text-dim);
+      letter-spacing: 0.3em;
+      padding-left: 0.3em;
+      text-transform: uppercase;
+      font-style: italic;
+      margin-top: 22px;
+    }
+
+    .meta {
+      font-size: 30px;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      padding-left: 0.15em;
+      font-style: italic;
+      margin-top: 14px;
+    }
+    .meta { font-variant-numeric: lining-nums; }
+    .meta span { color: var(--gold-dim); font-style: normal; margin: 0 0.4em; }
+
+    /* corner flourishes for the full-size (mobile/directory) view */
+    .corner {
+      position: absolute;
+      font-size: 48px;
+      color: var(--accent-dim);
+    }
+    .corner--tl { top: 60px; left: 80px; }
+    .corner--tr { top: 60px; right: 80px; }
+    .corner--bl { bottom: 60px; left: 80px; }
+    .corner--br { bottom: 60px; right: 80px; }
+
+    /* add ?guides to the URL to preview likely crop areas */
+    .guide { display: none; position: absolute; border: 2px dashed rgba(127, 201, 127, 0.7); pointer-events: none; }
+    .guides .guide { display: block; }
+    .guide--strip { left: 0; right: 0; top: 340px; bottom: 340px; }
+    .guide--card  { top: 0; bottom: 0; left: 50%; width: 1080px; transform: translateX(-50%); border-color: rgba(201, 127, 127, 0.7); }
+  </style>
+</head>
+<body>
+  <div class="banner" id="banner">
+    <svg class="circle" viewBox="0 0 100 100" aria-hidden="true">
+      <g fill="none" stroke="#c9a84c" stroke-width="0.35">
+        <circle cx="50" cy="50" r="48"/>
+        <circle cx="50" cy="50" r="44"/>
+        <polygon points="50,6 75.9,85.6 8.2,36.4 91.8,36.4 24.1,85.6"/>
+      </g>
+    </svg>
+
+    <div class="band"></div>
+    <div class="rule rule--top"></div>
+    <div class="rule rule--bottom"></div>
+
+    <div class="corner corner--tl">✦</div>
+    <div class="corner corner--tr">✦</div>
+    <div class="corner corner--bl">✦</div>
+    <div class="corner corner--br">✦</div>
+
+    <div class="safe">
+      <div class="sigil">⸸ ✦ ⸸</div>
+      <h1>Mordraga</h1>
+      <div class="subtitle">Chaos · Witchiness · Feral</div>
+      <div class="meta">@Mordraga0<span>✦</span>mordraga.me<span>✦</span>she/they</div>
+    </div>
+
+    <div class="guide guide--strip"></div>
+    <div class="guide guide--card"></div>
+  </div>
+  <script>
+    if (location.search.indexOf('guides') !== -1) document.getElementById('banner').classList.add('guides');
+  </script>
+</body>
+</html>

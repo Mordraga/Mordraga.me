@@ -219,6 +219,15 @@
   margin-bottom: 1.25rem;
 }
 
+.schedule-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
 .schedule-days {
   display: flex;
   justify-content: center;
@@ -235,6 +244,17 @@
   gap: 0.15rem;
 }
 
+.schedule-pentacle {
+  display: block;
+  width: 30px;
+  aspect-ratio: 1/1;
+  margin: 0.4rem auto 0;
+
+  color: var(--accent);
+
+  filter: drop-shadow(0 0 2px var(--accent));
+}
+
 .schedule-day-name {
   font-family: 'Cinzel Decorative', serif;
   font-size: 0.65rem;
@@ -249,7 +269,33 @@
   color: var(--text-dim);
 }
 
+.schedule-day-topic {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
 .schedule-sep { color: var(--accent); font-size: 0.9rem; }
+
+.schedule-day.highlight .schedule-day-name,
+.schedule-day.highlight .schedule-day-time {
+  color: var(--accent);
+  font-weight: 600;
+  text-shadow:
+    0 0 4px var(--accent),
+    0 0 10px rgba(139, 26, 26, 0.45);
+  border-radius: 4px;
+  padding: 0.1rem 0.3rem;
+  
+}
+
+.schedule-wrapper.highlight {
+  color: var(--bg);
+  border-bottom: 2px solid var(--accent);
+  box-shadow: 0 3px 6px -5px var(--accent);
+  border-radius: 50px;
+}
+
+
 
 /* ── CLIPS SECTION ── */
 .clips-section {

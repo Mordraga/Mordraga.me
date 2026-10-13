@@ -121,22 +121,7 @@
   <section class="schedule-strip">
     <div class="container">
       <div class="schedule-label">Stream Schedule</div>
-      <div class="schedule-days">
-        <div class="schedule-day">
-          <span class="schedule-day-name">Sunday</span>
-          <span class="schedule-day-time">4 PM EST</span>
-        </div>
-        <span class="schedule-sep">⸸</span>
-        <div class="schedule-day">
-          <span class="schedule-day-name">Monday</span>
-          <span class="schedule-day-time">4 PM EST</span>
-        </div>
-        <span class="schedule-sep">⸸</span>
-        <div class="schedule-day">
-          <span class="schedule-day-name">Thursday</span>
-          <span class="schedule-day-time">4 PM EST</span>
-        </div>
-      </div>
+      <div class="schedule-days" id="schedule-days"></div>
       <a href="https://twitch.tv/mordraga0" class="btn btn-ghost" target="_blank">Watch on Twitch →</a>
     </div>
   </section>
@@ -279,6 +264,170 @@
       placeholder.style.display = 'none';
     }
     // On localhost/dev, offline placeholder shows by default so you can still dev
+  </script>
+
+  <script>
+    // Create current schedule without hardcoding, so I can allow for future changes without editing the HTML. And
+    // free timezone conversion.
+
+    var schedule = [
+      { day: 'Sunday', time: '9 PM', topic: 'Devil\'s Advocate' },
+      { day: 'Monday', time: '9 PM', topic: 'Lobotomy Corporation' },
+      { day: 'Wednesday', time: '9 PM', topic: 'God Eater: Resurrection' },
+      { day: 'Thursday', time: '6 PM', topic: 'Star Technology' },
+      { day: 'Saturday', time: '9 PM', topic: 'Crypt Community Day~!' }
+    ];
+
+    // Populate the schedule strip dynamically and insert local time conversion + timezone name.
+    var scheduleDaysContainer = document.getElementById('schedule-days');
+    scheduleDaysContainer.innerHTML = ''; // Clear existing content
+    for (var i = 0; i < schedule.length; i++) {
+      var day = schedule[i];
+      var dayDiv = document.createElement('div');
+      dayDiv.className = 'schedule-day';
+      dayDiv.innerHTML = '<span class="schedule-wrapper"><span class="schedule-day-name">' + day.day + ' · ' + (day.time || 'No Stream') + '</span>' +
+                        '<span class="schedule-day-time">' + (convertToLocalTime(day.time) || 'No Stream') + '</span>' +
+                        '<span class="schedule-day-topic">' + (day.topic || 'No Stream') + '</span></span>';
+      scheduleDaysContainer.appendChild(dayDiv);
+      if (i < schedule.length - 1) {
+        var sep = document.createElement('span');
+        sep.className = 'schedule-sep';
+        sep.textContent = '⸸';
+        scheduleDaysContainer.appendChild(sep);
+      }
+    }
+
+  // Schedule is authored in Eastern Time.
+  // Convert it to the viewer's local timezone.
+  function convertToLocalTime(timeStr) {
+    if (!timeStr) return;
+
+    var parts = timeStr.split(' ');
+    var hours = parseInt(parts[0]);
+    var period = parts[1];
+
+    if (period === 'PM' && hours !== 12) hours += 12;
+    if (period === 'AM' && hours === 12) hours = 0;
+
+    // Build today's Eastern date string.
+    var easternNow = new Date().toLocaleDateString('en-CA', {
+      timeZone: 'America/New_York'
+    });
+
+    // Get Eastern's UTC offset for that date.
+    var formatter = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      timeZoneName: 'longOffset'
+    });
+
+    var offset = formatter
+      .formatToParts(new Date())
+      .find(function (part) {
+        return part.type === 'timeZoneName';
+      })
+      .value
+      .replace('GMT', '');
+
+    var paddedHour = String(hours).padStart(2, '0');
+
+    var easternDate = new Date(
+      easternNow + 'T' + paddedHour + ':00:00' + offset
+    );
+
+    return easternDate.toLocaleTimeString([], {
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      });
+  }
+
+    // Schedule strip: highlight current day
+    var scheduleDays = document.getElementById('schedule-days');
+    var today = new Date().getDay(); // 0 (Sunday) to 6 (Saturday)
+    var dayMap = {
+      0: 'Sunday',
+      1: 'Monday',
+      2: 'Tuesday',
+      3: 'Wednesday',
+      4: 'Thursday',
+      5: 'Friday',
+      6: 'Saturday'
+    };
+    var todayName = dayMap[today];
+
+    // Loop through schedule days and highlight the current day
+    // Loop through schedule days and highlight the current day
+    var days = scheduleDays.getElementsByClassName('schedule-day');
+
+    for (var i = 0; i < days.length; i++) {
+      var dayNameElem = days[i].getElementsByClassName('schedule-day-name')[0];
+
+      if (dayNameElem.textContent.startsWith(todayName)) {
+        var wrapper = days[i].getElementsByClassName('schedule-wrapper')[0];
+
+        wrapper.classList.add('highlight');
+        days[i].classList.add('highlight');
+
+        // Draw pentacle under current day
+        var svgNS = 'http://www.w3.org/2000/svg';
+
+        var svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', '0 0 100 100');
+        svg.setAttribute('class', 'schedule-pentacle');
+
+        // Outer circle
+        var circle = document.createElementNS(svgNS, 'circle');
+        circle.setAttribute('cx', '50');
+        circle.setAttribute('cy', '50');
+        circle.setAttribute('r', '44');
+        circle.setAttribute('fill', 'none');
+        circle.setAttribute('stroke', 'currentColor');
+        circle.setAttribute('stroke-width', '3');
+
+        // Pentagram
+        var star = document.createElementNS(svgNS, 'polyline');
+        star.setAttribute(
+          'points',
+          '50,12 75,86 10,41 90,41 25,86 50,12'
+        );
+        star.setAttribute('fill', 'none');
+        star.setAttribute('stroke', 'currentColor');
+        star.setAttribute('stroke-width', '3');
+        star.setAttribute('stroke-linejoin', 'round');
+
+        svg.appendChild(circle);
+        svg.appendChild(star);
+        wrapper.appendChild(svg);
+      }
+    }
+
+    function updateScheduleSeparators() {
+      var days = scheduleDaysContainer.getElementsByClassName('schedule-day');
+
+      for (var i = 0; i < days.length; i++) {
+        var day = days[i];
+        var sep = day.nextElementSibling;
+
+        // Ignore anything that isn't actually one of our separators
+        if (!sep || !sep.classList.contains('schedule-sep')) {
+          continue;
+        }
+
+        var nextDay = days[i + 1];
+
+        // Hide separator if this is the last item,
+        // or if the next day has wrapped onto another row.
+        if (!nextDay || nextDay.offsetTop !== day.offsetTop) {
+          sep.style.display = 'none';
+        } else {
+          sep.style.display = '';
+        }
+      }
+    }
+
+    updateScheduleSeparators();
+
+    window.addEventListener('resize', updateScheduleSeparators);
   </script>
 
 </body>
