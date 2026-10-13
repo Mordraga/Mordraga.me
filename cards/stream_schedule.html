@@ -256,7 +256,7 @@
     <div id="signed-in" hidden>
       <p class="who" id="who"></p>
       <label for="week-input">Week of (Sunday)</label>
-      <input type="date" id="week-input" step="7">
+      <input type="date" id="week-input" step="7" min="2024-01-07"><!-- min is a Sunday: step counts from it, so only Sundays are pickable -->
       <label for="caption">Caption</label>
       <textarea id="caption" maxlength="2000"></textarea>
       <div class="count" id="caption-count"></div>
@@ -331,7 +331,6 @@
 
       var API = new URLSearchParams(location.search).get('api') || 'https://api.mordraga.me';
       var DAYS = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-      var SHORT = { sunday: 'Sun', monday: 'Mon', tuesday: 'Tue', wednesday: 'Wed', thursday: 'Thu', friday: 'Fri', saturday: 'Sat' };
       var X_LIMIT = 280;
 
       var $ = function (id) { return document.getElementById(id); };
@@ -362,7 +361,6 @@
         return new Date(p[0], p[1] - 1, p[2]);
       }
       function field(day, part) { return document.querySelector('[data-key="' + day + '-' + part + '"]'); }
-      function blank(text) { return !text || /^tbd$/i.test(text.trim()); }
 
       function readDays() {
         return DAYS.map(function (day) {
@@ -379,16 +377,10 @@
         });
       }
 
+      // The card image carries the schedule itself; the caption just introduces it.
       function defaultCaption() {
         var week = fromIso(weekInput.value);
-        var lines = readDays().filter(function (d) { return !blank(d.topic) || !blank(d.time); }).map(function (d) {
-          var parts = [];
-          if (!blank(d.topic)) parts.push(d.topic);
-          if (!blank(d.time)) parts.push(d.time + ' ET');
-          return SHORT[d.day] + ' — ' + parts.join(' · ');
-        });
-        return '⸸ This week in the Crypt · ' + week.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ⸸\n\n' +
-          (lines.length ? lines.join('\n') : 'Schedule TBD') + '\n\nSee you there 🖤';
+        return '⸸ This week in the Crypt · ' + week.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ' ⸸\n\nSee you there 🖤';
       }
 
       function updateCount() {
