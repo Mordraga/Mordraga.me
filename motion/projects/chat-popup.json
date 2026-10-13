@@ -1,0 +1,296 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "duration": 4000,
+  "fps": 60,
+  "fonts": [
+    "https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap"
+  ],
+  "vars": {
+    "name": "Vesper",
+    "badge": "✦",
+    "message": "the crypt doors creak open…",
+    "nameColor": "#c9a84c"
+  },
+  "css": [
+    ".popup { position: absolute; left: 110px; top: 820px; width: 640px; height: 170px; }",
+    ".frame { position: absolute; left: 0; top: 0; overflow: visible; }",
+    ".plate { position: absolute; left: 34px; top: 26px; display: flex; align-items: baseline; gap: 10px;",
+    "         padding-bottom: 6px; border-bottom: 1px solid rgba(138,110,46,0.5); }",
+    ".badge { font-size: 22px; color: #c9a84c; }",
+    ".name { font-family: 'Cinzel', serif; font-weight: 600; font-size: 28px; letter-spacing: 0.04em;",
+    "        color: {{nameColor}}; text-shadow: 0 0 12px rgba(201,168,76,0.35); }",
+    ".message { position: absolute; left: 34px; top: 78px; width: 540px; font-family: 'Cormorant Garamond', serif;",
+    "           font-style: italic; font-size: 30px; line-height: 1.3; color: #d4c9d4; }"
+  ],
+  "html": [
+    "<div id=\"popup\" data-name=\"Chat Box\" class=\"popup\">",
+    "  <svg id=\"frame\" data-name=\"Frame\" class=\"frame\" viewBox=\"0 0 640 170\" width=\"640\" height=\"170\">",
+    "    <path id=\"frame-bg\" data-name=\"Message Background\" d=\"M16 1 H624 L639 16 V154 L624 169 H16 L1 154 V16 Z\" fill=\"rgba(8,8,8,0.88)\"></path>",
+    "    <path id=\"frame-line\" data-name=\"Outer Frame\" d=\"M16 1 H624 L639 16 V154 L624 169 H16 L1 154 V16 Z\" fill=\"none\" stroke=\"#8a6e2e\" stroke-width=\"1.5\"></path>",
+    "    <path id=\"accent\" data-name=\"Accent Bar\" d=\"M2 34 V136\" fill=\"none\" stroke=\"#8b1a1a\" stroke-width=\"3\"></path>",
+    "    <g id=\"corners\" data-name=\"Corner Brackets\" fill=\"none\" stroke=\"#c9a84c\" stroke-width=\"2\">",
+    "      <path id=\"corner-tl\" d=\"M0 22 V0 H22\"></path>",
+    "      <path id=\"corner-tr\" d=\"M618 0 H640 V22\"></path>",
+    "      <path id=\"corner-bl\" d=\"M0 148 V170 H22\"></path>",
+    "      <path id=\"corner-br\" d=\"M618 170 H640 V148\"></path>",
+    "    </g>",
+    "    <g id=\"sigil\" data-name=\"Decorative Sigil\" transform=\"translate(604 36)\" fill=\"none\" stroke=\"#8b1a1a\" stroke-width=\"1.2\">",
+    "      <circle id=\"sigil-ring\" cx=\"0\" cy=\"0\" r=\"15\"></circle>",
+    "      <path id=\"sigil-star\" d=\"M 0.00 -12.00 L 5.21 10.81 L -9.38 -7.48 L 11.70 2.67 L -11.70 2.67 L 9.38 -7.48 L -5.21 10.81 L 0.00 -12.00 Z\"></path>",
+    "    </g>",
+    "  </svg>",
+    "  <div id=\"plate\" data-name=\"Username Plate\" class=\"plate\">",
+    "    <span id=\"badge\" data-name=\"Badge\" class=\"badge\">{{badge}}</span>",
+    "    <span id=\"name\" data-name=\"Username\" class=\"name\">{{name}}</span>",
+    "  </div>",
+    "  <div id=\"message\" data-name=\"Message\" class=\"message\">{{message}}</div>",
+    "</div>"
+  ],
+  "tracks": [
+    {
+      "target": "popup",
+      "prop": "x",
+      "keys": [
+        {
+          "t": 0,
+          "v": -80,
+          "ease": "ease-out-strong"
+        },
+        {
+          "t": 233,
+          "v": 0,
+          "ease": "linear"
+        },
+        {
+          "t": 3500,
+          "v": 0,
+          "ease": "ease-in-strong"
+        },
+        {
+          "t": 3900,
+          "v": -60,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "popup",
+      "prop": "opacity",
+      "keys": [
+        {
+          "t": 0,
+          "v": 0,
+          "ease": "ease-out"
+        },
+        {
+          "t": 233,
+          "v": 1,
+          "ease": "linear"
+        },
+        {
+          "t": 3550,
+          "v": 1,
+          "ease": "ease-in"
+        },
+        {
+          "t": 3900,
+          "v": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "frame-bg",
+      "prop": "opacity",
+      "keys": [
+        {
+          "t": 0,
+          "v": 0,
+          "ease": "ease-out"
+        },
+        {
+          "t": 400,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "frame-line",
+      "prop": "draw",
+      "keys": [
+        {
+          "t": 100,
+          "v": 0,
+          "ease": "ease-in-out"
+        },
+        {
+          "t": 850,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "accent",
+      "prop": "draw",
+      "keys": [
+        {
+          "t": 250,
+          "v": 0,
+          "ease": "ease-out"
+        },
+        {
+          "t": 650,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "corners",
+      "prop": "opacity",
+      "keys": [
+        {
+          "t": 550,
+          "v": 0,
+          "ease": "ease-out"
+        },
+        {
+          "t": 750,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "corners",
+      "prop": "scale",
+      "keys": [
+        {
+          "t": 550,
+          "v": 1.08,
+          "ease": "overshoot"
+        },
+        {
+          "t": 900,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "sigil",
+      "prop": "rotate",
+      "keys": [
+        {
+          "t": 150,
+          "v": -120,
+          "ease": "ease-out-strong"
+        },
+        {
+          "t": 1300,
+          "v": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "sigil-ring",
+      "prop": "draw",
+      "keys": [
+        {
+          "t": 150,
+          "v": 0,
+          "ease": "ease-in-out"
+        },
+        {
+          "t": 700,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "sigil-star",
+      "prop": "draw",
+      "keys": [
+        {
+          "t": 350,
+          "v": 0,
+          "ease": "ease-in-out"
+        },
+        {
+          "t": 1200,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "plate",
+      "prop": "x",
+      "keys": [
+        {
+          "t": 300,
+          "v": -24,
+          "ease": "ease-out-strong"
+        },
+        {
+          "t": 800,
+          "v": 0,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "plate",
+      "prop": "opacity",
+      "keys": [
+        {
+          "t": 300,
+          "v": 0,
+          "ease": "ease-out"
+        },
+        {
+          "t": 700,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "message",
+      "prop": "opacity",
+      "keys": [
+        {
+          "t": 550,
+          "v": 0,
+          "ease": "ease-out"
+        },
+        {
+          "t": 700,
+          "v": 1,
+          "ease": "linear"
+        }
+      ]
+    },
+    {
+      "target": "message",
+      "prop": "blur",
+      "keys": [
+        {
+          "t": 550,
+          "v": 6,
+          "ease": "ease-out"
+        },
+        {
+          "t": 700,
+          "v": 0,
+          "ease": "linear"
+        }
+      ]
+    }
+  ]
+}

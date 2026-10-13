@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Motion Player</title>
+<!--
+  Plays a motion project (projects/*.json). render.py captures this page; the editor previews through it.
+    player.html?project=projects/chat-popup.json      loops it, fitted to the window (open via serve.py —
+                                                      browsers won't fetch a project from file://)
+    ...&var.name=Vex&var.message=hello                 override the project's {{vars}}
+    player.html?render                                 render.py: transparent, paused, waits for motion.load(project)
+    player.html?embed                                  the editor's preview; the editor drives it
+  Provides the render contract every renderable document has:
+    motion.ready     → { duration, width, height, fps }
+    motion.seek(ms)  → resolves once that moment has painted
+-->
+<style>
+  html, body { margin: 0; overflow: hidden; background: transparent; }
+  #stage { position: relative; overflow: hidden; }
+  body.preview {
+    background: #141014 repeating-conic-gradient(#1c171c 0 25%, #141014 0 50%) 0 0 / 32px 32px;
+  }
+  body.preview #stage { transform-origin: 0 0; }
+</style>
+<script src="runtime.js"></script>
+</head>
+<body>
+<div id="stage"></div>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var stage = document.getElementById('stage');
+  var scene = new MotionRuntime.Scene(stage);
+  var info = null, markReady;
+  var ready = new Promise(function (done) { markReady = done; });
+
+  function load(project, vars) {
+    return scene.load(project, vars).then(function (i) {
+      info = i;
+      markReady(i);
+      return i;
+    });
+  }
+
+  function seek(ms) {
+    scene.apply(ms);
+    return new Promise(function (done) {
+      requestAnimationFrame(function () { requestAnimationFrame(done); });
+    });
+  }
+
+  window.motion = {
+    ready: ready,
+    load: load,
+    seek: seek,
+    scene: scene,
+    get duration() { return info && info.duration; },
+    get width() { return info && info.width; },
+    get height() { return info && info.height; }
+  };
+
+  var src = params.get('project');
+  if (!src || params.has('render') || params.has('embed')) return;
+
+  var vars = {};
+  params.forEach(function (value, key) {
+    if (key.indexOf('var.') === 0) vars[key.slice(4)] = value;
+  });
+
+  document.body.classList.add('preview');
+  fetch(src).then(function (r) { return r.json(); }).then(function (p) {
+    return load(p, vars);
+  }).then(function (i) {
+    function fit() {
+      stage.style.transform = 'scale(' + Math.min(innerWidth / i.width, innerHeight / i.height) + ')';
+    }
+    fit();
+    addEventListener('resize', fit);
+    var start = performance.now();
+    (function tick(now) {
+      scene.apply((now - start) % (i.duration + 800));  // a short gap before it loops
+      requestAnimationFrame(tick);
+    })(start);
+  });
+})();
+</script>
+</body>
+</html>
