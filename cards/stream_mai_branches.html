@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mordraga — Mai's Grimoire</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+    :root {
+      --black: #080808;
+      --deep: #0f0d0f;
+      --surface: #141014;
+      --border: #2a1f2a;
+      --accent: #8b1a1a;
+      --gold: #c9a84c;
+      --gold-dim: #8a6e2e;
+      --text: #d4c9d4;
+      --text-dim: #7a6d7a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--black);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0.5rem;
+      color: var(--text);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--deep);
+    }
+
+    .card::before,
+    .card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      z-index: 2;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent),
+        var(--gold),
+        var(--accent),
+        transparent
+      );
+    }
+
+    .card::before { top: 0; }
+    .card::after { bottom: 0; }
+
+    header, footer {
+      text-align: center;
+      background: var(--surface);
+    }
+
+    header {
+      padding: 0.8rem 1rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.2rem;
+    }
+
+    h1 {
+      font: 400 1.1rem 'Cinzel Decorative', serif;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .subtitle {
+      margin-top: 0.1rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    .intro {
+      padding: 0.5rem 1rem 0.4rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-style: italic;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    footer {
+      padding: 0.4rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* SECTION HEADINGS */
+
+    .section-title {
+      display: block;
+      padding: 0.5rem 1rem 0.3rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      color: var(--gold);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* SHARED GRID SYSTEM */
+
+    .cmd-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(var(--columns, 4), minmax(0, 1fr));
+      width: 100%;
+      list-style: none;
+    }
+
+    /*
+      ADAPTIVE GRID
+
+      Uses 12 tracks to support:
+      4 columns = span 3
+      3 columns = span 4
+      2 columns = span 6
+      1 column  = span 12
+
+      Only the incomplete final row expands.
+    */
+
+    .cmd-grid-adaptive {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+
+    .cmd-grid-adaptive > .cmd-item {
+      grid-column: span 3;
+    }
+
+    /* Three items remaining */
+    .cmd-grid-adaptive > .cmd-item:nth-child(4n + 1):nth-last-child(3),
+    .cmd-grid-adaptive > .cmd-item:nth-child(4n + 1):nth-last-child(3) ~ .cmd-item {
+      grid-column: span 4;
+    }
+
+    /* Two items remaining */
+    .cmd-grid-adaptive > .cmd-item:nth-child(4n + 1):nth-last-child(2),
+    .cmd-grid-adaptive > .cmd-item:nth-child(4n + 1):nth-last-child(2) ~ .cmd-item {
+      grid-column: span 6;
+    }
+
+    /* One item remaining */
+    .cmd-grid-adaptive > .cmd-item:nth-child(4n + 1):last-child {
+      grid-column: span 12;
+    }
+
+    /* REGULAR COMMANDS */
+
+    .cmd-item {
+      min-width: 0;
+      padding: 0.5rem 0.35rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .cmd-name {
+      margin-bottom: 0.12rem;
+      color: var(--gold);
+      font: 400 0.48rem 'Cinzel Decorative', serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .cmd-name::before {
+      content: '!';
+    }
+
+    .cmd-desc {
+      color: var(--text);
+      font-size: 0.74rem;
+      font-style: italic;
+      line-height: 1.3;
+    }
+
+    /* COMMAND ALIASES */
+
+    .cmd-alias {
+      margin-top: 0.2rem;
+      color: var(--text-dim);
+      font-size: 0.6rem;
+    }
+
+    .cmd-alias-text,
+    .cmd-branch-text {
+      display: inline-block;
+      max-width: 100%;
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.2rem;
+      background: var(--surface);
+      font-family: monospace;
+      overflow-wrap: anywhere;
+      width: fit-content;
+      justify-self: center;
+      text-align: center;
+    }
+
+    /* BRANCHING COMMAND FAMILIES */
+
+    .cmd-families {
+      list-style: none;
+    }
+
+    .cmd-family {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cmd-family-heading {
+      padding: 0.5rem 0.5rem 0.4rem;
+      text-align: center;
+    }
+
+    .cmd-family-heading > .cmd-alias {
+      width: 90%;
+      max-width: 280px;
+      margin: 0.25rem auto 0.4rem;
+    }
+
+    .cmd-family .cmd-name {
+      font-size: 0.58rem;
+    }
+
+    .cmd-family .cmd-desc {
+      font-size: 0.74rem;
+    }
+
+    /* BRANCH SUBCOMMANDS */
+
+    .cmd-branch-item {
+      min-width: 0;
+      padding: 0.4rem 0.25rem;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .cmd-branch-text {
+      color: var(--gold);
+      font-size: 0.6rem;
+    }
+
+    .cmd-branch-desc {
+      margin-top: 0.2rem;
+      color: var(--text);
+      font-size: 0.7rem;
+      font-style: italic;
+      line-height: 1.25;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <header>
+      <div class="sigil">⸸ ✦ ⸸</div>
+      <h1>Mai's Grimoire</h1>
+      <div class="subtitle">Branching Commands</div>
+    </header>
+    
+    <section aria-labelledby="branch-title">
+<h2 class="section-title" id="branch-title">
+        Branching Commands
+      </h2>
+<ul class="cmd-families">
+<!-- SONG REQUESTS -->
+<li class="cmd-family">
+<div class="cmd-family-heading">
+<div class="cmd-name">sr</div>
+<div class="cmd-desc">
+              Request any song you want on Youtube music~!
+            </div>
+</div>
+<ul class="cmd-grid" style="--columns: 4">
+<li class="cmd-branch-item">
+<span class="cmd-branch-text">help</span>
+<div class="cmd-branch-desc">
+                Shows all sr commands
+              </div>
+</li>
+<li class="cmd-branch-item">
+<span class="cmd-branch-text">skip</span>
+<div class="cmd-branch-desc">
+                Skips the current song
+              </div>
+</li>
+<li class="cmd-branch-item">
+<span class="cmd-branch-text">queue</span>
+<div class="cmd-branch-desc">
+                Shows the current song queue
+              </div>
+</li>
+<li class="cmd-branch-item">
+<span class="cmd-branch-text">mine</span>
+<div class="cmd-branch-desc">
+                Shows when your requested song is.
+              </div>
+</li>
+</ul>
+</li>
+<!-- IMMORTALS -->
+<li class="cmd-family">
+<div class="cmd-family-heading">
+<div class="cmd-name">immortal</div>
+<div class="cmd-desc">
+              Immortalize a username in chat~!
+            </div>
+<div class="cmd-alias cmd-grid" style="--columns: 2">
+<span class="cmd-alias-text">bestnames</span>
+<span class="cmd-alias-text">immortalize</span>
+</div>
+</div>
+<ul class="cmd-grid" style="--columns: 3">
+<li class="cmd-branch-item">
+<span class="cmd-branch-text">help</span>
+<div class="cmd-branch-desc">
+                Shows all immortals commands
+              </div>
+</li>
+<li class="cmd-branch-item">
+<span class="cmd-branch-text">add</span>
+<div class="cmd-branch-desc">
+                Adds a username to the immortals list
+              </div>
+</li>
+<li class="cmd-branch-item">
+<span class="cmd-branch-text">list</span>
+<div class="cmd-branch-desc">
+                Shows the current immortals list
+              </div>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+    <footer>
+      The Crypt · @Mordraga0 · she/they
+    </footer>
+  </main>
+</body>
+</html>

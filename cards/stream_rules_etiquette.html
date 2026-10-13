@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mordraga — Rules of the Crypt</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+    :root {
+      --black: #080808;
+      --deep: #0f0d0f;
+      --surface: #141014;
+      --border: #2a1f2a;
+      --accent: #8b1a1a;
+      --gold: #c9a84c;
+      --gold-dim: #8a6e2e;
+      --text: #d4c9d4;
+      --text-dim: #7a6d7a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--black);
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 0.5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .card::before,
+    .card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      z-index: 2;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        var(--accent),
+        var(--gold),
+        var(--accent),
+        transparent
+      );
+    }
+
+    .card::before { top: 0; }
+    .card::after { bottom: 0; }
+
+    header, footer {
+      text-align: center;
+      background: var(--surface);
+    }
+
+    header {
+      padding: 0.8rem 1rem 0.6rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sigil {
+      font-size: 1rem;
+      color: var(--accent);
+      letter-spacing: 0.4em;
+      margin-bottom: 0.2rem;
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    .subtitle {
+      margin-top: 0.1rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    footer {
+      padding: 0.4rem;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    /* RULE GRID */
+
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      list-style: none;
+    }
+
+    .rule {
+      min-width: 0;
+      padding: 0.55rem 0.6rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .rule-title {
+      margin-bottom: 0.2rem;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.57rem;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+
+    .rule-desc {
+      font-size: 0.76rem;
+      font-style: italic;
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    /* FULL WIDTH RULES */
+
+    .rule-wide {
+      grid-column: 1 / -1;
+    }
+
+    /* FINAL WARNING */
+
+    .rule-warning {
+      grid-column: 1 / -1;
+      padding: 0.7rem 0.8rem;
+      text-align: center;
+      background: var(--surface);
+      border-top: 1px solid var(--accent);
+    }
+
+    .rule-warning .rule-title {
+      color: #b43a3a;
+      font-size: 0.65rem;
+    }
+
+    .rule-warning .rule-desc {
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+
+    <header>
+      <div class="sigil">⸸ ✦ ⸸</div>
+      <h1>Crypt Etiquette</h1>
+      <div class="subtitle">Behave, little gremlins~</div>
+    </header>
+
+    <ul class="rules-grid">
+
+      <li class="rule">
+        <div class="rule-title">Don't Be A Dick</div>
+        <div class="rule-desc">
+          Sarcasm is welcome.
+          Schrödinger's asshole isn't.
+        </div>
+      </li>
+
+      <li class="rule">
+        <div class="rule-title">Mods Have Final Say</div>
+        <div class="rule-desc">
+          If a mod says stop, stop.
+          Misunderstandings can be sorted later.
+        </div>
+      </li>
+
+      <li class="rule">
+        <div class="rule-title">Ask Before Venting</div>
+        <div class="rule-desc">
+          Trauma dumping needs consent.
+          I care, but I'm not your therapist.
+        </div>
+      </li>
+
+      <li class="rule">
+        <div class="rule-title">Flirt Responsibly</div>
+        <div class="rule-desc">
+          Keep it playful and consensual.
+          Read the room. &lt;3
+        </div>
+      </li>
+
+      <li class="rule">
+        <div class="rule-title">No Spam Or Promo</div>
+        <div class="rule-desc">
+          No unsolicited advertising or
+          attention farming. Be genuine.
+        </div>
+      </li>
+
+      <li class="rule">
+        <div class="rule-title">Good Faith Only</div>
+        <div class="rule-desc">
+          No loophole hunting, bad-faith
+          arguments, or boundary pushing.
+        </div>
+      </li>
+
+      <li class="rule-warning">
+        <div class="rule-title">
+          Don't Make Me Get The Fucking Spray Bottle.
+        </div>
+        <div class="rule-desc">
+          If I have to stop entertaining to deal
+          with your bullshit, you're getting banned.
+        </div>
+      </li>
+
+    </ul>
+
+    <footer>
+      The Crypt · @Mordraga0 · she/they
+    </footer>
+
+  </main>
+</body>
+</html>
