@@ -1,6 +1,7 @@
 /* Motion editor — select elements of an HTML/SVG document, keyframe them, preview, render.
    Needs editor.html, runtime.js and player.html over http:// (browsers wall off file:// frames).
-   serve.py adds saving and rendering; on any other host it saves as downloads and autosaves locally.
+   serve.py adds saving and rendering; on any other host it saves as downloads, autosaves locally,
+   and exports video/GIF/APNG in the browser (export.js).
    The project object is the only state that matters: html/css source strings + tracks.
    Document edits go through the source (so {{vars}} survive) and reload the preview;
    track edits just recompile the scene, which is instant. */
@@ -1311,7 +1312,7 @@
 
   // ════════ FILES / SERVER ════════
   // serve.py answers api/config with what it allows. Anywhere else (a static host, a plain web server)
-  // there is no api: projects save as downloads, examples come from projects/index.json, no rendering.
+  // there is no api: projects save as downloads, examples come from projects/index.json, export renders in the browser.
   // All URLs are relative, so the editor works from a subfolder like yoursite.com/motion/.
 
   var server = { api: false, save: false, render: false, formats: [] };
@@ -1341,15 +1342,20 @@
     });
   }
 
+  // without a render server, export.js draws the frames in this browser and the file downloads
+  var BROWSER_FORMATS = ['webm', 'mp4', 'gif', 'apng'];
+
   // show only what this server can do
   function applyServer() {
     $('btn-save').textContent = server.save ? 'Save' : 'Save .json';
     $('btn-save').title = server.save ? 'Ctrl+S' : 'Ctrl+S — downloads the project. Your work also autosaves in this browser.';
     $('btn-download').style.display = server.save ? '' : 'none';
-    [].forEach.call($('render-format').options, function (o) { o.hidden = server.formats.indexOf(o.value) < 0; });
-    $('render-format').style.display = $('btn-render').style.display = server.render ? '' : 'none';
+    var formats = server.render ? server.formats : BROWSER_FORMATS;
+    [].forEach.call($('render-format').options, function (o) { o.hidden = formats.indexOf(o.value) < 0; });
+    $('btn-render').textContent = server.render ? 'Render' : 'Export';
+    $('btn-render').title = server.render ? 'Saves, then renders to out/' : 'Renders in this browser and downloads the file';
     var fmt = $('render-format');
-    if (server.render && server.formats.indexOf(fmt.value) < 0) fmt.value = server.formats[0];
+    if (formats.indexOf(fmt.value) < 0) fmt.value = formats[0];
   }
 
   function openProject(n) {
@@ -1394,19 +1400,47 @@
       }).catch(function (err) { status('Save failed: ' + err.message, true); return false; });
   }
 
-  function download() {
-    var a = el('a', {
-      href: URL.createObjectURL(new Blob([JSON.stringify(serialize(), null, 2)], { type: 'application/json' })),
-      download: name + '.json'
-    });
+  function saveBlob(blob, file) {
+    var a = el('a', { href: URL.createObjectURL(blob), download: file });
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
   }
 
+  function download() {
+    saveBlob(new Blob([JSON.stringify(serialize(), null, 2)], { type: 'application/json' }), name + '.json');
+  }
+
+  // no render server: export.js renders in this browser; the button cancels while it runs
+  var exporting = null;
+  function exportInBrowser() {
+    if (exporting) { exporting.abort(); return; }
+    var fmt = $('render-format').value, btn = $('btn-render');
+    var job = exporting = new AbortController();
+    btn.textContent = 'Cancel';
+    status('Exporting ' + name + '…');
+    import('./export.js').then(function (m) {
+      return m.exportProject(serialize(), {
+        format: fmt,
+        signal: job.signal,
+        onProgress: function (done, total, phase) {
+          status(phase + ' ' + name + '.' + fmt + '… ' + Math.floor(done / total * 100) + '% (' + done + '/' + total + ' frames)');
+        }
+      }).then(function (blob) {
+        var file = name + '.' + (m.FORMATS[fmt].ext || fmt);
+        saveBlob(blob, file);
+        status('Exported ' + file + ' (' + (blob.size / 1048576).toFixed(1) + ' MB)');
+      });
+    }).catch(function (err) {
+      if (err.name === 'AbortError') status('Export cancelled');
+      else status('Export failed: ' + err.message, true);
+    }).then(function () {
+      exporting = null;
+      btn.textContent = 'Export';
+    });
+  }
+
   function renderVideo() {
-    if (!server.render) {
-      return status('Rendering runs on your own PC: download the project, then python render.py ' + name + '.json', true);
-    }
+    if (!server.render) return exportInBrowser();
     var fmt = $('render-format').value, btn = $('btn-render');
     save().then(function (ok) {
       if (!ok) return;

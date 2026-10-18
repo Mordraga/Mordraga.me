@@ -203,10 +203,12 @@
     <button id="btn-undo" title="Ctrl+Z">Undo</button>
     <button id="btn-redo" title="Ctrl+Y">Redo</button>
     <div class="sep"></div>
-    <select id="render-format" title="webm: OBS · mov: Premiere / Resolve / After Effects · gif: Discord / socials · png: frames">
+    <select id="render-format" title="webm: OBS · mov: Premiere / Resolve / After Effects · mp4: socials, no transparency · gif / apng: Discord / socials · png: frames">
       <option value="webm">WebM (alpha)</option>
       <option value="mov">ProRes 4444 .mov</option>
+      <option value="mp4">MP4 (no alpha)</option>
       <option value="gif">GIF (cropped, loops)</option>
+      <option value="apng">APNG (cropped, loops)</option>
       <option value="png">PNG frames</option>
     </select>
     <button id="btn-render" class="primary">Render</button>

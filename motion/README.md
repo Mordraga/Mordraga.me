@@ -57,16 +57,20 @@ window.motion = {
 
 ## Putting the editor on a website
 
-The editor is plain static files: `editor.html`, `editor.js`, `player.html`, `runtime.js` and `projects/`.
+The editor is plain static files: `editor.html`, `editor.js`, `export.js`, `player.html`, `runtime.js` and `projects/`.
 Upload them to any web host, in the site root or a subfolder like `/motion/`. With no server behind it:
 
 - **Save .json** downloads the project, and the editor autosaves in each visitor's own browser, so a reload
   picks up where they left off.
 - **Open an example…** lists `projects/index.json`. `serve.py` rewrites that file on every save; edit it
   by hand to choose which examples people see.
-- There's no Render button. Visitors render on their own PC with `render.py`.
+- **Export** renders in the visitor's browser and downloads the file: WebM with alpha (OBS), MP4 (no alpha),
+  or a looping GIF / APNG cropped to what's visible. `export.js` draws each frame from the same `player.html`
+  and `runtime.js` as `render.py`, and fetches gifenc and mp4-muxer from jsDelivr when needed. It needs
+  Chrome, Edge or Firefox; Safari won't let a page read back what it drew. ProRes .mov and PNG frames
+  still need `render.py`.
 
-`python serve.py --public` does the same from this PC: it listens on the network, read-only, with no rendering,
+`python serve.py --public` does the same from this PC: it listens on the network, read-only, with no server rendering,
 and doesn't serve `out/` or the `.py` files.
 
 **Why rendering stays local:** a render runs a real Chromium on the server against whatever HTML the
