@@ -246,9 +246,18 @@
   padding-inline: 0.5rem;
 }
 
+/* Center the unpaired final card across both columns on phones. */
+.schedule-days > .schedule-day:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 @media (min-width: 681px) {
   .schedule-days {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .schedule-days > .schedule-day:last-child:nth-child(odd) {
+    grid-column: auto;
   }
 }
 
