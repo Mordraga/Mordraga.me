@@ -58,7 +58,7 @@
   </script>
   <meta name="theme-color" content="#8b1a1a">
   <link rel="stylesheet" href="./crypt.css">
-  <link rel="stylesheet" href="./home.css">
+  <link rel="stylesheet" href="./home.css?v=schedule-grid-1">
   <script defer src="https://cloud.umami.is/script.js" data-website-id="e3d8aa38-b68a-4a19-8b81-6df9f7e8701f"></script>
 </head>
 <body>
@@ -289,12 +289,6 @@
                         '<span class="schedule-day-time">' + (convertToLocalTime(day.time) || 'No Stream') + '</span>' +
                         '<span class="schedule-day-topic">' + (day.topic || 'No Stream') + '</span></span>';
       scheduleDaysContainer.appendChild(dayDiv);
-      if (i < schedule.length - 1) {
-        var sep = document.createElement('span');
-        sep.className = 'schedule-sep';
-        sep.textContent = '⸸';
-        scheduleDaysContainer.appendChild(sep);
-      }
     }
 
   // Schedule is authored in Eastern Time.
@@ -400,34 +394,6 @@
         wrapper.appendChild(svg);
       }
     }
-
-    function updateScheduleSeparators() {
-      var days = scheduleDaysContainer.getElementsByClassName('schedule-day');
-
-      for (var i = 0; i < days.length; i++) {
-        var day = days[i];
-        var sep = day.nextElementSibling;
-
-        // Ignore anything that isn't actually one of our separators
-        if (!sep || !sep.classList.contains('schedule-sep')) {
-          continue;
-        }
-
-        var nextDay = days[i + 1];
-
-        // Hide separator if this is the last item,
-        // or if the next day has wrapped onto another row.
-        if (!nextDay || nextDay.offsetTop !== day.offsetTop) {
-          sep.style.display = 'none';
-        } else {
-          sep.style.display = '';
-        }
-      }
-    }
-
-    updateScheduleSeparators();
-
-    window.addEventListener('resize', updateScheduleSeparators);
   </script>
 
 </body>
